@@ -38,7 +38,7 @@ func AddSystem(system models.System) (err error) {
 	return nil
 }
 
-func RemoveSystemByIp(systemIp string) (err error) {
+func DeleteSystemByIp(systemIp string) (err error) {
 
 	o := orm.NewOrm()
 
