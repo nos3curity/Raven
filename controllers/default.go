@@ -20,7 +20,7 @@ func GetErrorMessage(err error) string {
 
 	defaultError := "🤓🤓🤓 OOPSIE WOOPSIE!! Uwu We make a fucky wucky!! A wittle fucko boingo! The code monkeys at our headquarters are working VEWY HAWD to fix this! 🤓🤓🤓"
 
-	runmode, err := beego.AppConfig.String("runmove")
+	runmode, err := beego.AppConfig.String("runmode")
 	if err != nil {
 		fmt.Println("something is really fucking wrong")
 	}
