@@ -14,7 +14,7 @@ type NmapController struct {
 }
 
 func (c *NmapController) Get() {
-	err := ParseNmapScan("raven.xml")
+	err := ParseNmapScan("big.xml")
 	if err != nil {
 		c.Ctx.WriteString(err.Error())
 	}
@@ -111,11 +111,18 @@ func ParseNmapHost(host nmap.Host) (system models.System, err error) {
 		fingerprint = ""
 	}
 
+	// Find which network the system belongs to
+	network, err := GetSystemsNetwork(ipAddress)
+	if err != nil {
+		return models.System{}, err
+	}
+
 	// Assign the variables to the model
 	system = models.System{
 		Ip:       ipAddress,
 		Hostname: hostname,
 		Os:       fingerprint,
+		Network:  &network,
 	}
 
 	return system, nil

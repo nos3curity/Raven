@@ -16,10 +16,11 @@ type NetworksController struct {
 
 func (c *NetworksController) Get() {
 
-	err := AddNetwork("45.33.32.1/24")
+	err := AddNetwork("10.100.10.0/24")
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	c.Ctx.WriteString("Work in Progress 🤓")
 }
 
@@ -75,6 +76,18 @@ func GetNetworkByCidr(networkCidr string) (network []models.Network, err error) 
 	}
 
 	return network, nil
+}
+
+func GetAllNetworks() (networks []models.Network, err error) {
+
+	o := orm.NewOrm()
+
+	_, err = o.QueryTable(new(models.Network)).All(&networks)
+	if err != nil {
+		return nil, err
+	}
+
+	return networks, nil
 }
 
 func AddNetwork(networkCidr string) (err error) {
@@ -133,4 +146,28 @@ func AddNetwork(networkCidr string) (err error) {
 	}
 
 	return nil
+}
+
+func GetSystemsNetwork(systemIp string) (network models.Network, err error) {
+
+	// Convert the system ip to an integer
+	intIp, err := ConvertIpToUint32(systemIp)
+	if err != nil {
+		return models.Network{}, err
+	}
+
+	// Get all networks
+	networks, err := GetAllNetworks()
+	if err != nil {
+		return models.Network{}, err
+	}
+
+	// Loop over all the networks and return the one the ip belongs to
+	for _, network := range networks {
+		if intIp >= network.NetworkID && intIp <= network.NetworkBroadcast {
+			return network, nil
+		}
+	}
+
+	return models.Network{}, fmt.Errorf("Out of scope")
 }

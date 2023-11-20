@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.93 scan initiated Sun Nov 19 21:50:17 2023 as: nmap -p- -&#45;min-rate=10000 -oX nmap_scan_subnet.xml 10.100.10.0/24 -->
+<nmaprun scanner="nmap" args="nmap -p- -&#45;min-rate=10000 -oX nmap_scan_subnet.xml 10.100.10.0/24" start="1700459417" startstr="Sun Nov 19 21:50:17 2023" version="7.93" xmloutputversion="1.05">
+<scaninfo type="syn" protocol="tcp" numservices="65535" services="1-65535"/>
+<verbose level="0"/>
+<debugging level="0"/>
+<hosthint><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.100.10.1" addrtype="ipv4"/>
+<address addr="00:0C:29:A1:E1:A1" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<hosthint><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.100.10.12" addrtype="ipv4"/>
+<address addr="00:0C:29:58:0F:18" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<hosthint><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.100.10.35" addrtype="ipv4"/>
+<address addr="00:50:56:9C:74:35" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<hosthint><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.100.10.64" addrtype="ipv4"/>
+<address addr="00:0C:29:5B:FB:FC" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<hosthint><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.100.10.32" addrtype="ipv4"/>
+<address addr="00:0C:29:EB:7C:DB" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<hosthint><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.100.10.63" addrtype="ipv4"/>
+<address addr="00:0C:29:AD:5E:BC" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<hosthint><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.100.10.28" addrtype="ipv4"/>
+<address addr="00:0C:29:7E:E8:88" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<hosthint><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.100.10.33" addrtype="ipv4"/>
+<address addr="00:0C:29:5B:46:F5" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<hosthint><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.100.10.51" addrtype="ipv4"/>
+<address addr="00:0C:29:12:8E:95" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<hosthint><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.100.10.50" addrtype="ipv4"/>
+<address addr="00:0C:29:18:6C:1D" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<hosthint><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.100.10.67" addrtype="ipv4"/>
+<address addr="00:0C:29:10:73:22" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<hosthint><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.100.10.55" addrtype="ipv4"/>
+<address addr="00:0C:29:C0:AB:2E" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<hosthint><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.100.10.54" addrtype="ipv4"/>
+<address addr="00:0C:29:E2:5F:88" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<hosthint><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.100.10.53" addrtype="ipv4"/>
+<address addr="00:0C:29:8D:96:A3" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<hosthint><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.100.10.27" addrtype="ipv4"/>
+<address addr="00:0C:29:2D:C1:DF" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<hosthint><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.100.10.34" addrtype="ipv4"/>
+<address addr="00:50:56:9C:0D:7A" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<taskprogress task="SYN Stealth Scan" time="1700459424" percent="18.79" remaining="31" etc="1700459454"/>
+<taskprogress task="SYN Stealth Scan" time="1700459425" percent="22.48" remaining="28" etc="1700459453"/>
+<taskprogress task="SYN Stealth Scan" time="1700459427" percent="29.55" remaining="24" etc="1700459451"/>
+<taskprogress task="SYN Stealth Scan" time="1700459428" percent="31.39" remaining="25" etc="1700459452"/>
+<taskprogress task="SYN Stealth Scan" time="1700459431" percent="42.33" remaining="20" etc="1700459450"/>
+<taskprogress task="SYN Stealth Scan" time="1700459432" percent="44.34" remaining="19" etc="1700459451"/>
+<taskprogress task="SYN Stealth Scan" time="1700459432" percent="46.10" remaining="18" etc="1700459450"/>
+<host starttime="1700459417" endtime="1700459450"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.100.10.1" addrtype="ipv4"/>
+<address addr="00:0C:29:A1:E1:A1" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="pfsense.esxi.lan" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65532">
+<extrareasons reason="no-response" count="65532" proto="tcp" ports="1-52,54-79,81-442,444-65535"/>
+</extraports>
+<port protocol="tcp" portid="53"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="domain" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="171" rttvar="31" to="100000"/>
+</host>
+<host starttime="1700459417" endtime="1700459450"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.100.10.12" addrtype="ipv4"/>
+<address addr="00:0C:29:58:0F:18" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+<ports><extraports state="closed" count="65533">
+<extrareasons reason="reset" count="65533" proto="tcp" ports="1-21,23-9089,9091-65535"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="9090"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="zeus-admin" method="table" conf="3"/></port>
+</ports>
+<times srtt="56" rttvar="13" to="100000"/>
+</host>
+<host starttime="1700459417" endtime="1700459450"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.100.10.27" addrtype="ipv4"/>
+<address addr="00:0C:29:2D:C1:DF" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+<ports><extraports state="closed" count="65509">
+<extrareasons reason="reset" count="65509" proto="tcp" ports="1-52,54-87,89-134,136-138,140-388,390-444,446-463,465-592,594-635,637-3267,3270-5984,5986-9388,9390-47000,47002-49663,49668-49669,49671-49672,49674-49681,49684-49695,49697-49713,49715-49727,49729-57663,57665-65535"/>
+</extraports>
+<port protocol="tcp" portid="53"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="domain" method="table" conf="3"/></port>
+<port protocol="tcp" portid="88"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="kerberos-sec" method="table" conf="3"/></port>
+<port protocol="tcp" portid="135"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="msrpc" method="table" conf="3"/></port>
+<port protocol="tcp" portid="139"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="netbios-ssn" method="table" conf="3"/></port>
+<port protocol="tcp" portid="389"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="ldap" method="table" conf="3"/></port>
+<port protocol="tcp" portid="445"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="microsoft-ds" method="table" conf="3"/></port>
+<port protocol="tcp" portid="464"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="kpasswd5" method="table" conf="3"/></port>
+<port protocol="tcp" portid="593"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="http-rpc-epmap" method="table" conf="3"/></port>
+<port protocol="tcp" portid="636"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="ldapssl" method="table" conf="3"/></port>
+<port protocol="tcp" portid="3268"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="globalcatLDAP" method="table" conf="3"/></port>
+<port protocol="tcp" portid="3269"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="globalcatLDAPssl" method="table" conf="3"/></port>
+<port protocol="tcp" portid="5985"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="wsman" method="table" conf="3"/></port>
+<port protocol="tcp" portid="9389"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="adws" method="table" conf="3"/></port>
+<port protocol="tcp" portid="47001"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="winrm" method="table" conf="3"/></port>
+<port protocol="tcp" portid="49664"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49665"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49666"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49667"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49670"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49673"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49682"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49683"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49696"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49714"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49728"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="57664"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+</ports>
+<times srtt="82" rttvar="15" to="100000"/>
+</host>
+<host starttime="1700459417" endtime="1700459450"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.100.10.28" addrtype="ipv4"/>
+<address addr="00:0C:29:7E:E8:88" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+<ports><extraports state="closed" count="65508">
+<extrareasons reason="reset" count="65508" proto="tcp" ports="1-52,54-79,81-87,89-134,136-138,140-388,390-444,446-463,465-592,594-635,637-3267,3270-5984,5986-9388,9390-47000,47002-49663,49668,49670-49671,49673-49676,49679-49690,49692-49711,49713-49729,49731-57540,57542-65535"/>
+</extraports>
+<port protocol="tcp" portid="53"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="domain" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="88"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="kerberos-sec" method="table" conf="3"/></port>
+<port protocol="tcp" portid="135"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="msrpc" method="table" conf="3"/></port>
+<port protocol="tcp" portid="139"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="netbios-ssn" method="table" conf="3"/></port>
+<port protocol="tcp" portid="389"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="ldap" method="table" conf="3"/></port>
+<port protocol="tcp" portid="445"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="microsoft-ds" method="table" conf="3"/></port>
+<port protocol="tcp" portid="464"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="kpasswd5" method="table" conf="3"/></port>
+<port protocol="tcp" portid="593"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="http-rpc-epmap" method="table" conf="3"/></port>
+<port protocol="tcp" portid="636"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="ldapssl" method="table" conf="3"/></port>
+<port protocol="tcp" portid="3268"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="globalcatLDAP" method="table" conf="3"/></port>
+<port protocol="tcp" portid="3269"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="globalcatLDAPssl" method="table" conf="3"/></port>
+<port protocol="tcp" portid="5985"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="wsman" method="table" conf="3"/></port>
+<port protocol="tcp" portid="9389"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="adws" method="table" conf="3"/></port>
+<port protocol="tcp" portid="47001"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="winrm" method="table" conf="3"/></port>
+<port protocol="tcp" portid="49664"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49665"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49666"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49667"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49669"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49672"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49677"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49678"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="unknown" method="table" conf="3"/></port>
+<port protocol="tcp" portid="49691"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49712"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49730"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="57541"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+</ports>
+<times srtt="92" rttvar="14" to="100000"/>
+</host>
+<taskprogress task="SYN Stealth Scan" time="1700459460" percent="4.62" remaining="83" etc="1700459543"/>
+<taskprogress task="SYN Stealth Scan" time="1700459460" percent="5.38" remaining="71" etc="1700459530"/>
+<taskprogress task="SYN Stealth Scan" time="1700459461" percent="6.04" remaining="78" etc="1700459539"/>
+<taskprogress task="SYN Stealth Scan" time="1700459464" percent="9.51" remaining="77" etc="1700459540"/>
+<taskprogress task="SYN Stealth Scan" time="1700459466" percent="11.63" remaining="77" etc="1700459542"/>
+<taskprogress task="SYN Stealth Scan" time="1700459467" percent="12.58" remaining="77" etc="1700459543"/>
+<taskprogress task="SYN Stealth Scan" time="1700459469" percent="14.59" remaining="77" etc="1700459545"/>
+<taskprogress task="SYN Stealth Scan" time="1700459471" percent="16.29" remaining="78" etc="1700459548"/>
+<taskprogress task="SYN Stealth Scan" time="1700459479" percent="25.49" remaining="68" etc="1700459546"/>
+<taskprogress task="SYN Stealth Scan" time="1700459480" percent="26.31" remaining="68" etc="1700459547"/>
+<taskprogress task="SYN Stealth Scan" time="1700459482" percent="28.37" remaining="66" etc="1700459548"/>
+<taskprogress task="SYN Stealth Scan" time="1700459483" percent="29.40" remaining="65" etc="1700459548"/>
+<taskprogress task="SYN Stealth Scan" time="1700459483" percent="30.19" remaining="63" etc="1700459545"/>
+<taskprogress task="SYN Stealth Scan" time="1700459504" percent="52.98" remaining="43" etc="1700459547"/>
+<taskprogress task="SYN Stealth Scan" time="1700459506" percent="55.15" remaining="41" etc="1700459547"/>
+<taskprogress task="SYN Stealth Scan" time="1700459511" percent="60.17" remaining="37" etc="1700459547"/>
+<taskprogress task="SYN Stealth Scan" time="1700459511" percent="60.67" remaining="36" etc="1700459547"/>
+<taskprogress task="SYN Stealth Scan" time="1700459512" percent="61.09" remaining="36" etc="1700459548"/>
+<taskprogress task="SYN Stealth Scan" time="1700459512" percent="61.51" remaining="36" etc="1700459547"/>
+<taskprogress task="SYN Stealth Scan" time="1700459517" percent="66.66" remaining="31" etc="1700459548"/>
+<taskprogress task="SYN Stealth Scan" time="1700459519" percent="69.07" remaining="29" etc="1700459547"/>
+<taskprogress task="SYN Stealth Scan" time="1700459524" percent="74.12" remaining="24" etc="1700459548"/>
+<taskprogress task="SYN Stealth Scan" time="1700459525" percent="75.22" remaining="23" etc="1700459548"/>
+<taskprogress task="SYN Stealth Scan" time="1700459543" percent="94.98" remaining="5" etc="1700459548"/>
+<taskprogress task="SYN Stealth Scan" time="1700459544" percent="96.03" remaining="4" etc="1700459548"/>
+<host starttime="1700459456" endtime="1700459548"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.100.10.32" addrtype="ipv4"/>
+<address addr="00:0C:29:EB:7C:DB" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+<ports><extraports state="closed" count="65521">
+<extrareasons reason="reset" count="65521" proto="tcp" ports="1-134,136-138,140-444,446-1432,1434-5984,5986-47000,47002-49663,49672-65535"/>
+</extraports>
+<port protocol="tcp" portid="135"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="msrpc" method="table" conf="3"/></port>
+<port protocol="tcp" portid="139"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="netbios-ssn" method="table" conf="3"/></port>
+<port protocol="tcp" portid="445"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="microsoft-ds" method="table" conf="3"/></port>
+<port protocol="tcp" portid="1433"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="ms-sql-s" method="table" conf="3"/></port>
+<port protocol="tcp" portid="5985"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="wsman" method="table" conf="3"/></port>
+<port protocol="tcp" portid="47001"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="winrm" method="table" conf="3"/></port>
+<port protocol="tcp" portid="49664"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49665"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49666"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49667"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49668"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49669"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49670"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49671"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+</ports>
+<times srtt="124" rttvar="22" to="100000"/>
+</host>
+<host starttime="1700459456" endtime="1700459548"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.100.10.33" addrtype="ipv4"/>
+<address addr="00:0C:29:5B:46:F5" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+<ports><extraports state="closed" count="65521">
+<extrareasons reason="reset" count="65521" proto="tcp" ports="1-134,136-138,140-444,446-1432,1434-5984,5986-47000,47002-49663,49672-65535"/>
+</extraports>
+<port protocol="tcp" portid="135"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="msrpc" method="table" conf="3"/></port>
+<port protocol="tcp" portid="139"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="netbios-ssn" method="table" conf="3"/></port>
+<port protocol="tcp" portid="445"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="microsoft-ds" method="table" conf="3"/></port>
+<port protocol="tcp" portid="1433"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="ms-sql-s" method="table" conf="3"/></port>
+<port protocol="tcp" portid="5985"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="wsman" method="table" conf="3"/></port>
+<port protocol="tcp" portid="47001"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="winrm" method="table" conf="3"/></port>
+<port protocol="tcp" portid="49664"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49665"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49666"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49667"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49668"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49669"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49670"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49671"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+</ports>
+<times srtt="80" rttvar="20" to="100000"/>
+</host>
+<host starttime="1700459456" endtime="1700459548"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.100.10.34" addrtype="ipv4"/>
+<address addr="00:50:56:9C:0D:7A" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+<ports><extraports state="closed" count="65520">
+<extrareasons reason="reset" count="65520" proto="tcp" ports="1-134,136-138,140-444,446-2178,2180-5039,5041-5356,5358-5984,5986-47000,47002-49663,49670,49672-65535"/>
+</extraports>
+<port protocol="tcp" portid="135"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="msrpc" method="table" conf="3"/></port>
+<port protocol="tcp" portid="139"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="netbios-ssn" method="table" conf="3"/></port>
+<port protocol="tcp" portid="445"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="microsoft-ds" method="table" conf="3"/></port>
+<port protocol="tcp" portid="2179"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="vmrdp" method="table" conf="3"/></port>
+<port protocol="tcp" portid="5040"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="unknown" method="table" conf="3"/></port>
+<port protocol="tcp" portid="5357"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="wsdapi" method="table" conf="3"/></port>
+<port protocol="tcp" portid="5985"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="wsman" method="table" conf="3"/></port>
+<port protocol="tcp" portid="47001"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="winrm" method="table" conf="3"/></port>
+<port protocol="tcp" portid="49664"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49665"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49666"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49667"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49668"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49669"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49671"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+</ports>
+<times srtt="109" rttvar="46" to="100000"/>
+</host>
+<host starttime="1700459456" endtime="1700459548"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.100.10.35" addrtype="ipv4"/>
+<address addr="00:50:56:9C:74:35" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+<ports><extraports state="closed" count="65533">
+<extrareasons reason="reset" count="65533" proto="tcp" ports="1-21,23-7069,7071-65535"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="7070"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="realserver" method="table" conf="3"/></port>
+</ports>
+<times srtt="13269" rttvar="11432" to="100000"/>
+</host>
+<host starttime="1700459456" endtime="1700459548"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.100.10.50" addrtype="ipv4"/>
+<address addr="00:0C:29:18:6C:1D" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+<ports><extraports state="filtered" count="65514">
+<extrareasons reason="no-response" count="65514" proto="tcp" ports="1-52,54-87,89-134,136-138,140-388,390-444,446-463,465-592,594-635,637-3267,3270-5984,5986-7069,7071-9388,9390-49665,49668,49671,49673-49888,49890-54206,54208-65535"/>
+</extraports>
+<port protocol="tcp" portid="53"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="domain" method="table" conf="3"/></port>
+<port protocol="tcp" portid="88"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="kerberos-sec" method="table" conf="3"/></port>
+<port protocol="tcp" portid="135"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="msrpc" method="table" conf="3"/></port>
+<port protocol="tcp" portid="139"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="netbios-ssn" method="table" conf="3"/></port>
+<port protocol="tcp" portid="389"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="ldap" method="table" conf="3"/></port>
+<port protocol="tcp" portid="445"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="microsoft-ds" method="table" conf="3"/></port>
+<port protocol="tcp" portid="464"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="kpasswd5" method="table" conf="3"/></port>
+<port protocol="tcp" portid="593"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="http-rpc-epmap" method="table" conf="3"/></port>
+<port protocol="tcp" portid="636"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="ldapssl" method="table" conf="3"/></port>
+<port protocol="tcp" portid="3268"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="globalcatLDAP" method="table" conf="3"/></port>
+<port protocol="tcp" portid="3269"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="globalcatLDAPssl" method="table" conf="3"/></port>
+<port protocol="tcp" portid="5985"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="wsman" method="table" conf="3"/></port>
+<port protocol="tcp" portid="7070"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="realserver" method="table" conf="3"/></port>
+<port protocol="tcp" portid="9389"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="adws" method="table" conf="3"/></port>
+<port protocol="tcp" portid="49666"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49667"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49669"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49670"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49672"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49889"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="54207"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+</ports>
+<times srtt="190" rttvar="54" to="100000"/>
+</host>
+<host starttime="1700459456" endtime="1700459547"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.100.10.51" addrtype="ipv4"/>
+<address addr="00:0C:29:12:8E:95" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+<ports><extraports state="closed" count="65535">
+<extrareasons reason="reset" count="65535" proto="tcp" ports="1-65535"/>
+</extraports>
+</ports>
+<times srtt="95" rttvar="9" to="100000"/>
+</host>
+<host starttime="1700459456" endtime="1700459548"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.100.10.53" addrtype="ipv4"/>
+<address addr="00:0C:29:8D:96:A3" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+<ports><extraports state="filtered" count="65535">
+<extrareasons reason="no-response" count="65535" proto="tcp" ports="1-65535"/>
+</extraports>
+</ports>
+<times srtt="2547" rttvar="5000" to="100000"/>
+</host>
+<host starttime="1700459456" endtime="1700459548"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.100.10.54" addrtype="ipv4"/>
+<address addr="00:0C:29:E2:5F:88" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+<ports><extraports state="closed" count="65534">
+<extrareasons reason="reset" count="65534" proto="tcp" ports="1-7069,7071-65535"/>
+</extraports>
+<port protocol="tcp" portid="7070"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="realserver" method="table" conf="3"/></port>
+</ports>
+<times srtt="70" rttvar="20" to="100000"/>
+</host>
+<host starttime="1700459456" endtime="1700459548"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.100.10.55" addrtype="ipv4"/>
+<address addr="00:0C:29:C0:AB:2E" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+<ports><extraports state="closed" count="65534">
+<extrareasons reason="reset" count="65534" proto="tcp" ports="1-7070,7072-65535"/>
+</extraports>
+<port protocol="tcp" portid="7071"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="iwg1" method="table" conf="3"/></port>
+</ports>
+<times srtt="60" rttvar="24" to="100000"/>
+</host>
+<host starttime="1700459456" endtime="1700459548"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.100.10.63" addrtype="ipv4"/>
+<address addr="00:0C:29:AD:5E:BC" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+<ports><extraports state="closed" count="65510">
+<extrareasons reason="reset" count="65510" proto="tcp" ports="1-52,54-87,89-134,136-138,140-388,390-444,446-463,465-592,594-635,637-3267,3270-5984,5986-9388,9390-47000,47002-49663,49669-56296,56298-56310,56312-56436,56440-56444,56446-65535"/>
+</extraports>
+<port protocol="tcp" portid="53"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="domain" method="table" conf="3"/></port>
+<port protocol="tcp" portid="88"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="kerberos-sec" method="table" conf="3"/></port>
+<port protocol="tcp" portid="135"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="msrpc" method="table" conf="3"/></port>
+<port protocol="tcp" portid="139"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="netbios-ssn" method="table" conf="3"/></port>
+<port protocol="tcp" portid="389"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="ldap" method="table" conf="3"/></port>
+<port protocol="tcp" portid="445"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="microsoft-ds" method="table" conf="3"/></port>
+<port protocol="tcp" portid="464"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="kpasswd5" method="table" conf="3"/></port>
+<port protocol="tcp" portid="593"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="http-rpc-epmap" method="table" conf="3"/></port>
+<port protocol="tcp" portid="636"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="ldapssl" method="table" conf="3"/></port>
+<port protocol="tcp" portid="3268"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="globalcatLDAP" method="table" conf="3"/></port>
+<port protocol="tcp" portid="3269"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="globalcatLDAPssl" method="table" conf="3"/></port>
+<port protocol="tcp" portid="5985"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="wsman" method="table" conf="3"/></port>
+<port protocol="tcp" portid="9389"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="adws" method="table" conf="3"/></port>
+<port protocol="tcp" portid="47001"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="winrm" method="table" conf="3"/></port>
+<port protocol="tcp" portid="49664"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49665"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49666"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49667"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49668"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="56297"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="56311"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="56437"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="56438"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="56439"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="56445"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+</ports>
+<times srtt="116" rttvar="31" to="100000"/>
+</host>
+<host starttime="1700459456" endtime="1700459548"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.100.10.64" addrtype="ipv4"/>
+<address addr="00:0C:29:5B:FB:FC" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+<ports><extraports state="closed" count="65510">
+<extrareasons reason="reset" count="65510" proto="tcp" ports="1-52,54-87,89-134,136-138,140-388,390-444,446-463,465-592,594-635,637-3267,3270-5984,5986-9388,9390-47000,47002-49663,49669-51338,51342-51351,51353-60529,60531-60565,60567-65535"/>
+</extraports>
+<port protocol="tcp" portid="53"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="domain" method="table" conf="3"/></port>
+<port protocol="tcp" portid="88"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="kerberos-sec" method="table" conf="3"/></port>
+<port protocol="tcp" portid="135"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="msrpc" method="table" conf="3"/></port>
+<port protocol="tcp" portid="139"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="netbios-ssn" method="table" conf="3"/></port>
+<port protocol="tcp" portid="389"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="ldap" method="table" conf="3"/></port>
+<port protocol="tcp" portid="445"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="microsoft-ds" method="table" conf="3"/></port>
+<port protocol="tcp" portid="464"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="kpasswd5" method="table" conf="3"/></port>
+<port protocol="tcp" portid="593"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="http-rpc-epmap" method="table" conf="3"/></port>
+<port protocol="tcp" portid="636"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="ldapssl" method="table" conf="3"/></port>
+<port protocol="tcp" portid="3268"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="globalcatLDAP" method="table" conf="3"/></port>
+<port protocol="tcp" portid="3269"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="globalcatLDAPssl" method="table" conf="3"/></port>
+<port protocol="tcp" portid="5985"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="wsman" method="table" conf="3"/></port>
+<port protocol="tcp" portid="9389"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="adws" method="table" conf="3"/></port>
+<port protocol="tcp" portid="47001"><state state="open" reason="syn-ack" reason_ttl="128"/><service name="winrm" method="table" conf="3"/></port>
+<port protocol="tcp" portid="49664"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49665"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49666"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49667"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="49668"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="51339"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="51340"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="51341"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="51352"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="60530"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+<port protocol="tcp" portid="60566"><state state="open" reason="syn-ack" reason_ttl="128"/></port>
+</ports>
+<times srtt="114" rttvar="29" to="100000"/>
+</host>
+<host starttime="1700459456" endtime="1700459548"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.100.10.67" addrtype="ipv4"/>
+<address addr="00:0C:29:10:73:22" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+<ports><extraports state="closed" count="65527">
+<extrareasons reason="reset" count="65527" proto="tcp" ports="1-21,23-5043,5045-5600,5602-8219,8221-9199,9201-9299,9301-9599,9601-49999,50001-65535"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="5044"><state state="open" reason="syn-ack" reason_ttl="63"/><service name="lxi-evntsvc" method="table" conf="3"/></port>
+<port protocol="tcp" portid="5601"><state state="open" reason="syn-ack" reason_ttl="63"/><service name="esmagent" method="table" conf="3"/></port>
+<port protocol="tcp" portid="8220"><state state="open" reason="syn-ack" reason_ttl="64"/></port>
+<port protocol="tcp" portid="9200"><state state="open" reason="syn-ack" reason_ttl="63"/><service name="wap-wsp" method="table" conf="3"/></port>
+<port protocol="tcp" portid="9300"><state state="open" reason="syn-ack" reason_ttl="63"/><service name="vrace" method="table" conf="3"/></port>
+<port protocol="tcp" portid="9600"><state state="open" reason="syn-ack" reason_ttl="63"/><service name="micromuse-ncpw" method="table" conf="3"/></port>
+<port protocol="tcp" portid="50000"><state state="open" reason="syn-ack" reason_ttl="63"/><service name="ibm-db2" method="table" conf="3"/></port>
+</ports>
+<times srtt="99" rttvar="20" to="100000"/>
+</host>
+<host starttime="1700459548" endtime="1700459549"><status state="up" reason="localhost-response" reason_ttl="0"/>
+<address addr="10.100.10.59" addrtype="ipv4"/>
+<hostnames>
+<hostname name="bri5ee" type="PTR"/>
+</hostnames>
+<ports><extraports state="closed" count="65534">
+<extrareasons reason="reset" count="65534" proto="tcp" ports="1-21,23-65535"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+</ports>
+<times srtt="6" rttvar="0" to="100000"/>
+</host>
+<runstats><finished time="1700459549" timestr="Sun Nov 19 21:52:29 2023" summary="Nmap done at Sun Nov 19 21:52:29 2023; 256 IP addresses (17 hosts up) scanned in 132.07 seconds" elapsed="132.07" exit="success"/><hosts up="17" down="239" total="256"/>
+</runstats>
+</nmaprun>
