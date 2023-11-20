@@ -16,7 +16,12 @@ type NetworksController struct {
 
 func (c *NetworksController) Get() {
 
-	err := AddNetwork("10.100.10.0/24")
+	//err := AddNetwork("10.100.10.0/24")
+	//if err != nil {
+	//fmt.Println(err)
+	//}
+
+	err := RemoveNetworkByCidr("10.100.10.0/24")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -170,4 +175,18 @@ func GetSystemsNetwork(systemIp string) (network models.Network, err error) {
 	}
 
 	return models.Network{}, fmt.Errorf("Out of scope")
+}
+
+func RemoveNetworkByCidr(networkCidr string) (err error) {
+
+	o := orm.NewOrm()
+
+	network := models.Network{NetworkCidr: networkCidr}
+
+	_, err = o.Delete(&network)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

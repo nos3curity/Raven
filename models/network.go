@@ -8,7 +8,7 @@ type Network struct {
 	NetworkCidr      string `json:"network_cidr" orm:"pk"`
 	NetworkID        uint32 `json:"network_id"`
 	NetworkBroadcast uint32 `json:"network_broadcast"`
-	// Team *Team
+	Team             *Team  `orm:"rel(fk);on_delete(cascade)" json:"team"`
 }
 
 func init() {

@@ -14,7 +14,7 @@ type NmapController struct {
 }
 
 func (c *NmapController) Get() {
-	err := ParseNmapScan("big.xml")
+	err := ParseNmapScan("bigos.xml")
 	if err != nil {
 		c.Ctx.WriteString(err.Error())
 	}
@@ -95,6 +95,7 @@ func ParseNmapHost(host nmap.Host) (system models.System, err error) {
 	var ipAddress string
 	var hostname string
 	var fingerprint string
+	var osFamily string
 
 	// Assign host values to variables
 	ipAddress = host.Addresses[0].Addr
@@ -105,10 +106,12 @@ func ParseNmapHost(host nmap.Host) (system models.System, err error) {
 		hostname = ""
 	}
 
-	if len(host.Os.OsFingerprints) != 0 {
-		fingerprint = host.Os.OsFingerprints[0].Fingerprint
+	if len(host.Os.OsMatches) > 0 {
+		fingerprint = host.Os.OsMatches[0].Name
+		osFamily = host.Os.OsMatches[0].OsClasses[0].OsFamily
 	} else {
 		fingerprint = ""
+		osFamily = ""
 	}
 
 	// Find which network the system belongs to
@@ -121,6 +124,7 @@ func ParseNmapHost(host nmap.Host) (system models.System, err error) {
 	system = models.System{
 		Ip:       ipAddress,
 		Hostname: hostname,
+		OsFamily: osFamily,
 		Os:       fingerprint,
 		Network:  &network,
 	}
