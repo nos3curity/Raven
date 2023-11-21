@@ -19,7 +19,7 @@ cd raven/
 
 init the module and download libraries:
 ```
-go init raven
+go mod init raven
 go mod tidy
 ```
 
