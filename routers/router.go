@@ -9,5 +9,5 @@ import (
 func init() {
 	beego.Router("/", &controllers.MainController{})
 	beego.Router("/nmap", &controllers.NmapController{})
-	beego.Router("/networks/add", &controllers.NetworksController{})
+	beego.Router("/networks/add", &controllers.NetworksController{}, "get:Add")
 }

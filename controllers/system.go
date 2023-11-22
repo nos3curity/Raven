@@ -38,7 +38,7 @@ func AddSystem(system models.System) (err error) {
 	return nil
 }
 
-func DeleteSystemByIp(systemIp string) (err error) {
+func DeleteSystem(systemIp string) (err error) {
 
 	o := orm.NewOrm()
 
@@ -50,4 +50,29 @@ func DeleteSystemByIp(systemIp string) (err error) {
 	}
 
 	return nil
+}
+
+func GetSystem(systemIp string) (system models.System, err error) {
+
+	o := orm.NewOrm()
+
+	system = models.System{Ip: systemIp}
+	err = o.Read(&system, "Ip")
+	if err != nil {
+		return models.System{}, err
+	}
+
+	return system, nil
+}
+
+func GetSystemPorts(systemIp string) (systemPorts []models.SystemPort, err error) {
+
+	o := orm.NewOrm()
+
+	_, err = o.QueryTable(new(models.SystemPort)).RelatedSel().Filter("System__Ip", systemIp).All(&systemPorts)
+	if err != nil {
+		return nil, err
+	}
+
+	return systemPorts, nil
 }

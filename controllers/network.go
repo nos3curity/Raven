@@ -25,7 +25,7 @@ func (c *NetworksController) Add() {
 
 	err := AddNetwork(networkCidr)
 	if err != nil {
-		c.Ctx.WriteString(GetErrorMessage(err))
+		c.Ctx.WriteString(err.Error())
 	}
 
 	c.Ctx.WriteString("")
@@ -82,7 +82,7 @@ func GetNetworkBroadcastByCidr(networkCidr string) (broadcastString string, err 
 	return broadcastString, nil
 }
 
-func GetNetworkByCidr(networkCidr string) (network []models.Network, err error) {
+func GetNetwork(networkCidr string) (network []models.Network, err error) {
 
 	o := orm.NewOrm()
 
@@ -142,7 +142,7 @@ func AddNetwork(networkCidr string) (err error) {
 	}
 
 	// Check if the network exists already
-	exists, err := GetNetworkByCidr(networkCidr)
+	exists, err := GetNetwork(networkCidr)
 	if err != nil {
 		return nil
 	}
@@ -188,7 +188,7 @@ func GetSystemsNetwork(systemIp string) (network models.Network, err error) {
 	return models.Network{}, fmt.Errorf("Out of scope")
 }
 
-func DeleteNetworkByCidr(networkCidr string) (err error) {
+func DeleteNetwork(networkCidr string) (err error) {
 
 	o := orm.NewOrm()
 
@@ -200,4 +200,16 @@ func DeleteNetworkByCidr(networkCidr string) (err error) {
 	}
 
 	return nil
+}
+
+func GetNetworkSystems(networkCidr string) (systems []models.System, err error) {
+
+	o := orm.NewOrm()
+
+	_, err = o.QueryTable(new(models.System)).RelatedSel().Filter("Network__NetworkCidr", networkCidr).All(&systems)
+	if err != nil {
+		return nil, err
+	}
+
+	return systems, nil
 }

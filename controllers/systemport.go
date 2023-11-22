@@ -22,7 +22,7 @@ func AddOpenSystemPort(system *models.System, port *models.Port) (err error) {
 	}
 
 	// Check if there are any port associations for this system
-	systemPorts, err := GetSystemPortsByIp(system.Ip)
+	systemPorts, err := GetSystemPorts(system.Ip)
 	if len(systemPorts) == 0 {
 
 		// If no associations exist, create it
@@ -64,18 +64,6 @@ func GetSystemPort(systemIp string, port int) (systemPorts []models.SystemPort, 
 	o := orm.NewOrm()
 
 	_, err = o.QueryTable(new(models.SystemPort)).RelatedSel().Filter("System__Ip", systemIp).Filter("Port__PortNumber", port).All(&systemPorts)
-	if err != nil {
-		return nil, err
-	}
-
-	return systemPorts, nil
-}
-
-func GetSystemPortsByIp(systemIp string) (systemPorts []models.SystemPort, err error) {
-
-	o := orm.NewOrm()
-
-	_, err = o.QueryTable(new(models.SystemPort)).RelatedSel().Filter("System__Ip", systemIp).All(&systemPorts)
 	if err != nil {
 		return nil, err
 	}
