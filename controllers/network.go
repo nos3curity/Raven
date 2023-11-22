@@ -16,8 +16,45 @@ type NetworksController struct {
 
 func (c *NetworksController) Get() {
 
-	c.Ctx.WriteString("Work in Progress 🤓")
+	// Get all networks
+	networks, err := GetAllNetworks()
+	if err != nil {
+		c.Ctx.WriteString(err.Error())
+	}
+
+	networkSystems := make(map[string][]models.System)
+	systemPorts := make(map[string][]models.SystemPort)
+
+	// Get systems for all networks
+	for _, network := range networks {
+		systems, err := GetNetworkSystems(network.NetworkCidr)
+		if err != nil {
+			continue
+		}
+
+		networkSystems[network.NetworkCidr] = systems
+
+		// Grab open ports for each system
+		for _, system := range systems {
+			ports, err := GetSystemPorts(system.Ip)
+			if err != nil {
+				continue
+			}
+
+			systemPorts[system.Ip] = ports
+		}
+	}
+
+	c.Data["networks"] = networks
+	c.Data["network_systems"] = networkSystems
+	c.Data["system_ports"] = systemPorts
+	c.TplName = "networks.html"
+	return
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////// ROUTES WITH NO HTML ////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 func (c *NetworksController) Add() {
 
@@ -28,17 +65,26 @@ func (c *NetworksController) Add() {
 		c.Ctx.WriteString(err.Error())
 	}
 
-	c.Ctx.WriteString("")
+	c.Redirect("/networks", 302) // CHANGE AS NEEDED
+	return
 }
 
 func (c *NetworksController) Delete() {
 
-	c.Ctx.WriteString("Work in Progress 🤓")
+	networkCidr := c.GetString("network_cidr")
+
+	err := DeleteNetwork(networkCidr)
+	if err != nil {
+		c.Ctx.WriteString(err.Error())
+	}
+
+	c.Redirect("/networks", 302) // CHANGE AS NEEDED
+	return
 }
 
-/////////////////////////////////////////////////
-////////////////// Helper functions go below here
-/////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////// HELPER FUNCTIONS ////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 func ConvertIpToUint32(ipString string) (intIp uint32, err error) {
 
