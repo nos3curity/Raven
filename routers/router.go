@@ -14,7 +14,8 @@ func init() {
 	beego.Router("/networks/add", &controllers.NetworksController{}, "get:Add")
 	beego.Router("/networks/delete", &controllers.NetworksController{}, "get:Delete")
 
-	beego.Router("/systems", &controllers.NetworksController{}, "get:Get")
-	beego.Router("/systems/add", &controllers.NetworksController{}, "get:Add")
 	beego.Router("/systems/delete", &controllers.NetworksController{}, "get:Delete")
+
+	beego.Router("/uploads", &controllers.UploadsController{}, "get:Get")
+	beego.Router("/uploads/nmap", &controllers.UploadsController{}, "post:Nmap")
 }
