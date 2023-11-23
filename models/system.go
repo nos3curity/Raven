@@ -10,7 +10,7 @@ type System struct {
 	OsFamily    string        `json:"os_family"`
 	Os          string        `json:"os"`
 	Network     *Network      `orm:"rel(fk);column(network);on_delete(cascade)"`
-	SystemPorts []*SystemPort `orm:"reverse(many)"`
+	SystemPorts []*SystemPort `orm:"reverse(many);on_delete(cascade)"`
 }
 
 func init() {

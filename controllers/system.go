@@ -18,13 +18,14 @@ type SystemsController struct {
 func (c *SystemsController) Delete() {
 
 	systemIp := c.GetString("system_ip")
-
 	err := DeleteSystem(systemIp)
+
 	if err != nil {
-		c.Ctx.WriteString(err.Error())
+		c.Ctx.WriteString("fucked up")
+		return
 	}
 
-	c.Redirect("/networks", 302) // CHANGE AS NEEDED
+	c.Redirect("/", 302) // CHANGE AS NEEDED
 	return
 }
 

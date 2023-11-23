@@ -1,0 +1,38 @@
+<h3>Team: {{.team.Name}}</h3>
+{{range .networks}}
+<div class="col-sm-9">
+    <div class="well">
+        <h4>Network: {{.NetworkCidr}}</h4>
+        <p>Hosts: 10</p>
+        {{range (index $.network_systems .NetworkCidr)}}
+        <div class="well">
+        <li>
+            {{.Ip}} <a href="/systems/delete?system_ip={{.Ip}}">Delete</a>
+            <ul>
+                <li>
+                    Hostname: {{.Hostname}}
+                </li>
+                <li>
+                    Os Family: {{.OsFamily}}
+                </li>
+                <li>
+                    Os Version: {{.Os}}
+                </li>
+                <li>
+                    Open Ports:
+                    <ul>
+                        {{range (index $.system_ports .Ip)}}
+                        <li>
+                            {{.Port.PortNumber}}/{{.Port.Protocol}}
+                        </li>
+                        {{end}}
+                    </ul>
+                </li>
+                
+            </ul>
+        </li>
+    </div>
+        {{end}}
+    </div>
+</div>
+{{end}}

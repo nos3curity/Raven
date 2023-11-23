@@ -6,11 +6,19 @@ import (
 	beego "github.com/beego/beego/v2/server/web"
 )
 
-type MainController struct {
+type DashboardController struct {
 	beego.Controller
 }
 
-func (c *MainController) Get() {
+func (c *DashboardController) Get() {
+
+	teams, err := GetAllTeams()
+	if err != nil {
+		c.Ctx.WriteString(err.Error())
+	}
+
+	c.Data["teams"] = teams
+	c.Layout = "sidebar.tpl"
 	c.TplName = "dashboard.html"
 	return
 }

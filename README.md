@@ -8,10 +8,12 @@ https://youtu.be/p0mZmnl792o?si=IbfBX9GMjRMoLJLl
 
 ### testing workflow
 
-1) add a team with `/teams/add?team_name=brice`
-2) add a network with the form on `/networks` or `/networks/add?network_cidr=10.100.10.0/24`
-3) parse the sample nmap scan by going to `/nmap` or upload your own at `/uploads/nmap`
-4) marvel at the data returned by `/networks`
+1) go to http://localhost:8080/teams
+2) add a team and call it `brice`
+3) add a network to team `brice` with cidr `10.100.10.0/24`
+4) go to http://localhost:8080/uploads
+5) upload sample `bigos.xml` file as nmap xml
+6) go to http://localhost:8080/teams/1
 
 ### primary functions
 
@@ -35,6 +37,7 @@ the function names should be self-explanatory. see controller code for usage:
 	- [x] AddTeam
 	- [x] DeleteTeam
 	- [x] GetTeam
+	- [x] GetAllTeams
 	- [x] RenameTeam
 	- [x] GetTeamNetworks
 

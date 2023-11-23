@@ -13,6 +13,14 @@ type UploadsController struct {
 }
 
 func (c *UploadsController) Get() {
+	// Get teams for the sidebar
+	teams, err := GetAllTeams()
+	if err != nil {
+		c.Ctx.WriteString(err.Error())
+	}
+
+	c.Data["teams"] = teams
+	c.Layout = "sidebar.tpl"
 	c.TplName = "upload.html"
 	return
 }
@@ -53,7 +61,7 @@ func (c *UploadsController) Nmap() {
 		return
 	}
 
-	c.Ctx.WriteString("File processed successfully")
+	c.Redirect("/uploads", 302) // CHANGE AS NEEDED
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
