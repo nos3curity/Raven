@@ -98,3 +98,18 @@ func GetSystemPorts(systemIp string) (systemPorts []models.SystemPort, err error
 
 	return systemPorts, nil
 }
+
+func UpdateSystemPwnedStatus(systemIp string, pwned bool) (err error) {
+    o := orm.NewOrm()
+
+    system := models.System{Ip: systemIp}
+    err = o.Read(&system, "Ip")
+    if err != nil {
+        return err
+    }
+
+    system.Pwned = pwned
+
+    _, err = o.Update(&system)
+    return err
+}
