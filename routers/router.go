@@ -22,5 +22,6 @@ func init() {
 
 	beego.Router("/uploads", &controllers.UploadsController{}, "get:Get")
 	beego.Router("/uploads/nmap", &controllers.UploadsController{}, "post:Nmap")
+	beego.Router("/pwned", &controllers.NmapController{}, "post:Pwned")
 
 }
