@@ -153,3 +153,20 @@ func ParseNmapPort(port nmap.Port) (openPort models.Port, err error) {
 
 	return openPort, nil
 }
+
+func (c *NmapController) Pwned() {
+    systemIp := c.GetString("ip")
+    pwnedStatus, err := c.GetBool("pwned")
+    if err != nil {
+        c.Ctx.WriteString("Invalid pwned status: " + err.Error())
+        return
+    }
+
+    err = UpdateSystemPwnedStatus(systemIp, pwnedStatus)
+    if err != nil {
+        c.Ctx.WriteString("Error updating system: " + err.Error())
+        return
+    }
+
+    c.Ctx.WriteString("System updated successfully")
+}
