@@ -60,7 +60,12 @@ func (c *NetworksController) Add() {
 
 	networkCidr := c.GetString("network_cidr")
 
-	err := AddNetwork(networkCidr)
+	teamId, err := c.GetInt("team_id")
+	if err != nil {
+		c.Ctx.WriteString(err.Error())
+	}
+
+	err = AddNetwork(teamId, networkCidr)
 	if err != nil {
 		c.Ctx.WriteString(err.Error())
 	}
@@ -128,13 +133,20 @@ func GetNetworkBroadcastByCidr(networkCidr string) (broadcastString string, err 
 	return broadcastString, nil
 }
 
-func GetNetwork(networkCidr string) (network []models.Network, err error) {
+func GetNetwork(networkCidr string) (network models.Network, err error) {
 
 	o := orm.NewOrm()
+	var networks []models.Network
 
-	_, err = o.QueryTable(new(models.Network)).RelatedSel().Filter("NetworkCidr", networkCidr).All(&network)
+	_, err = o.QueryTable(new(models.Network)).RelatedSel().Filter("NetworkCidr", networkCidr).All(&networks)
 	if err != nil {
-		return nil, err
+		return models.Network{}, err
+	}
+
+	if len(networks) > 0 {
+		network = networks[0]
+	} else {
+		network = models.Network{}
 	}
 
 	return network, nil
@@ -152,39 +164,44 @@ func GetAllNetworks() (networks []models.Network, err error) {
 	return networks, nil
 }
 
-func AddNetwork(networkCidr string) (err error) {
+func AddNetwork(teamId int, networkCidr string) (err error) {
 
 	o := orm.NewOrm()
 
+	// First ensure the team exists
+	team, err := GetTeam(teamId)
+	if err != nil {
+		return err
+	}
+
+	// Then check to see if we have a valid cidr
 	_, _, err = net.ParseCIDR(networkCidr)
 	if err != nil {
 		return err
 	}
 
+	// Get the network ID from CIDR
 	networkId, err := GetNetworkIdByCidr(networkCidr)
 	if err != nil {
 		return err
 	}
 
+	// Convert network ID to integer
 	networkIdInt, err := ConvertIpToUint32(networkId)
 	if err != nil {
 		return err
 	}
 
+	// Get network broadcast from CIDR
 	networkBroadcast, err := GetNetworkBroadcastByCidr(networkCidr)
 	if err != nil {
 		return err
 	}
 
+	// Convert broadcast to integer
 	networkBroadcastInt, err := ConvertIpToUint32(networkBroadcast)
 	if err != nil {
 		return err
-	}
-
-	network := models.Network{
-		NetworkCidr:      networkCidr,
-		NetworkID:        networkIdInt,
-		NetworkBroadcast: networkBroadcastInt,
 	}
 
 	// Check if the network exists already
@@ -193,8 +210,16 @@ func AddNetwork(networkCidr string) (err error) {
 		return nil
 	}
 
-	if len(exists) == 0 {
-		// If not, insert a new record
+	// Populate the model
+	network := models.Network{
+		NetworkCidr:      networkCidr,
+		NetworkID:        networkIdInt,
+		NetworkBroadcast: networkBroadcastInt,
+		Team:             &team,
+	}
+
+	if exists.NetworkCidr == "" {
+		// If doesn't exist, insert a new record
 		_, err = o.Insert(&network)
 		if err != nil {
 			return err

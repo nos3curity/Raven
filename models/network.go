@@ -9,7 +9,7 @@ type Network struct {
 	NetworkID        uint32    `json:"network_id"`
 	NetworkBroadcast uint32    `json:"network_broadcast"`
 	NetworkSystems   []*System `orm:"reverse(many)"`
-	//Team             *Team  `orm:"rel(fk);on_delete(cascade)" json:"team"`
+	Team             *Team     `orm:"rel(fk);on_delete(cascade)" json:"team"`
 }
 
 func init() {

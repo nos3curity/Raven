@@ -3,6 +3,8 @@
 <h3>Add Network</h3>
 
 <form method="get" action="/networks/add">
+    <p>Team Id:</p>
+    <textarea id="team_id" name="team_id" required></textarea>
     <p>Ip Range:</p>
     <textarea id="ip_range" name="network_cidr" required></textarea>
     <br>
@@ -12,6 +14,7 @@
 <br>
 <br>
 
+<h2>{{.Name}}</h2>
 {{range .networks}}
 
 <h3>Network: {{.NetworkCidr}} <a href="/networks/delete?network_cidr={{.NetworkCidr}}">Delete</a></h3>
