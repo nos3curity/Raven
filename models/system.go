@@ -11,6 +11,7 @@ type System struct {
 	Os          string        `json:"os"`
 	Network     *Network      `orm:"rel(fk);column(network);on_delete(cascade)"`
 	SystemPorts []*SystemPort `orm:"reverse(many);on_delete(cascade)"`
+	Pwned       bool          `json:"pwned"`
 }
 
 func init() {
