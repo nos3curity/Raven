@@ -34,6 +34,7 @@
                 <li class="active"><a href="/">Home</a></li>
                 <li><a href="/teams">Team Setup</a></li>
                 <li><a href="/uploads">Uploads</a></li>
+                <li><a href="/profile">Profile</a></li>
             </ul>
             <h4>Teams</h4>
             <ul class="nav nav-pills nav-stacked">

@@ -2,6 +2,7 @@ package models
 
 import (
 	"errors"
+	"fmt"
 
 	"github.com/golang-jwt/jwt/v5"
 )
@@ -70,11 +71,12 @@ func IssueJwt(username string) (tokenString string, err error) {
 	return tokenString, err
 }
 
-func ValidateJwt(tokenString string) (bool, error) {
+func ParseJwt(tokenString string) (jwtToken *jwt.Token, err error) {
+
 	// Retrieve the JWT secret from the configuration
 	jwtSecretConfig, err := GetConfig("jwt_secret")
 	if err != nil {
-		return false, err
+		return nil, err
 	}
 
 	// Parse the token
@@ -88,10 +90,45 @@ func ValidateJwt(tokenString string) (bool, error) {
 		return []byte(jwtSecretConfig.Value), nil
 	})
 
-	// Check if parsing and validation were successful
+	if err != nil {
+		return nil, err
+	}
+
+	return token, err
+}
+
+func ValidateJwt(tokenString string) (valid bool, err error) {
+
+	token, err := ParseJwt(tokenString)
 	if err != nil {
 		return false, err
 	}
 
 	return token.Valid, nil
+}
+
+func GetCurrentUsername(tokenString string) (string, error) {
+	token, err := ParseJwt(tokenString)
+	if err != nil {
+		return "", fmt.Errorf("error parsing token: %v", err)
+	}
+
+	// Ensure the token is valid
+	if !token.Valid {
+		return "", errors.New("token is invalid")
+	}
+
+	// Assert the type of token.Claims to jwt.MapClaims
+	claims, ok := token.Claims.(jwt.MapClaims)
+	if !ok {
+		return "", errors.New("claims type assertion to MapClaims failed")
+	}
+
+	// Extract the username from claims
+	username, ok := claims["username"].(string)
+	if !ok {
+		return "", errors.New("username not found in token claims")
+	}
+
+	return username, nil
 }

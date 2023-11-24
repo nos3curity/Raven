@@ -13,21 +13,29 @@ type LoginController struct {
 }
 
 func ValidateJwtFilter(c *context.Context) {
+	var token string
+	var err error
 
 	if c.Request.URL.Path == "/login" {
 		return
 	}
 
-	// Check if the "token" cookie is set
-	cookie, err := c.Request.Cookie("session")
-	if err != nil || cookie.Value == "" {
-		// If the cookie is not set, redirect to the login page
-		c.Redirect(http.StatusFound, "/login")
-		return
+	// First, try to get the token from the Authorization header
+	token = c.Request.Header.Get("Authorization")
+
+	// If the token is not in the Authorization header, check the cookie
+	if token == "" {
+		cookie, err := c.Request.Cookie("session")
+		if err != nil || cookie.Value == "" {
+			// If neither Authorization header nor cookie is set, redirect to the login page
+			c.Redirect(http.StatusFound, "/login")
+			return
+		}
+		token = cookie.Value
 	}
 
 	// Call ValidateJwt with the token string
-	valid, err := models.ValidateJwt(cookie.Value)
+	valid, err := models.ValidateJwt(token)
 	if err != nil || !valid {
 		// If the token is not valid or an error occurred, redirect to the login page
 		c.Redirect(http.StatusFound, "/login")
@@ -40,6 +48,36 @@ func ValidateJwtFilter(c *context.Context) {
 func (c *LoginController) Get() {
 
 	c.TplName = "user/login.html"
+	return
+}
+
+func (c *LoginController) Profile() {
+
+	// Get all teams
+	teams, err := models.GetAllTeams()
+	if err != nil {
+		c.Ctx.WriteString(err.Error())
+	}
+
+	// Get the JWT cookie
+	jwt, err := c.Ctx.Request.Cookie("session")
+	if err != nil {
+		c.Ctx.WriteString(err.Error())
+		return
+	}
+
+	// Get the username
+	username, err := models.GetCurrentUsername(jwt.Value)
+	if err != nil {
+		c.Ctx.WriteString(err.Error())
+		return
+	}
+
+	c.Data["authorization"] = jwt.Value
+	c.Data["username"] = username
+	c.Data["teams"] = teams
+	c.Layout = "sidebar.tpl"
+	c.TplName = "user/profile.html"
 	return
 }
 

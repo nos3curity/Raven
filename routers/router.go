@@ -17,6 +17,7 @@ func init() {
 	// Login functionality
 	beego.Router("/login", &controllers.LoginController{}, "get:Get")
 	beego.Router("/login", &controllers.LoginController{}, "post:SignIn")
+	beego.Router("/profile", &controllers.LoginController{}, "get:Profile")
 
 	// Teams functionality
 	beego.Router("/teams", &controllers.TeamsController{}, "get:Setup")
