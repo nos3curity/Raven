@@ -33,6 +33,8 @@ func init() {
 
 	// Uploads functionality
 	beego.Router("/uploads", &controllers.UploadsController{}, "get:Get")
+
+	// External API functionality
 	beego.Router("/api/nmap", &controllers.ApiController{}, "post:Nmap")
 	beego.Router("/api/pwned", &controllers.ApiController{}, "post:Pwned")
 
