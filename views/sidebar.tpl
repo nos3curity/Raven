@@ -10,7 +10,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">ac-130</a>
+            <a class="navbar-brand" href="#">raven</a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav nav-pills nav-stacked">
@@ -29,7 +29,7 @@
 <!-- Side navbar for non-xs viewports -->
 <div class="container-fluid">
         <div class="col-sm-3 sidenav hidden-xs">
-            <h2>AC-130</h2>
+            <h2>raven</h2>
             <ul class="nav nav-pills nav-stacked">
                 <li class="active"><a href="/">Home</a></li>
                 <li><a href="/teams">Team Setup</a></li>

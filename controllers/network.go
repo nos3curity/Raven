@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"ac-130/models"
+	"raven/models"
 
 	beego "github.com/beego/beego/v2/server/web"
 )
