@@ -98,3 +98,34 @@ func UpdateSystemPwnedStatus(systemIp string, pwned bool) (err error) {
 	_, err = o.Update(&system)
 	return err
 }
+
+func SetSystemHostname(systemIp string, hostname string) (err error) {
+
+	o := orm.NewOrm()
+
+	system, err := GetSystem(systemIp)
+	if err != nil {
+		return err
+	}
+
+	system.Hostname = hostname
+	o.Update(&system)
+
+	return nil
+}
+
+func SetSystemOs(systemIp string, osFamily string, osVersion string) (err error) {
+
+	o := orm.NewOrm()
+
+	system, err := GetSystem(systemIp)
+	if err != nil {
+		return err
+	}
+
+	system.OsFamily = osFamily
+	system.Os = osVersion
+	o.Update(&system)
+
+	return nil
+}

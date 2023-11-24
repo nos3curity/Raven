@@ -29,7 +29,10 @@ func init() {
 	beego.Router("/networks/add", &controllers.NetworksController{}, "get:Add")       // TODO: convert to POST
 	beego.Router("/networks/delete", &controllers.NetworksController{}, "get:Delete") // TODO: convert to POST
 
-	// Networks functionality
+	// Systems functionality
+	beego.Router("/systems/add", &controllers.SystemsController{}, "post:Add")
+	beego.Router("/systems/os", &controllers.SystemsController{}, "post:SetOs") // TODO: convert to POST
+	beego.Router("/systems/hostname", &controllers.SystemsController{}, "post:SetHostname")
 	beego.Router("/systems/delete", &controllers.SystemsController{}, "get:Delete") // TODO: convert to POST
 
 	// Uploads functionality

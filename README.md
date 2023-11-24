@@ -56,12 +56,12 @@ the function names should be self-explanatory. see model code for usage:
 	- [x] GetNetwork
 	- [x] GetAllNetworks
 	- [x] GetNetworkSystems
-- [ ] system
+- [x] system
 	- [x] AddSystem
 	- [x] GetSystem
 	- [x] DeleteSystem
-	- [ ] ChangeOs
-	- [ ] ChangeHostname
+	- [x] ChangeOs
+	- [x] ChangeHostname
 	- [x] GetSystemPorts
 - [x] team
 	- [x] AddTeam
