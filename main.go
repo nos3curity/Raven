@@ -18,6 +18,12 @@ func init() {
 
 func main() {
 
+	// Start the database
+	err := orm.RunSyncdb("default", false, true)
+	if err != nil {
+		fmt.Println(err)
+	}
+
 	// Initialize the JWT cookie signing key
 	jwtSecret, _ := models.GetConfig("jwt_secret")
 	if jwtSecret.Value == "" {
@@ -27,15 +33,13 @@ func main() {
 	// Initialize the server password
 	password, _ := models.GetConfig("password")
 	if password.Value == "" {
-		models.InitializePassword()
+		err := models.InitializePassword()
+		if err != nil {
+			panic(err)
+		}
 	}
 
 	fmt.Println("Server Password:", password.Value)
 
-	// Start the database
-	err := orm.RunSyncdb("default", false, true)
-	if err != nil {
-		fmt.Println(err)
-	}
 	beego.Run()
 }
