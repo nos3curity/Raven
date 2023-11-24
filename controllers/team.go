@@ -4,7 +4,6 @@ import (
 	"raven/models"
 	"strconv"
 
-	"github.com/beego/beego/v2/client/orm"
 	beego "github.com/beego/beego/v2/server/web"
 )
 
@@ -17,7 +16,7 @@ func (c *TeamsController) Setup() {
 	teamNetworks := make(map[int][]models.Network)
 
 	// Get all teams
-	teams, err := GetAllTeams()
+	teams, err := models.GetAllTeams()
 	if err != nil {
 		c.Ctx.WriteString(err.Error())
 	}
@@ -25,7 +24,7 @@ func (c *TeamsController) Setup() {
 	// Fetch the team networks
 	for _, team := range teams {
 
-		networks, err := GetTeamNetworks(team.Id)
+		networks, err := models.GetTeamNetworks(team.Id)
 		if err != nil {
 			c.Ctx.WriteString(err.Error())
 		}
@@ -54,21 +53,21 @@ func (c *TeamsController) Get() {
 	systemPorts := make(map[string][]models.SystemPort)
 
 	// Get teams for the sidebar
-	teams, err := GetAllTeams()
+	teams, err := models.GetAllTeams()
 	if err != nil {
 		c.Ctx.WriteString(err.Error())
 		return
 	}
 
 	// First, fetch the team information
-	team, err := GetTeam(teamId)
+	team, err := models.GetTeam(teamId)
 	if err != nil {
 		c.Ctx.WriteString(err.Error())
 		return
 	}
 
 	// Fetch the team networks
-	networks, err := GetTeamNetworks(teamId)
+	networks, err := models.GetTeamNetworks(teamId)
 	if err != nil {
 		c.Ctx.WriteString(err.Error())
 		return
@@ -76,7 +75,7 @@ func (c *TeamsController) Get() {
 
 	// Get systems for all networks
 	for _, network := range networks {
-		systems, err := GetNetworkSystems(network.NetworkCidr)
+		systems, err := models.GetNetworkSystems(network.NetworkCidr)
 		if err != nil {
 			continue
 		}
@@ -85,7 +84,7 @@ func (c *TeamsController) Get() {
 
 		// Grab open ports for each system
 		for _, system := range systems {
-			ports, err := GetSystemPorts(system.Ip)
+			ports, err := models.GetSystemPorts(system.Ip)
 			if err != nil {
 				continue
 			}
@@ -110,7 +109,7 @@ func (c *TeamsController) Add() {
 
 	teamName := c.GetString("team_name")
 
-	_, err := AddTeam(teamName)
+	_, err := models.AddTeam(teamName)
 	if err != nil {
 		c.Ctx.WriteString(err.Error())
 		return
@@ -128,99 +127,11 @@ func (c *TeamsController) Delete() {
 		return
 	}
 
-	err = DeleteTeam(teamId)
+	err = models.DeleteTeam(teamId)
 	if err != nil {
 		c.Ctx.WriteString(err.Error())
 	}
 
 	c.Redirect("/teams", 302) // CHANGE AS NEEDED
 	return
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////// HELPER FUNCTIONS ////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////
-
-func AddTeam(teamName string) (team models.Team, err error) {
-
-	o := orm.NewOrm()
-
-	team = models.Team{
-		Name: teamName,
-	}
-
-	_, err = o.Insert(&team)
-	if err != nil {
-		return models.Team{}, err
-	}
-
-	return team, nil
-}
-
-func GetTeam(teamId int) (team models.Team, err error) {
-
-	o := orm.NewOrm()
-	var teams []models.Team
-
-	_, err = o.QueryTable(new(models.Team)).RelatedSel().Filter("Id", teamId).All(&teams)
-	if err != nil {
-		return models.Team{}, err
-	}
-
-	team = teams[0]
-
-	return team, nil
-}
-
-func GetAllTeams() (teams []models.Team, err error) {
-
-	o := orm.NewOrm()
-
-	_, err = o.QueryTable(new(models.Team)).All(&teams)
-	if err != nil {
-		return nil, err
-	}
-
-	return teams, nil
-}
-
-func DeleteTeam(teamId int) (err error) {
-
-	o := orm.NewOrm()
-
-	team := models.Team{Id: teamId}
-
-	_, err = o.Delete(&team)
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func RenameTeam(teamId int, teamName string) (err error) {
-
-	o := orm.NewOrm()
-
-	team, err := GetTeam(teamId)
-	if err != nil {
-		return err
-	}
-
-	team.Name = teamName
-	o.Update(&team)
-
-	return nil
-}
-
-func GetTeamNetworks(teamId int) (networks []models.Network, err error) {
-
-	o := orm.NewOrm()
-
-	_, err = o.QueryTable(new(models.Network)).RelatedSel().Filter("Team__Id", teamId).All(&networks)
-	if err != nil {
-		return nil, err
-	}
-
-	return networks, nil
 }

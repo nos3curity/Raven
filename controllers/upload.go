@@ -2,10 +2,9 @@ package controllers
 
 import (
 	"os"
-	"time"
+	"raven/models"
 
 	beego "github.com/beego/beego/v2/server/web"
-	"github.com/google/uuid"
 )
 
 type UploadsController struct {
@@ -14,7 +13,7 @@ type UploadsController struct {
 
 func (c *UploadsController) Get() {
 	// Get teams for the sidebar
-	teams, err := GetAllTeams()
+	teams, err := models.GetAllTeams()
 	if err != nil {
 		c.Ctx.WriteString(err.Error())
 	}
@@ -35,7 +34,7 @@ func (c *UploadsController) Nmap() {
 	defer file.Close()
 
 	// Generate a random filename
-	uniqueFileName := GenerateRandomFilename()
+	uniqueFileName := models.GenerateRandomFilename()
 
 	// Define the full path
 	tempFilePath := "uploads/" + uniqueFileName + ".xml"
@@ -48,7 +47,7 @@ func (c *UploadsController) Nmap() {
 	}
 
 	// Process the file with ParseNmap function
-	err = ParseNmapScan(tempFilePath)
+	err = models.ParseNmapScan(tempFilePath)
 	if err != nil {
 		c.Ctx.WriteString("Error parsing the nmap scan: " + err.Error())
 		return
@@ -62,14 +61,4 @@ func (c *UploadsController) Nmap() {
 	}
 
 	c.Redirect("/uploads", 302) // CHANGE AS NEEDED
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////// HELPER FUNCTIONS ////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////
-
-func GenerateRandomFilename() string {
-	timestamp := time.Now().Format("20060102150405")
-	uuidStr := uuid.New().String()
-	return timestamp + "_" + uuidStr
 }

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"raven/models"
 	_ "raven/routers"
 
 	"github.com/beego/beego/v2/client/orm"
@@ -16,6 +17,22 @@ func init() {
 }
 
 func main() {
+
+	// Initialize the JWT cookie signing key
+	jwtSecret, _ := models.GetConfig("jwt_secret")
+	if jwtSecret.Value == "" {
+		models.InitializeJwtSecret()
+	}
+
+	// Initialize the server password
+	password, _ := models.GetConfig("password")
+	if password.Value == "" {
+		models.InitializePassword()
+	}
+
+	fmt.Println("Server Password:", password.Value)
+
+	// Start the database
 	err := orm.RunSyncdb("default", false, true)
 	if err != nil {
 		fmt.Println(err)

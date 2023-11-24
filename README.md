@@ -6,12 +6,14 @@ https://youtu.be/p0mZmnl792o?si=IbfBX9GMjRMoLJLl
 
 ## testing workflow
 
-1) go to http://localhost:8080/teams
-2) add a team and call it `brice`
-3) add a network to team `brice` with cidr `10.100.10.0/24`
-4) go to http://localhost:8080/uploads
-5) upload sample `example.xml` file as nmap xml
-6) go to http://localhost:8080/teams/1
+1) go to http://localhost:8080/
+2) login using the password from the console or db
+3) go to http://localhost:8080/teams
+4) add a team and call it `brice`
+5) add a network to team `brice` with cidr `10.100.10.0/24`
+6) go to http://localhost:8080/uploads
+7) upload sample `example.xml` file as nmap xml
+8) go to http://localhost:8080/teams/1
 
 ## build instructions
 
@@ -47,7 +49,7 @@ bee run
 
 these functions exist to manipulate model objects like add, remove, get, etc.
 
-the function names should be self-explanatory. see controller code for usage:
+the function names should be self-explanatory. see model code for usage:
 - [x] networks
 	- [x] AddNetwork
 	- [x] DeleteNetwork

@@ -11,3 +11,23 @@ type Port struct {
 func init() {
 	orm.RegisterModel(new(Port))
 }
+
+func AddPort(port Port) (err error) {
+
+	o := orm.NewOrm()
+
+	// Try and find the system in the db
+	existing := Port{PortNumber: port.PortNumber}
+	readErr := o.Read(&existing, "PortNumber")
+
+	// If no row exists, use INSERT
+	if readErr == orm.ErrNoRows {
+
+		_, err = o.Insert(&port)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}

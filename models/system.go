@@ -17,3 +17,84 @@ type System struct {
 func init() {
 	orm.RegisterModel(new(System))
 }
+
+func AddSystem(system System) (err error) {
+
+	o := orm.NewOrm()
+
+	// Try and find the system in the db
+	existing := System{Ip: system.Ip}
+	readErr := o.Read(&existing, "Ip")
+
+	// If no row exists, use INSERT
+	if readErr == orm.ErrNoRows {
+
+		_, err = o.Insert(&system)
+		if err != nil {
+			return err
+		}
+		// If a row exists, use UPDATE
+	} else if readErr == nil {
+
+		_, err = o.Update(&system)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func DeleteSystem(systemIp string) (err error) {
+
+	o := orm.NewOrm()
+
+	system := System{Ip: systemIp}
+
+	_, err = o.Delete(&system)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func GetSystem(systemIp string) (system System, err error) {
+
+	o := orm.NewOrm()
+
+	system = System{Ip: systemIp}
+	err = o.Read(&system, "Ip")
+	if err != nil {
+		return System{}, err
+	}
+
+	return system, nil
+}
+
+func GetSystemPorts(systemIp string) (systemPorts []SystemPort, err error) {
+
+	o := orm.NewOrm()
+
+	_, err = o.QueryTable(new(SystemPort)).RelatedSel().Filter("System__Ip", systemIp).All(&systemPorts)
+	if err != nil {
+		return nil, err
+	}
+
+	return systemPorts, nil
+}
+
+func UpdateSystemPwnedStatus(systemIp string, pwned bool) (err error) {
+	o := orm.NewOrm()
+
+	system := System{Ip: systemIp}
+	err = o.Read(&system, "Ip")
+	if err != nil {
+		return err
+	}
+
+	system.Pwned = pwned
+
+	_, err = o.Update(&system)
+	return err
+}

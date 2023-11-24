@@ -1,0 +1,141 @@
+package models
+
+import (
+	"fmt"
+	"os"
+
+	"github.com/lair-framework/go-nmap"
+)
+
+func ParseNmapScan(scanPath string) (err error) {
+
+	// Read the XML file
+	data, err := os.ReadFile(scanPath)
+	if err != nil {
+		return err
+	}
+
+	// Parse the Nmap scan results
+	var scan *nmap.NmapRun
+	scan, err = nmap.Parse(data)
+	if err != nil {
+		return err
+	}
+
+	// Iterate over scan results
+	for _, host := range scan.Hosts {
+
+		// Parse the XML host to the system model
+		system, err := ParseNmapHost(host)
+		if err != nil {
+			continue
+
+		}
+
+		// Add the system to the database
+		err = AddSystem(system)
+		if err != nil {
+			continue
+		}
+
+		err = SetAllSystemPortsClosedByIp(system.Ip)
+		if err != nil {
+			continue
+		}
+
+		for _, port := range host.Ports {
+
+			// Parse the port from XML into a model
+			openPort, err := ParseNmapPort(port)
+			if err != nil {
+				continue
+			}
+
+			// Add the port to the ports database
+			err = AddPort(openPort)
+			if err != nil {
+				continue
+			}
+
+			// Add the systemport association
+			err = AddOpenSystemPort(&system, &openPort)
+			if err != nil {
+				continue
+			}
+		}
+	}
+
+	return nil
+}
+
+func ParseNmapHost(host nmap.Host) (system System, err error) {
+
+	if len(host.Addresses) == 0 {
+		return System{}, fmt.Errorf("Host has no IP addresses")
+	}
+
+	if host.Addresses[0].AddrType != "ipv4" {
+		return System{}, fmt.Errorf("Not an IPv4 address")
+	}
+
+	var ipAddress string
+	var hostname string
+	var fingerprint string
+	var osFamily string
+
+	// Assign host values to variables
+	ipAddress = host.Addresses[0].Addr
+
+	if len(host.Hostnames) != 0 {
+		hostname = host.Hostnames[0].Name
+	} else {
+		hostname = ""
+	}
+
+	if len(host.Os.OsMatches) > 0 {
+		fingerprint = host.Os.OsMatches[0].Name
+		osFamily = host.Os.OsMatches[0].OsClasses[0].OsFamily
+	} else {
+		fingerprint = ""
+		osFamily = ""
+	}
+
+	// Find which network the system belongs to
+	network, err := GetSystemsNetwork(ipAddress)
+	if err != nil {
+		return System{}, err
+	}
+
+	// Assign the variables to the model
+	system = System{
+		Ip:       ipAddress,
+		Hostname: hostname,
+		OsFamily: osFamily,
+		Os:       fingerprint,
+		Network:  &network,
+	}
+
+	return system, nil
+}
+
+func ParseNmapPort(port nmap.Port) (openPort Port, err error) {
+
+	if port.State.State != "open" {
+		return Port{}, fmt.Errorf("Port closed or filtered")
+	}
+
+	var portNumber int
+	var protocol string
+
+	// Assign values to variables
+	portNumber = port.PortId
+	protocol = port.Protocol
+
+	// Assign the variables to the model
+	openPort = Port{
+		PortNumber: portNumber,
+		Protocol:   protocol,
+	}
+
+	return openPort, nil
+}

@@ -1,6 +1,9 @@
 package models
 
 import (
+	"crypto/rand"
+	"fmt"
+
 	"github.com/beego/beego/v2/client/orm"
 )
 
@@ -13,33 +16,37 @@ func init() {
 	orm.RegisterModel(new(Config))
 }
 
-func SetConfig(key string, value string) (config Config, err error) {
+func SetConfig(key string, value string) (Config, error) {
 
 	o := orm.NewOrm()
 
-	// Get the config by its key
-	config, err = GetConfig(key)
-	if err != nil {
-		return Config{}, err
-	}
+	config := Config{Key: key}
 
-	if config.Key == "" {
+	// Try to read the existing config
+	err := o.Read(&config, "Key")
 
-		// If the config does not exist, create it
+	// Handle different cases based on whether the config exists
+	switch {
+	case err == orm.ErrNoRows:
+		// Config doesn't exist, so create it
+		config.Value = value
 		_, err = o.Insert(&config)
 		if err != nil {
 			return Config{}, err
 		}
-	} else {
-
-		// If the config exists, update it
+	case err == nil:
+		// Config exists, so update it
+		config.Value = value
 		_, err = o.Update(&config)
 		if err != nil {
 			return Config{}, err
 		}
+	default:
+		// Some other error occurred
+		return Config{}, err
 	}
 
-	return config, err
+	return config, nil
 }
 
 func GetConfig(key string) (config Config, err error) {
@@ -103,4 +110,11 @@ func UpdateConfig(key string, value string) (err error) {
 	}
 
 	return nil
+}
+
+func RandomString(length int) string {
+
+	b := make([]byte, length+2)
+	rand.Read(b)
+	return fmt.Sprintf("%x", b)[2 : length+2]
 }

@@ -7,8 +7,12 @@ import (
 )
 
 func init() {
+
+	beego.InsertFilter("/*", beego.BeforeRouter, controllers.ValidateJwtFilter)
 	beego.Router("/", &controllers.DashboardController{})
-	beego.Router("/nmap", &controllers.NmapController{})
+
+	beego.Router("/login", &controllers.LoginController{}, "get:Get")
+	beego.Router("/login", &controllers.LoginController{}, "post:SignIn")
 
 	beego.Router("/teams", &controllers.TeamsController{}, "get:Setup")
 	beego.Router("/teams/:id", &controllers.TeamsController{}, "get:Get")
