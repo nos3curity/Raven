@@ -7,13 +7,13 @@ import (
 	beego "github.com/beego/beego/v2/server/web"
 )
 
-type MainController struct {
+type DashboardController struct {
 	beego.Controller
 }
 
-func (c *MainController) Get() {
+func (c *DashboardController) Get() {
 	// Get all networks
-	networks, err := GetAllNetworks()
+	networks, err := models.GetAllNetworks()
 	if err != nil {
 		c.Ctx.WriteString(err.Error())
 	}
@@ -23,7 +23,7 @@ func (c *MainController) Get() {
 
 	// Get systems for all networks
 	for _, network := range networks {
-		systems, err := GetNetworkSystems(network.NetworkCidr)
+		systems, err := models.GetNetworkSystems(network.NetworkCidr)
 		if err != nil {
 			continue
 		}
@@ -32,7 +32,7 @@ func (c *MainController) Get() {
 
 		// Grab open ports for each system
 		for _, system := range systems {
-			ports, err := GetSystemPorts(system.Ip)
+			ports, err := models.GetSystemPorts(system.Ip)
 			if err != nil {
 				continue
 			}
@@ -40,7 +40,6 @@ func (c *MainController) Get() {
 			systemPorts[system.Ip] = ports
 		}
 	}
-
 
 	c.Data["networks"] = networks
 	c.Data["network_systems"] = networkSystems

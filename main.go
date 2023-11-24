@@ -34,6 +34,7 @@ func main() {
 	password, _ := models.GetConfig("password")
 	if password.Value == "" {
 		err := models.InitializePassword()
+		password, _ = models.GetConfig("password")
 		if err != nil {
 			panic(err)
 		}
