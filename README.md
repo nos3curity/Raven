@@ -19,7 +19,7 @@ https://youtu.be/p0mZmnl792o?si=IbfBX9GMjRMoLJLl
 
 clone or download zip:
 ```
-git clone https://github.com/nos3curity/raven
+git clone https://github.com/nos3curity/ac-130
 ```
 
 install the bee cli tool:
@@ -29,12 +29,12 @@ go install github.com/beego/bee/v2@latest
 
 cd into folder:
 ```
-cd raven/
+cd ac-130/
 ```
 
 init the module and download libraries:
 ```
-go mod init raven
+go mod init ac-130
 go mod tidy
 ```
 

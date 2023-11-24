@@ -10,7 +10,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Raven</a>
+            <a class="navbar-brand" href="#">ac-130</a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav nav-pills nav-stacked">

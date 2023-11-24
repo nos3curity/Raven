@@ -1,9 +1,9 @@
 package main
 
 import (
+	"ac-130/models"
+	_ "ac-130/routers"
 	"fmt"
-	"raven/models"
-	_ "raven/routers"
 
 	"github.com/beego/beego/v2/client/orm"
 	beego "github.com/beego/beego/v2/server/web"
