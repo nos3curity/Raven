@@ -1,14 +1,61 @@
-<h3>Login</h3>
-<div class="col-sm-9">
-    <div class="well">
-        <form action="/login" method="post">
-            <p>Username:</p>
-            <input type="text" name="username">
-            <br>
-            <p>Password:</p>
-            <input type="text" name="password">
-            <br><br>
-            <input type="submit" value="Login">
-        </form>
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Raven - Dashboard</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<style>
+    .background-custom {
+        background: #1d1d1d;
+    }
+    .cs-bg-brown {
+        background-color: #403c3c !important;
+    }
+    .cs-bg-white {
+        background-color: #faf4dd !important;
+    }
+    .cs-text-white {
+        color: #faf4dd !important;
+    }
+    .cs-button-red {
+        background-color: #f26270 !important;
+    }
+    input[type="text"] {
+        background-color: #faf4dd !important;
+    }
+</style>
+<body>
+<div class="vh-100 background-custom">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-10 col-md-8 col-lg-6 col-xl-5">
+                <div class="card cs-bg-brown text-white" style="border-radius: 5px;">
+                    <div class="card-body my-3 py-5 px-4 text-start">
+                        <div class="mb-md-5 mb-5 mx-3 py-5">
+                            <form action="/login" method="post">
+                                <h1 class="fw-bold mb-5">
+                                    Log In
+                                </h1>
+                                <div class="form-outline mb-3 rounded-0">
+                                    <input type="text" name="username" id="typeUsernameX" class="form-control form-control-lg rounded-1 h-100" placeholder="Username">
+                                </div>
+                                <div class="form-outline mb-5 rounded-0">
+                                    <input type="text" name="password" id="typePasswordX" class="form-control form-control-lg rounded-1" placeholder="Password">
+                                </div>
+                                <div class="d-grid col-12 text-center cs-text-white pt-3">
+                                    <button class="btn btn-lg px-5 cs-button-red rounded-4 cs-text-white" type="submit" value="Login">Log In</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+       </div> 
     </div>
 </div>
+
+</body>
+</html>
