@@ -12,6 +12,25 @@ type DashboardController struct {
 }
 
 func (c *DashboardController) Get() {
+	teamNetworks := make(map[int][]models.Network)
+
+	// Get all teams
+	teams, err := models.GetAllTeams()
+	if err != nil {
+		c.Ctx.WriteString(err.Error())
+	}
+
+	// Fetch the team networks
+	for _, team := range teams {
+
+		networks, err := models.GetTeamNetworks(team.Id)
+		if err != nil {
+			c.Ctx.WriteString(err.Error())
+		}
+
+		teamNetworks[team.Id] = networks
+
+	}
 	// Get all networks
 	networks, err := models.GetAllNetworks()
 	if err != nil {
@@ -44,6 +63,8 @@ func (c *DashboardController) Get() {
 	c.Data["networks"] = networks
 	c.Data["network_systems"] = networkSystems
 	c.Data["system_ports"] = systemPorts
+	c.Data["teams"] = teams
+	c.Layout = "sidebar.tpl"
 	c.TplName = "dashboard.html"
 	return
 }
