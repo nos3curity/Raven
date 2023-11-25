@@ -12,7 +12,7 @@ type DashboardController struct {
 }
 
 func (c *DashboardController) Get() {
-	// Get all networks
+	/*// Get all networks
 	networks, err := models.GetAllNetworks()
 	if err != nil {
 		c.Ctx.WriteString(err.Error())
@@ -44,7 +44,16 @@ func (c *DashboardController) Get() {
 	c.Data["networks"] = networks
 	c.Data["network_systems"] = networkSystems
 	c.Data["system_ports"] = systemPorts
+	*/
 
+	// Get teams for the sidebar
+	teams, err := models.GetAllTeams()
+	if err != nil {
+		c.Ctx.WriteString(err.Error())
+		return
+	}
+
+	c.Data["teams"] = teams
 	c.Layout = "sidebar.tpl"
 	c.TplName = "dashboard.html"
 	return

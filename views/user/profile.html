@@ -1,14 +1,23 @@
-<h3>Profile</h3>
-<div class="col-sm-9">
-    <div class="well" style="word-wrap: break-word; overflow-wrap: break-word;">
-        <p>
-            You are logged in as {{.username}}
-        </p>
-        <h5>
-            <strong>API Authorization Header</strong>
-        </h5>
-        <p>
-            Authorization: <span style="word-break: break-all;">{{.authorization}}</span>
-        </p>
+<div class="col-12 col-sm-6 col-md-8 col-lg-9 col-xl-9 p-0 cs-bg-black">
+    <div class="p-0 cs-bg-black m-3 mx-4">
+        <div class="container">
+            <h3 class="col-12 cs-text-white fw-bold mb-4 w-100">Uploads</h3> 
+            <div class="flex-row container w-100 p-0">
+                <div class="col-sm-9">
+                    <div class="col-12 cs-text-white p-3 cs-bg-gray">
+                        <h4>Profile</h4>
+                        <p>
+                            You are logged in as {{.username}}
+                        </p>
+                        <h5>
+                            <strong>API Authorization Header</strong>
+                        </h5>
+                        <p>
+                            Authorization: <span style="word-break: break-all;">{{.authorization}}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

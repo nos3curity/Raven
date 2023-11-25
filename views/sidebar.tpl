@@ -50,7 +50,9 @@
                 <!-- </nav>     -->
             </div>
         </div>
-        {{ .LayoutContent }}
+        <div class="col-12 col-sm-6 col-md-8 col-lg-9 col-xl-9 p-0 m-0 cs-bg-black">
+            {{ .LayoutContent }}
+        </div>
     </div>
 </div>
 
