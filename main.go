@@ -42,5 +42,8 @@ func main() {
 
 	fmt.Println("Server Password:", password.Value)
 
+	// Register time template function
+	beego.AddFuncMap("formatTime", models.FormatTime)
+
 	beego.Run()
 }

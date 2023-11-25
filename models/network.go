@@ -3,6 +3,8 @@ package models
 import (
 	"fmt"
 	"net"
+	"strconv"
+	"strings"
 
 	"github.com/beego/beego/v2/client/orm"
 	"github.com/praserx/ipconv"
@@ -212,4 +214,46 @@ func GetNetworkSystems(networkCidr string) (systems []System, err error) {
 	}
 
 	return systems, nil
+}
+
+func ConvertNetmaskToCidr(mask net.IPMask) int {
+	size, _ := mask.Size()
+	return size
+}
+
+func IncrementNetwork(networkCidr string, octet int, increment int) (newNetworkCidr string, err error) {
+	// Parse the CIDR
+	ip, ipnet, err := net.ParseCIDR(networkCidr)
+	if err != nil {
+		return "", err
+	}
+
+	// Split the IP into octets
+	ipOctets := strings.Split(ip.String(), ".")
+
+	// Increment the specified octet
+	if octet < 1 || octet > 4 {
+		return "", fmt.Errorf("invalid octet: %d", octet)
+	}
+	octetIndex := octet - 1 // Adjust for 0-based indexing
+	octetValue, err := strconv.Atoi(ipOctets[octetIndex])
+	if err != nil {
+		return "", err
+	}
+
+	octetValue += increment
+	if octetValue > 255 {
+		return "", fmt.Errorf("octet value out of range after increment")
+	}
+	ipOctets[octetIndex] = strconv.Itoa(octetValue)
+
+	// Reassemble the IP
+	newIP := net.ParseIP(strings.Join(ipOctets, "."))
+	if newIP == nil {
+		return "", fmt.Errorf("failed to parse new IP")
+	}
+
+	// Construct new CIDR
+	newNetworkCidr = fmt.Sprintf("%s/%d", newIP, ConvertNetmaskToCidr(ipnet.Mask))
+	return newNetworkCidr, nil
 }

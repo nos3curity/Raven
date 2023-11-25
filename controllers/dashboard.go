@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"raven/models"
 
 	beego "github.com/beego/beego/v2/server/web"
@@ -12,6 +11,7 @@ type DashboardController struct {
 }
 
 func (c *DashboardController) Get() {
+
 	teamNetworks := make(map[int][]models.Network)
 
 	// Get all teams
@@ -31,6 +31,7 @@ func (c *DashboardController) Get() {
 		teamNetworks[team.Id] = networks
 
 	}
+  
 	// Get all networks
 	networks, err := models.GetAllNetworks()
 	if err != nil {
@@ -63,6 +64,7 @@ func (c *DashboardController) Get() {
 	c.Data["networks"] = networks
 	c.Data["network_systems"] = networkSystems
 	c.Data["system_ports"] = systemPorts
+
 	c.Data["teams"] = teams
 	c.Layout = "sidebar.tpl"
 	c.TplName = "dashboard.html"
@@ -73,15 +75,15 @@ func GetErrorMessage(err error) string {
 
 	defaultError := "🤓🤓🤓 OOPSIE WOOPSIE!! Uwu We make a fucky wucky!! A wittle fucko boingo! The code monkeys at our headquarters are working VEWY HAWD to fix this! 🤓🤓🤓"
 
-	runmode, err := beego.AppConfig.String("runmode")
+	// Get teams for the sidebar
+	teams, err := models.GetAllTeams()
 	if err != nil {
-		fmt.Println("something is really fucking wrong")
+		c.Ctx.WriteString(err.Error())
+		return
 	}
 
-	if runmode == "dev" {
-		return err.Error()
-	} else {
-		return defaultError
-	}
-
+	c.Data["teams"] = teams
+	c.Layout = "sidebar.tpl"
+	c.TplName = "dashboard.html"
+	return
 }

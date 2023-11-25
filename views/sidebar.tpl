@@ -29,6 +29,9 @@
                                 <a href="/uploads" onclick="setActiveButton('uploadsBtn')">
                                     <button id="uploadsBtn" type="button" class="cs-button btn w-100 text-start rounded-0 mb-2">Uploads</button>
                                 </a>
+                                <a href="/profile">
+                                    <button type="button" class="btn w-100 text-start rounded-0 cs-text-black mb-2">Profile</button>
+                                </a>
                             </div>
                             <br>
                             <br>
