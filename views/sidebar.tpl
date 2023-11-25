@@ -29,6 +29,9 @@
                                 <a href="/uploads">
                                     <button type="button" class="btn w-100 text-start rounded-0 cs-text-black mb-2">Uploads</button>
                                 </a>
+                                <a href="/profile">
+                                    <button type="button" class="btn w-100 text-start rounded-0 cs-text-black mb-2">Profile</button>
+                                </a>
                             </div>
                             <br>
                             <br>
@@ -36,15 +39,11 @@
                                 Teams
                             </h4>
                             <div>
-                                <a href="/teams/1">
-                                    <button type="button" class="btn w-100 text-start rounded-0 cs-text-black mb-2">Team 1</button>
+                            {{range .teams}}
+                                <a href="/teams/{{.Id}}">
+                                    <button type="button" class="btn w-100 text-start rounded-0 cs-text-black mb-2">{{.Name}}</button>
                                 </a>
-                                <a href="/teams/2">
-                                    <button type="button" class="btn w-100 text-start rounded-0 cs-text-black mb-2">Team 2</button>
-                                </a>
-                                <a href="/teams/3">
-                                    <button type="button" class="btn w-100 text-start rounded-0 cs-text-black mb-2">Team 3</button>
-                                </a>
+                            {{end}}
                             </div>
                         <!-- </ul> -->
                     </div>

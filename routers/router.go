@@ -37,10 +37,10 @@ func init() {
 
 	// Uploads functionality
 	beego.Router("/uploads", &controllers.UploadsController{}, "get:Get")
-	beego.Router("/comments/delete", &controllers.CommentsController{}, "get:Delete")
 
 	// Comment functionality
 	beego.Router("/comments/add", &controllers.CommentsController{}, "post:Add")
+	beego.Router("/comments/delete", &controllers.CommentsController{}, "get:Delete") // TODO: convert to POST
 
 	// External API functionality
 	beego.Router("/api/nmap", &controllers.ApiController{}, "post:Nmap")

@@ -8,7 +8,7 @@ import (
 
 type Comment struct {
 	Id        int       `orm:"auto"`
-	SystemIp  *System   `orm:"rel(fk);on_delete(cascade)"`
+	System    *System   `orm:"rel(fk);on_delete(cascade)"`
 	Username  string    `orm:"type(varchar)"`
 	Text      string    `orm:"type(text)"`
 	CreatedAt time.Time `orm:"auto_now_add;type(datetime)"`
@@ -18,7 +18,14 @@ func init() {
 	orm.RegisterModel(new(Comment))
 }
 
-func AddComment(systemIp string, username string, commentText string) error {
+func FormatTime(t time.Time) string {
+
+	localTime := t.Local()
+	return localTime.Format("2006-01-02 15:04:05")
+}
+
+func AddComment(systemIp string, username string, commentText string) (err error) {
+
 	o := orm.NewOrm()
 
 	// Find the system by IP
@@ -28,26 +35,43 @@ func AddComment(systemIp string, username string, commentText string) error {
 	}
 
 	comment := &Comment{
-		SystemIp: &system,
+		System:   &system,
 		Username: username, // Save the username with the comment
 		Text:     commentText,
 	}
 
 	// Insert the comment into the database
-	_, err := o.Insert(comment)
-	return err
-}
+	_, err = o.Insert(comment)
+	if err != nil {
+		return err
+	}
 
-func GetCommentsBySystemIp(systemIp string) ([]Comment, error) {
-	o := orm.NewOrm()
-	var comments []Comment
-	_, err := o.QueryTable("comment").Filter("SystemIp__Ip", systemIp).RelatedSel().All(&comments)
-	return comments, err
+	return nil
 }
 
 // DeleteComment deletes a comment from the database
-func DeleteComment(commentId int) error {
+func DeleteComment(commentId int) (err error) {
+
 	o := orm.NewOrm()
-	_, err := o.Delete(&Comment{Id: commentId})
-	return err
+
+	_, err = o.Delete(&Comment{Id: commentId})
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func GetSystemComments(systemIp string) ([]Comment, error) {
+
+	o := orm.NewOrm()
+
+	var comments []Comment
+
+	_, err := o.QueryTable("comment").Filter("System__Ip", systemIp).RelatedSel().All(&comments)
+	if err != nil {
+		return nil, err
+	}
+
+	return comments, nil
 }

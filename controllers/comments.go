@@ -11,9 +11,16 @@ type CommentsController struct {
 }
 
 func (c *CommentsController) Add() {
+
 	// Extract system IP and comment text from the request
 	systemIp := c.GetString("system_ip")
 	commentText := c.GetString("comment")
+
+	// Check for blank parameters
+	if (systemIp == "") || (commentText == "") {
+		c.Ctx.WriteString("Provide a system IP and comment text")
+		return
+	}
 
 	// Get the JWT cookie
 	jwtCookie, err := c.Ctx.Request.Cookie("session")
@@ -49,6 +56,7 @@ func (c *CommentsController) Add() {
 
 // Delete handles the deletion of a comment
 func (c *CommentsController) Delete() {
+
 	// Retrieve the comment ID from the query parameter
 	commentId, err := c.GetInt("comment_id")
 	if err != nil {

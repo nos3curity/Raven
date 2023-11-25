@@ -44,6 +44,8 @@ func (c *DashboardController) Get() {
 	c.Data["networks"] = networks
 	c.Data["network_systems"] = networkSystems
 	c.Data["system_ports"] = systemPorts
+
+	c.Layout = "sidebar.tpl"
 	c.TplName = "dashboard.html"
 	return
 }
