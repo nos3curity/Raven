@@ -20,14 +20,14 @@
                                 Raven
                             </h2>
                             <div>
-                                <a href="/">
-                                    <button type="button" class="btn w-100 text-start rounded-0 cs-button-active cs-text-white mb-2">Home</button>
+                                <a href="/" onclick="setActiveButton('homeBtn')">
+                                    <button id="homeBtn" type="button" class="cs-button btn w-100 text-start rounded-0 mb-2">Home</button>
                                 </a>
-                                <a href="/teams">
-                                    <button type="button" class="btn w-100 text-start rounded-0 cs-text-black mb-2">Team Setup</button>
+                                <a href="/teams" onclick="setActiveButton('teamsBtn')">
+                                    <button id="teamsBtn" type="button" class="cs-button btn w-100 text-start rounded-0 mb-2">Team Setup</button>
                                 </a>
-                                <a href="/uploads">
-                                    <button type="button" class="btn w-100 text-start rounded-0 cs-text-black mb-2">Uploads</button>
+                                <a href="/uploads" onclick="setActiveButton('uploadsBtn')">
+                                    <button id="uploadsBtn" type="button" class="cs-button btn w-100 text-start rounded-0 mb-2">Uploads</button>
                                 </a>
                                 <a href="/profile">
                                     <button type="button" class="btn w-100 text-start rounded-0 cs-text-black mb-2">Profile</button>
@@ -39,18 +39,18 @@
                                 Teams
                             </h4>
                             <div>
-                            {{range .teams}}
-                                <a href="/teams/{{.Id}}">
-                                    <button type="button" class="btn w-100 text-start rounded-0 cs-text-black mb-2">{{.Name}}</button>
+                                {{ range .teams }}
+                                <a href="/teams/{{ .Id }}" onclick="setActiveButton('team{{ .Id }}Btn')">
+                                    <button id="team{{ .Id }}Btn" type="button" class="btn w-100 text-start rounded-0 cs-text-black mb-2">{{ .Name }}</button>
                                 </a>
-                            {{end}}
+                                {{ end }}
                             </div>
                         <!-- </ul> -->
                     </div>
                 <!-- </nav>     -->
             </div>
         </div>
-        <div class="col-12 col-sm-6 col-md-8 col-lg-9 col-xl-9 p-0 m-0 cs-bg-black">
+        <div class="col-12 col-sm-6 col-md-8 col-lg-9 col-xl-9 p-0 cs-bg-black">
             {{ .LayoutContent }}
         </div>
     </div>
@@ -59,6 +59,35 @@
 
 </div>
 
+<script>
+    // Function to set the active button and store it in localStorage
+    function setActiveButton(buttonId) {
+            // Remove the 'cs-button-active' class from all buttons
+            document.querySelectorAll('button').forEach(function(btn) {
+                btn.classList.remove('cs-button-active');
+            });
+    
+            // Add the 'cs-button-active' class to the clicked button
+            document.getElementById(buttonId).classList.add('cs-button-active');
+    
+            // Store the active button ID in localStorage
+            localStorage.setItem('activeButton', buttonId);
+        }
+    
+        // Function to set the active button on page load
+        function setActiveButtonOnLoad() {
+            // Retrieve the active button ID from localStorage
+            var activeButtonId = localStorage.getItem('activeButton');
+    
+            // If an active button ID is found, set the active button
+            if (activeButtonId) {
+                setActiveButton(activeButtonId);
+            }
+        }
+    
+        // Set the active button on page load
+        setActiveButtonOnLoad();
+    </script>
 
 
 

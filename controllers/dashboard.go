@@ -11,7 +11,28 @@ type DashboardController struct {
 }
 
 func (c *DashboardController) Get() {
-	/*// Get all networks
+
+	teamNetworks := make(map[int][]models.Network)
+
+	// Get all teams
+	teams, err := models.GetAllTeams()
+	if err != nil {
+		c.Ctx.WriteString(err.Error())
+	}
+
+	// Fetch the team networks
+	for _, team := range teams {
+
+		networks, err := models.GetTeamNetworks(team.Id)
+		if err != nil {
+			c.Ctx.WriteString(err.Error())
+		}
+
+		teamNetworks[team.Id] = networks
+
+	}
+  
+	// Get all networks
 	networks, err := models.GetAllNetworks()
 	if err != nil {
 		c.Ctx.WriteString(err.Error())
@@ -43,7 +64,16 @@ func (c *DashboardController) Get() {
 	c.Data["networks"] = networks
 	c.Data["network_systems"] = networkSystems
 	c.Data["system_ports"] = systemPorts
-	*/
+
+	c.Data["teams"] = teams
+	c.Layout = "sidebar.tpl"
+	c.TplName = "dashboard.html"
+	return
+}
+
+func GetErrorMessage(err error) string {
+
+	defaultError := "🤓🤓🤓 OOPSIE WOOPSIE!! Uwu We make a fucky wucky!! A wittle fucko boingo! The code monkeys at our headquarters are working VEWY HAWD to fix this! 🤓🤓🤓"
 
 	// Get teams for the sidebar
 	teams, err := models.GetAllTeams()

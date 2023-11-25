@@ -198,4 +198,57 @@
             </div>
         </div>
     </div>
+<!-- </div> -->
+
+
+
+
+
+
+
+
+<!-- 
+<div class="col-sm-9">
+    <div class="well">
+        <h4>Add Team</h4>
+        <form action="/teams/add" method="get">
+            <p>Name:</p>
+            <input type="text" name="team_name">
+            <br><br>
+            <input type="submit" value="Add">
+        </form>
+    </div>
 </div>
+
+<div class="col-sm-9">
+    <div class="well">
+        <h4>Add Network</h4>
+        <form action="/networks/add" method="get">
+            <p>Team:</p>
+            <select id="team_id" name="team_id">
+                {{range .teams}}
+                <option value="{{.Id}}">{{.Name}}</option>
+                {{end}}
+            </select>
+            <br><br>
+            <p>Network Cidr:</p>
+            <input type="text" name="network_cidr">
+            <br><br>
+            <input type="submit" value="Add">
+        </form>
+    </div>
+</div>
+
+{{range .teams}}
+<div class="col-sm-9">
+    <div class="well">
+        <h4>Team {{.Name}} <a href="/teams/delete?team_id={{.Id}}">Delete</a></h4>
+        <p>Networks:</p>
+        <ul>
+            {{range (index $.team_networks .Id)}}
+            <li>{{.NetworkCidr}} <a href="/networks/delete?network_cidr={{.NetworkCidr}}">Delete</a></li>
+            {{end}}
+        </ul>
+    </div>
+</div>
+{{end}} -->

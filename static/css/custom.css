@@ -34,6 +34,7 @@ html, body
         background-color: #403c3c !important;
         color: #faf4dd !important;
     }
+    
 
     /* Bootstrap override */
 .accordion {
@@ -43,4 +44,14 @@ html, body
     --bs-accordion-btn-focus-box-shadow: none;
     --bs-accordion-bg:#929190; 
     --bs-accordion-border-width: 0;
+}
+
+.btn {
+    --bs-btn-hover-color: #403c3c !important;
+    --bs-btn-hover-bg:#bdbdbc !important; 
+}
+
+.link {
+    --bs-link-hover-color: #1d1d1d;
+    --bs-link-hover-rgb: (29,29,29);
 }
