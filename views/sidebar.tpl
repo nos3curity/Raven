@@ -1,80 +1,66 @@
-{{template "base.tpl"}}
-
-<!-- Top navbar for xs viewports -->
-<nav class="navbar navbar-inverse visible-xs">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">   
-                <!-- navbar 3 horizontal lines -->
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">raven</a>
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Raven - Dashboard</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/static/css/custom.css">
+</head>
+<body>
+<div class="fluid-container">
+    <div class="row g-0">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 p-0 cs-bg-gray">
+            <div class="d-flex flex-column align-items-center align-items-sm-start min-vh-100 p-0 cs-bg-gray pe-3 ps-3">
+                <!-- <nav class="navbar p-0"> -->
+                    <div class="container-fluid p-3">
+                        <!-- <ul class="navbar-nav cs-bg-gray col-12 col-md-4 col-lg-3 col-xl-3 ps-4 pt-4 pb-4 pe-4"> -->
+                            <h2 class="fw-bold">
+                                Raven
+                            </h2>
+                            <div>
+                                <a href="/">
+                                    <button type="button" class="btn w-100 text-start rounded-0 cs-button-active cs-text-white mb-2">Home</button>
+                                </a>
+                                <a href="/teams">
+                                    <button type="button" class="btn w-100 text-start rounded-0 cs-text-black mb-2">Team Setup</button>
+                                </a>
+                                <a href="/uploads">
+                                    <button type="button" class="btn w-100 text-start rounded-0 cs-text-black mb-2">Uploads</button>
+                                </a>
+                            </div>
+                            <br>
+                            <br>
+                            <h4 class="fw-bold">
+                                Teams
+                            </h4>
+                            <div>
+                                <a href="/teams/1">
+                                    <button type="button" class="btn w-100 text-start rounded-0 cs-text-black mb-2">Team 1</button>
+                                </a>
+                                <a href="/teams/2">
+                                    <button type="button" class="btn w-100 text-start rounded-0 cs-text-black mb-2">Team 2</button>
+                                </a>
+                                <a href="/teams/3">
+                                    <button type="button" class="btn w-100 text-start rounded-0 cs-text-black mb-2">Team 3</button>
+                                </a>
+                            </div>
+                        <!-- </ul> -->
+                    </div>
+                <!-- </nav>     -->
+            </div>
         </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
-            <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="/">Home</a></li>
-                <li><a href="#">Team Setup</a></li>
-            </ul>
-            <ul class="nav navbar-nav">
-                {{range .teams}}
-                <li><a href="#">{{.Name}}</a></li>
-                {{end}}
-            </ul>
-        </div>
+        {{ .LayoutContent }}
     </div>
-</nav>
+</div>
 
-<!-- Side navbar for non-xs viewports -->
-<div class="container-fluid">
-        <div class="col-sm-3 sidenav hidden-xs">
-            <h2>raven</h2>
-            <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="/">Home</a></li>
-                <li><a href="/teams">Team Setup</a></li>
-                <li><a href="/uploads">Uploads</a></li>
-                <li><a href="/profile">Profile</a></li>
-            </ul>
-            <h4>Teams</h4>
-            <ul class="nav nav-pills nav-stacked">
-                {{range .teams}}
-                <li><a href="/teams/{{.Id}}">{{.Name}}</a></li>
-                {{end}}
-            </ul>
-            <br>
-        </div>
-<style>
-    /* Set gray background color and 100% height */
-    .sidenav {
-      background-color: #f1f1f1;
-      height: 100%;
-    }
-        
-    /* On small screens, set height to 'auto' for the grid */
-    @media screen and (max-width: 767px) {
-      .row.content {height: auto;} 
-    }
-
-    html, body
-    {
-        height: 100%;
-    }
-
-    .container-fluid
-    {
-        height: 100%;
-        /* overflow-y: hidden; */
-    }   
-  </style>
-
-  <br>
-
-  <div class="col-sm-9">
-        {{.LayoutContent}}
-  </div>
-<br>
 
 </div>
+
+
+
+
+
 </body>
 </html>

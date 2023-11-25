@@ -8,6 +8,14 @@
     <script src="/static/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <style>
+    html, body
+    {
+        min-height: 100vh;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow-y: hidden;
+    }
     .background-custom {
         background: #1d1d1d;
     }
@@ -29,7 +37,7 @@
 </style>
 <body>
 <div class="vh-100 background-custom">
-    <div class="container py-5 h-100">
+    <div class="container h-100"> <!-- need some padding without actually padding, or make the internal container smaller somehow -->
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-10 col-md-8 col-lg-6 col-xl-5">
                 <div class="card cs-bg-brown text-white" style="border-radius: 5px;">

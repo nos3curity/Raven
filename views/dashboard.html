@@ -1,162 +1,66 @@
-{{template "base.tpl"}}
-
-<style>
-    html, body
-    {
-        min-height: 100vh;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        /* overflow: auto; */
-    }
-
-    .nav-link {
-        text-align: left;
-        width: 100%;
-    }
-
-    .navbar-brand {
-        text-align: left;
-    }
-
-    .nav-item {
-        width: 100%;
-    }
-
-    /* .card-header .fa {
-    transition: .3s transform ease-in-out;
-    } */
-    .card-header .collapsed .fa {
-    transform: rotate(90deg);
-    }
-
-    .accordion-button {
-        background-color: #f6f6f6;
-    }
-
-    .fluid-container {
-        background-color: #f6f6f6;
-    }
-    
-    .a:visited {
-        color: black;
-    }
-
-</style>
-
-<!-- Top navbar for xs viewports -->
-<div class="fluid-container">
-<div class="fluid-container d-block d-sm-none">
-    <nav class="navbar navbar-expand-sm bg-light navbar-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Raven</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Team 1</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Team 2</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Team 3</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Team 4</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <div class="col-12 g-0">
-        <div class="accordion accordion-flush" id="accordionExample">
-            <div class="accordion-item">
-                {{ range .networks }}
-                <h2 class="accordion-header" id="headingOne">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        Network: {{ .NetworkCidr }}
-                    </button>
-                </h2>
-
-                {{range (index $.network_systems .NetworkCidr)}}
-                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                        {{ .Ip }} 
-                    </div>
-                </div>
-                {{ end }}
-                {{ end }}
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="fluid-container d-none d-sm-block">
-    <div class="row m-0">
-        <div class="col-2 g-0 d-none d-sm-block" id="sidenav">
-            <nav class="navbar-nav bg-light navbar-light">
-                <div class="container-fluid">
-                    <ul class="nav nav-pills mb-3 flex-column pt-3" id="pills-tab" role="tablist">
-                        <a class="navbar-brand" href="#">
-                            <h2>Raven</h2>
-                        </a>
-                        <li class="nav-item mb-2" role="presentation">
-                            <a class="btn btn-primary w-100 text-start" data-bs-toggle="button" href="#" role="button" aria-pressed="true">
-                                Home
-                            </a>
-                        </li>
-                        <li class="nav-item mb-2" role="presentation">
-                            <a class="btn btn-primary w-100 text-start" data-bs-toggle="button" href="#" role="button" aria-pressed="false">
-                                Team Setup
-                            </a>
-                        </li>
-                        <li class="nav-item mb-2" role="presentation">
-                            <a class="btn btn-primary w-100 text-start" data-bs-toggle="button" href="#" role="button" aria-pressed="false">
-                                Uploads
-                            </a>
-                        </li>
-                      </ul>
-                </div>
-            </nav>
-        </div>
-
-        <div class="col-10 g-0">
-            <div class="accordion border-0 " id="accordionExample">
-                <div class="accordion-item border-0 p-3">
-                    {{ range $networkIndex, $network := .networks }}
-                    <h2 class="accordion-header mb-3 border border-1 rounded" id="heading{{ $networkIndex }}">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse{{ $networkIndex }}" aria-expanded="false" aria-controls="panelsStayOpen-collapse{{ $networkIndex }}">
-                            Network: {{ .NetworkCidr }}
-                        </button>
-                    </h2>
-                    <div id="panelsStayOpen-collapse{{ $networkIndex }}" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading{{ $networkIndex }}">
-                        <div class="accordion-body">
-                        <div class="row">
-                        {{ range (index $.network_systems .NetworkCidr) }}
-                            <div class="col card">
-                                <!-- each card will contain:
-                                - hostname 
-                                - IP
-                                - OS image
-                                -->
-                                {{ .Hostname }}
-                                {{ .Ip }}
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Raven - Dashboard</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/static/css/custom.css">
+</head>
+<body>
+<div class="fluid-container h-100">
+    <div class="row g-0">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 p-0 cs-bg-gray">
+            <div class="d-flex flex-column align-items-center align-items-sm-start min-vh-100 p-0 cs-bg-gray pe-3 ps-3">
+                <!-- <nav class="navbar p-0"> -->
+                    <div class="container-fluid p-3">
+                        <!-- <ul class="navbar-nav cs-bg-gray col-12 col-md-4 col-lg-3 col-xl-3 ps-4 pt-4 pb-4 pe-4"> -->
+                            <h2 class="fw-bold">
+                                Raven
+                            </h2>
+                            <div>
+                                <a href="/">
+                                    <button type="button" class="btn w-100 text-start rounded-0 cs-button-active cs-text-white mb-2">Home</button>
+                                </a>
+                                <a href="/teams">
+                                    <button type="button" class="btn w-100 text-start rounded-0 cs-text-black mb-2">Team Setup</button>
+                                </a>
+                                <a href="/uploads">
+                                    <button type="button" class="btn w-100 text-start rounded-0 cs-text-black mb-2">Uploads</button>
+                                </a>
                             </div>
-                        {{ end }}
-                        </div>
-                        </div>
-                      </div>
-                    {{ end }}
-                </div>
+                            <br>
+                            <br>
+                            <h4 class="fw-bold">
+                                Teams
+                            </h4>
+                            <div>
+                                <a href="/teams/1">
+                                    <button type="button" class="btn w-100 text-start rounded-0 cs-text-black mb-2">Team 1</button>
+                                </a>
+                                <a href="/teams/2">
+                                    <button type="button" class="btn w-100 text-start rounded-0 cs-text-black mb-2">Team 2</button>
+                                </a>
+                                <a href="/teams/3">
+                                    <button type="button" class="btn w-100 text-start rounded-0 cs-text-black mb-2">Team 3</button>
+                                </a>
+                            </div>
+                        <!-- </ul> -->
+                    </div>
+                <!-- </nav>     -->
             </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-8 col-lg-9 col-xl-9 p-0 m-0 cs-bg-black">
         </div>
     </div>
 </div>
+
+
 </div>
+
+
+
 
 
 </body>
