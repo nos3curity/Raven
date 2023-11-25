@@ -51,7 +51,7 @@ func (c *TeamsController) Get() {
 
 	networkSystems := make(map[string][]models.System)
 	systemPorts := make(map[string][]models.SystemPort)
-
+	systemComments := make(map[string][]models.Comment)
 	// Get teams for the sidebar
 	teams, err := models.GetAllTeams()
 	if err != nil {
@@ -90,6 +90,12 @@ func (c *TeamsController) Get() {
 			}
 
 			systemPorts[system.Ip] = ports
+
+			comments, err := models.GetCommentsBySystemIp(system.Ip)
+			if err != nil {
+				continue
+			}
+			systemComments[system.Ip] = comments
 		}
 	}
 
@@ -99,6 +105,7 @@ func (c *TeamsController) Get() {
 	c.Data["networks"] = networks
 	c.Data["network_systems"] = networkSystems
 	c.Data["system_ports"] = systemPorts
+	c.Data["system_comments"] = systemComments
 
 	c.Layout = "sidebar.tpl"
 	c.TplName = "team/systems.html"

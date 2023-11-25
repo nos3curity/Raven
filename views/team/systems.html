@@ -6,35 +6,41 @@
         <p>Hosts: 10</p>
         {{range (index $.network_systems .NetworkCidr)}}
         <div class="well">
-        <li>
-            {{.Ip}} <a href="/systems/delete?system_ip={{.Ip}}">Delete</a>
-            <ul>
-                <li>
-                    Pwned: {{.Pwned}}
-                </li>
-                <li>
-                    Hostname: {{.Hostname}} 
-                </li>
-                <li>
-                    Os Family: {{.OsFamily}}
-                </li>
-                <li>
-                    Os Version: {{.Os}}
-                </li>
-                <li>
-                    Open Ports:
-                    <ul>
-                        {{range (index $.system_ports .Ip)}}
-                        <li>
-                            {{.Port.PortNumber}}/{{.Port.Protocol}}
-                        </li>
-                        {{end}}
-                    </ul>
-                </li>
-                
-            </ul>
-        </li>
-    </div>
+            <li>
+                {{.Ip}} <a href="/systems/delete?system_ip={{.Ip}}">Delete</a>
+                <ul>
+                    <li>Pwned: {{.Pwned}}</li>
+                    <li>Hostname: {{.Hostname}}</li>
+                    <li>Os Family: {{.OsFamily}}</li>
+                    <li>Os Version: {{.Os}}</li>
+                    <li>
+                        Comments:
+                        <ul>
+                            {{range (index $.system_comments .Ip)}}
+                            <li>{{.CreatedAt}}/{{.Username}}/{{.Text}}</li>
+                            {{end}}
+                        </ul>
+                    </li>
+                    <li>
+                        Open Ports:
+                        <ul>
+                            {{range (index $.system_ports .Ip)}}
+                            <li>{{.Port.PortNumber}}/{{.Port.Protocol}}</li>
+                            {{end}}
+                        </ul>
+                    </li>
+                    <li>
+                        <!-- Form for adding comments -->
+                        <form method="POST" action="/comments/add">
+                            <input type="hidden" name="system_ip" value="{{.Ip}}">
+                            <textarea name="comment" rows="4" cols="50" placeholder="Enter comments here"></textarea>
+                            <br>
+                            <input type="submit" value="Add Comment">
+                        </form>
+                    </li>
+                </ul>
+            </li>
+        </div>
         {{end}}
     </div>
 </div>
