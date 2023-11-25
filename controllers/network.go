@@ -13,28 +13,45 @@ type NetworksController struct {
 
 func (c *NetworksController) Add() {
 
+	// Parse the team id
+	teamId, err := c.GetInt("team_id")
+	if err != nil {
+		c.Ctx.WriteString(err.Error())
+		return
+	}
+
+	// Try to find the team
+	_, err = models.GetTeam(teamId)
+	if err != nil {
+		c.Ctx.WriteString(err.Error())
+		return
+	}
+
+	// Get the network cidr
 	networkCidr := c.GetString("network_cidr")
+	if networkCidr == "" {
+		c.Ctx.WriteString("No network cidr provided")
+		return
+	}
+
+	// Add the network
+	err = models.AddNetwork(teamId, networkCidr)
+	if err != nil {
+		c.Ctx.WriteString(err.Error())
+		return
+	}
+
+	c.Redirect("/teams", 302) // CHANGE AS NEEDED
+	return
+}
+
+func (c *NetworksController) AddMultiple() {
+
 	networks := c.GetStrings("network_cidr[]")
 
-	if networkCidr == "" {
-
-		if len(networks) < 1 {
-			c.Ctx.WriteString("Provide a network cidr")
-			return
-		}
-	} else {
-
-		// Parse the team id
-		teamId, err := c.GetInt("team_id")
-		if err != nil {
-			c.Ctx.WriteString(err.Error())
-		}
-
-		// Add individual network
-		err = models.AddNetwork(teamId, networkCidr)
-		if err != nil {
-			c.Ctx.WriteString(err.Error())
-		}
+	if len(networks) < 1 {
+		c.Ctx.WriteString("No networks provided")
+		return
 	}
 
 	// Get all teams

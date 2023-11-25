@@ -110,7 +110,7 @@
                 <div class="col-12 cs-text-white p-3 cs-bg-gray">
                     <h4>Add Multiple Teams</h4>
                     <p>Add multiple teams by incrementing the first team's IP ranges in the specified octet.</p>
-                    <form action="/teams/add" method="post">
+                    <form action="/teams/add-multiple" method="post">
                         <p>Number of Teams:</p>
                         <input type="text" placeholder="10" required name="teams_number">
                         <br><br>
@@ -168,7 +168,7 @@
                 <div class="col-12 cs-text-white p-3 cs-bg-gray">
                     <h4>Add Network To Multiple Teams</h4>
                     <p>Add a single network to all teams by incrementing the first team's IP range in the specified octet.</p>
-                    <form action="/networks/add" method="post">
+                    <form action="/networks/add-multiple" method="post">
                         <table id="multipleTeamNetworks">
                             <thead>
                                 <tr>

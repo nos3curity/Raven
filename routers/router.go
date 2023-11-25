@@ -23,10 +23,12 @@ func init() {
 	beego.Router("/teams", &controllers.TeamsController{}, "get:Setup")
 	beego.Router("/teams/:id", &controllers.TeamsController{}, "get:Get")
 	beego.Router("/teams/add", &controllers.TeamsController{}, "post:Add")
+	beego.Router("/teams/add-multiple", &controllers.TeamsController{}, "post:AddMultiple")
 	beego.Router("/teams/delete", &controllers.TeamsController{}, "get:Delete") // TODO: convert to POST
 
 	// Networks functionality
 	beego.Router("/networks/add", &controllers.NetworksController{}, "post:Add")
+	beego.Router("/networks/add-multiple", &controllers.NetworksController{}, "post:AddMultiple")
 	beego.Router("/networks/delete", &controllers.NetworksController{}, "get:Delete") // TODO: convert to POST
 
 	// Systems functionality

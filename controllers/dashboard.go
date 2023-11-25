@@ -31,7 +31,7 @@ func (c *DashboardController) Get() {
 		teamNetworks[team.Id] = networks
 
 	}
-  
+
 	// Get all networks
 	networks, err := models.GetAllNetworks()
 	if err != nil {
@@ -64,23 +64,6 @@ func (c *DashboardController) Get() {
 	c.Data["networks"] = networks
 	c.Data["network_systems"] = networkSystems
 	c.Data["system_ports"] = systemPorts
-
-	c.Data["teams"] = teams
-	c.Layout = "sidebar.tpl"
-	c.TplName = "dashboard.html"
-	return
-}
-
-func GetErrorMessage(err error) string {
-
-	defaultError := "🤓🤓🤓 OOPSIE WOOPSIE!! Uwu We make a fucky wucky!! A wittle fucko boingo! The code monkeys at our headquarters are working VEWY HAWD to fix this! 🤓🤓🤓"
-
-	// Get teams for the sidebar
-	teams, err := models.GetAllTeams()
-	if err != nil {
-		c.Ctx.WriteString(err.Error())
-		return
-	}
 
 	c.Data["teams"] = teams
 	c.Layout = "sidebar.tpl"

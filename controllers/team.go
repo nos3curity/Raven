@@ -117,41 +117,55 @@ func (c *TeamsController) Get() {
 
 func (c *TeamsController) Add() {
 
+	teamName := c.GetString("team_name")
+	teamNetworks := c.GetStrings("network_cidr[]")
+
+	// First add the team
+	team, err := models.AddTeam(teamName)
+	if err != nil {
+		c.Ctx.WriteString(err.Error())
+		return
+	}
+
+	// Loop over the networks array and add them
+	for _, network := range teamNetworks {
+		err := models.AddNetwork(team.Id, network)
+		if err != nil {
+			c.Ctx.WriteString(err.Error())
+			return
+		}
+	}
+
+	c.Redirect("/teams", 302) // CHANGE AS NEEDED
+	return
+}
+
+func (c *TeamsController) AddMultiple() {
+
 	var teamsNumber int
 	var err error
 
 	var teams []models.Team
 
-	teamName := c.GetString("team_name")
+	// Check to see if we have a teams_number
+	teamsNumber, err = c.GetInt("teams_number")
+	if (err != nil) || teamsNumber < 1 {
+		c.Ctx.WriteString("No teams number provided")
+		return
+	}
+
+	// Check if we have networks
 	teamNetworks := c.GetStrings("network_cidr[]")
-
-	if teamName == "" {
-		// Check to see if we have a teams_number to create multiple
-		teamsNumber, err = c.GetInt("teams_number")
-		if (err != nil) || teamsNumber < 1 {
-			c.Ctx.WriteString("No team name or number provided")
-			return
-		}
-
-		fmt.Println(teamsNumber)
-	} else {
-		// If a team name is provided, we create a single team
-		team, err := models.AddTeam(teamName)
-		if err != nil {
-			c.Ctx.WriteString(err.Error())
-			return
-		}
-
-		// Loop over the networks array and add them
-		for _, network := range teamNetworks {
-			models.AddNetwork(team.Id, network)
-		}
+	if len(teamNetworks) < 1 {
+		c.Ctx.WriteString("No networks provided")
+		return
 	}
 
 	// Get the form arrays
 	teamOctets := c.GetStrings("team_octet[]")
 	teamIncrements := c.GetStrings("team_increment[]")
 
+	// Check if we have the octets and increments
 	if len(teamOctets) < 1 || len(teamIncrements) < 1 {
 		c.Ctx.WriteString("No team octet or increments provided")
 		return
