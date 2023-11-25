@@ -22,11 +22,11 @@ func init() {
 	// Teams functionality
 	beego.Router("/teams", &controllers.TeamsController{}, "get:Setup")
 	beego.Router("/teams/:id", &controllers.TeamsController{}, "get:Get")
-	beego.Router("/teams/add", &controllers.TeamsController{}, "get:Add")       // TODO: convert to POST
+	beego.Router("/teams/post", &controllers.TeamsController{}, "get:Add")
 	beego.Router("/teams/delete", &controllers.TeamsController{}, "get:Delete") // TODO: convert to POST
 
 	// Networks functionality
-	beego.Router("/networks/add", &controllers.NetworksController{}, "get:Add")       // TODO: convert to POST
+	beego.Router("/networks/add", &controllers.NetworksController{}, "post:Add")
 	beego.Router("/networks/delete", &controllers.NetworksController{}, "get:Delete") // TODO: convert to POST
 
 	// Systems functionality

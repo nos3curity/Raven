@@ -32,7 +32,7 @@
             <div class="container p-0">
                 <div class="col-12 cs-text-white p-3 cs-bg-gray">
                     <h4>Add Team</h4>
-                    <form action="/teams/add" method="GET">
+                    <form action="/teams/add" method="post">
                         <p>Name:</p>
                         <input type="text" name="team_name">
                         <input type="submit" value="Add">
@@ -43,7 +43,7 @@
             <div class="container p-0">
                 <div class="col-12 cs-text-white p-3 cs-bg-gray">
                     <h4>Add Network</h4>
-                    <form action="/networks/add" method="GET">
+                    <form action="/networks/add" method="post">
                         <p>Team:</p>
                         <select id="team_id" name="team_id">
                             {{range .teams}}
