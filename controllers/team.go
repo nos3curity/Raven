@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"raven/models"
 	"strconv"
 
@@ -116,12 +117,86 @@ func (c *TeamsController) Get() {
 
 func (c *TeamsController) Add() {
 
-	teamName := c.GetString("team_name")
+	var teamsNumber int
+	var err error
 
-	_, err := models.AddTeam(teamName)
-	if err != nil {
-		c.Ctx.WriteString(err.Error())
+	var teams []models.Team
+
+	teamName := c.GetString("team_name")
+	teamNetworks := c.GetStrings("network_cidr[]")
+
+	if teamName == "" {
+		// Check to see if we have a teams_number to create multiple
+		teamsNumber, err = c.GetInt("teams_number")
+		if (err != nil) || teamsNumber < 1 {
+			c.Ctx.WriteString("No team name or number provided")
+			return
+		}
+
+		fmt.Println(teamsNumber)
+	} else {
+		// If a team name is provided, we create a single team
+		team, err := models.AddTeam(teamName)
+		if err != nil {
+			c.Ctx.WriteString(err.Error())
+			return
+		}
+
+		// Loop over the networks array and add them
+		for _, network := range teamNetworks {
+			models.AddNetwork(team.Id, network)
+		}
+	}
+
+	// Get the form arrays
+	teamOctets := c.GetStrings("team_octet[]")
+	teamIncrements := c.GetStrings("team_increment[]")
+
+	if len(teamOctets) < 1 || len(teamIncrements) < 1 {
+		c.Ctx.WriteString("No team octet or increments provided")
 		return
+	}
+
+	// Do N loops where N is the number of teams
+	for teamIncrement := 0; teamIncrement < teamsNumber; teamIncrement++ {
+
+		fmt.Println(teamIncrement)
+		// Make teams with names based on their ID
+		team, err := models.AddTeam(fmt.Sprintf("Team %d", teamIncrement+1))
+		if err != nil {
+			c.Ctx.WriteString(err.Error())
+			return
+		}
+
+		teams = append(teams, team)
+	}
+
+	// Loop over the networks array
+	for i, network := range teamNetworks {
+
+		teamOctet, err := strconv.Atoi(teamOctets[i])
+		teamIncrement, err := strconv.Atoi(teamIncrements[i])
+		if err != nil {
+			c.Ctx.WriteString(err.Error())
+			return
+		}
+
+		for i := 0; i < len(teams); i++ {
+
+			// Add the network
+			err = models.AddNetwork(teams[i].Id, network)
+			if err != nil {
+				c.Ctx.WriteString(err.Error())
+				return
+			}
+
+			// Increment the network
+			network, err = models.IncrementNetwork(network, teamOctet, teamIncrement)
+			if err != nil {
+				c.Ctx.WriteString(err.Error())
+				return
+			}
+		}
 	}
 
 	c.Redirect("/teams", 302) // CHANGE AS NEEDED

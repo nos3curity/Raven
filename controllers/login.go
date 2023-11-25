@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 	"raven/models"
 
@@ -73,8 +72,6 @@ func (c *LoginController) Profile() {
 		c.Ctx.WriteString(err.Error())
 		return
 	}
-
-	fmt.Println(jwt.Value)
 
 	c.Data["authorization"] = jwt.Value
 	c.Data["username"] = username
