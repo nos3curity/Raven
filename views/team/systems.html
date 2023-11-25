@@ -1,4 +1,70 @@
-<h3>Team: {{.team.Name}}</h3>
+<div class="col-12 col-sm-6 col-md-8 col-lg-9 col-xl-9 p-0 cs-bg-black">
+    <div class="p-0 cs-bg-black m-3 mx-4">
+        <div class="container">
+            <h3 class="col-12 cs-text-white fw-bold mb-4 w-100">{{.team.Name}}</h3> 
+            <div class="col-10 g-0 cs-bg-gray">
+                <div class="accordion border-0 accordion-borderless cs-text-gray" id="accordinExample">
+                    <div class="accordion-item border-0 p-3 cs-bg-gray cs-text-gray">
+                        {{range .networks}}
+                        <h2 class="accordion-header border border-0 rounded m-0 cs-bg-gray" id="heading"> 
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse" aria-expanded="false" aria-controls="panelsStayOpen-collapse">
+                                Network: {{ .NetworkCidr }}
+                            </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapse" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading">
+                            <div class="accordion-body">
+                            <div class="row row-cols-3">
+                                {{range (index $.network_systems .NetworkCidr)}}
+                                <div class="col card cs-bg-gray border-0">
+                                    <li>
+                                        {{.Ip}} <a href="/systems/delete?system_ip={{.Ip}}">Delete</a>
+                                        <ul>
+                                            <li>
+                                                Pwned: {{.Pwned}}
+                                            </li>
+                                            <li>
+                                                Hostname: {{.Hostname}} 
+                                            </li>
+                                            <li>
+                                                Os Family: {{.OsFamily}}
+                                            </li>
+                                            <li>
+                                                Os Version: {{.Os}}
+                                            </li>
+                                            <!-- <li>
+                                                Open Ports:
+                                                <ul>
+                                                    {{range (index $.system_ports .Ip)}}
+                                                    <li>
+                                                        {{.Port.PortNumber}}/{{.Port.Protocol}}
+                                                    </li>
+                                                    {{end}}
+                                                </ul>
+                                            </li> -->
+                
+                                        </ul>
+                                    </li>
+                                    <!-- each card will contain:
+                                    - hostname 
+                                    - IP
+                                    - OS image
+                                    -->
+                                </div>
+                            {{ end }}
+                            </div>
+                            </div>
+                          </div>
+                        {{ end }}
+                    </div>
+                </div>
+            </div>
+                
+        </div>
+    </div>
+</div>
+
+
+<!-- <h3>Team: {{.team.Name}}</h3>
 {{range .networks}}
 <div class="col-sm-9">
     <div class="well">
@@ -45,4 +111,4 @@
         {{end}}
     </div>
 </div>
-{{end}}
+{{end}} -->

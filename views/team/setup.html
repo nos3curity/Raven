@@ -1,5 +1,75 @@
-<h3>Team Setup</h3>
+<div class="col-12 col-sm-6 col-md-8 col-lg-9 col-xl-9 p-0 cs-bg-black">
+<div class="p-0 cs-bg-black m-3 mx-4">
+    <div class="container">
+        <h3 class="col-12 cs-text-white fw-bold mb-4 w-100">Team Setup</h3> 
+        <div class="flex-row container w-100 p-0">
+            <!-- <div class="col">
+                <form action="/teams/add" method="get">
+                    <button type="button" class="btn w-100 text-start rounded-0 cs-text-black cs-bg-brown h-100 ps-0">
+                        <h6 class="cs-text-white text-center align-middle m-0">Add Team</h6>
+                        <p>Name:</p>
+                        <input type="text" name="team_name">
+                        <br><br>
+                        <input type="submit" value="Add">
+                    </button>
+                </form>
+            </div>
+            <div class="col">
+                <button type="button" class="btn w-100 text-start rounded-0 cs-text-black cs-bg-brown h-100">
+                    <h6 class="cs-text-white text-center align-middle m-0">Add Multiple Teams</h6>
+                </button>
+            </div>
+            <div class="col">
+                <button type="button" class="btn w-100 text-start rounded-0 cs-text-black cs-bg-brown h-100">
+                    <h6 class="cs-text-white text-center align-middle m-0">Add Network</h6>
+                </button>
+            </div>
+            <div class="col pe-0">
+                <button type="button" class="btn w-100 text-start rounded-0 cs-text-black cs-bg-brown h-100">
+                    <h6 class="cs-text-white text-center align-middle m-0">Add Multiple Networks </h6>
+                </button>
+            </div> -->
+            <div class="container p-0">
+                <div class="col-12 cs-text-white p-3 cs-bg-gray">
+                    <h4>Add Team</h4>
+                    <form action="/teams/add" method="GET">
+                        <p>Name:</p>
+                        <input type="text" name="team_name">
+                        <input type="submit" value="Add">
+                    </form>
+                </div>
+            </div> 
+            <br>
+            <div class="container p-0">
+                <div class="col-12 cs-text-white p-3 cs-bg-gray">
+                    <h4>Add Network</h4>
+                    <form action="/networks/add" method="GET">
+                        <p>Team:</p>
+                        <select id="team_id" name="team_id">
+                            {{range .teams}}
+                            <option value="{{.Id}}">{{.Name}}</option>
+                            {{end}}
+                        </select>
+                        <br><br>
+                        <p>Network Cidr:</p>
+                        <input type="text" name="network_cidr">
+                        <input type="submit" value="Add">
+                    </form>
+                </div>
+            </div> 
+            
+        </div>
+    </div>
+</div>
 
+
+
+
+
+
+
+
+<!-- 
 <div class="col-sm-9">
     <div class="well">
         <h4>Add Team</h4>
@@ -43,4 +113,4 @@
         </ul>
     </div>
 </div>
-{{end}}
+{{end}} -->
