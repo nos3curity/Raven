@@ -21,7 +21,7 @@ func AddTeam(teamName string) (team Team, err error) {
 	}
 
 	_, err = o.Insert(&team)
-	if err != nil {
+	if (err != nil) && (err != orm.ErrLastInsertIdUnavailable) {
 		return Team{}, err
 	}
 
@@ -79,7 +79,11 @@ func RenameTeam(teamId int, teamName string) (err error) {
 	}
 
 	team.Name = teamName
-	o.Update(&team)
+
+	_, err = o.Update(&team)
+	if (err != nil) && (err != orm.ErrLastInsertIdUnavailable) {
+		return err
+	}
 
 	return nil
 }

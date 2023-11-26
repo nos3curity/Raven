@@ -42,7 +42,7 @@ func AddComment(systemIp string, username string, commentText string) (err error
 
 	// Insert the comment into the database
 	_, err = o.Insert(comment)
-	if err != nil {
+	if (err != nil) && (err != orm.ErrLastInsertIdUnavailable) {
 		return err
 	}
 

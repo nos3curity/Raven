@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	_ "raven/database"
 	"raven/models"
 	_ "raven/routers"
 
@@ -11,17 +12,19 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-func init() {
-	orm.RegisterDriver("sqlite3", orm.DRSqlite)
-	orm.RegisterDataBase("default", "sqlite3", "file:data.db?cache=shared&mode=rwc")
-}
-
 func main() {
 
-	// Start the database
-	err := orm.RunSyncdb("default", false, true)
+	// Get the database name from the config
+	dbName, err := beego.AppConfig.String("dbname")
 	if err != nil {
-		fmt.Println(err)
+		panic(fmt.Errorf("failed to get dbname: %v", err))
+	}
+
+	// Start the database
+	force, verbose := false, true
+	err = orm.RunSyncdb(dbName, force, verbose)
+	if err != nil {
+		panic(err)
 	}
 
 	// Initialize the JWT cookie signing key

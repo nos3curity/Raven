@@ -33,14 +33,14 @@ func AddSystem(system System) (err error) {
 	if readErr == orm.ErrNoRows {
 
 		_, err = o.Insert(&system)
-		if err != nil {
+		if (err != nil) && (err != orm.ErrLastInsertIdUnavailable) {
 			return err
 		}
 		// If a row exists, use UPDATE
 	} else if readErr == nil {
 
 		_, err = o.Update(&system)
-		if err != nil {
+		if (err != nil) && (err != orm.ErrLastInsertIdUnavailable) {
 			return err
 		}
 	}
@@ -99,7 +99,11 @@ func UpdateSystemPwnedStatus(systemIp string, pwned bool) (err error) {
 	system.Pwned = pwned
 
 	_, err = o.Update(&system)
-	return err
+	if (err != nil) && (err != orm.ErrLastInsertIdUnavailable) {
+		return err
+	}
+
+	return nil
 }
 
 func SetSystemHostname(systemIp string, hostname string) (err error) {
@@ -112,7 +116,10 @@ func SetSystemHostname(systemIp string, hostname string) (err error) {
 	}
 
 	system.Hostname = hostname
-	o.Update(&system)
+	_, err = o.Update(&system)
+	if (err != nil) && (err != orm.ErrLastInsertIdUnavailable) {
+		return err
+	}
 
 	return nil
 }
@@ -128,7 +135,11 @@ func SetSystemOs(systemIp string, osFamily string, osVersion string) (err error)
 
 	system.OsFamily = osFamily
 	system.Os = osVersion
-	o.Update(&system)
+
+	_, err = o.Update(&system)
+	if (err != nil) && (err != orm.ErrLastInsertIdUnavailable) {
+		return err
+	}
 
 	return nil
 }

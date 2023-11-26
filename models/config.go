@@ -31,14 +31,14 @@ func SetConfig(key string, value string) (Config, error) {
 		// Config doesn't exist, so create it
 		config.Value = value
 		_, err = o.Insert(&config)
-		if err != nil {
+		if (err != nil) && (err != orm.ErrLastInsertIdUnavailable) {
 			return Config{}, err
 		}
 	case err == nil:
 		// Config exists, so update it
 		config.Value = value
 		_, err = o.Update(&config)
-		if err != nil {
+		if (err != nil) && (err != orm.ErrLastInsertIdUnavailable) {
 			return Config{}, err
 		}
 	default:
@@ -74,7 +74,7 @@ func AddConfig(key string, value string) (config Config, err error) {
 	}
 
 	_, err = o.Insert(&config)
-	if err != nil {
+	if (err != nil) && (err != orm.ErrLastInsertIdUnavailable) {
 		return Config{}, err
 	}
 
@@ -105,7 +105,7 @@ func UpdateConfig(key string, value string) (err error) {
 	}
 
 	_, err = o.Update(&config)
-	if err != nil {
+	if (err != nil) && (err != orm.ErrLastInsertIdUnavailable) {
 		return err
 	}
 

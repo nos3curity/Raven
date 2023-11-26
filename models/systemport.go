@@ -29,7 +29,7 @@ func AddOpenSystemPort(system *System, port *Port) (err error) {
 
 		// If no associations exist, create it
 		_, err = o.Insert(&systemPort)
-		if err != nil {
+		if (err != nil) && (err != orm.ErrLastInsertIdUnavailable) {
 			return err
 		}
 	} else {
@@ -44,7 +44,7 @@ func AddOpenSystemPort(system *System, port *Port) (err error) {
 
 			// If no associations exist, create it
 			_, err = o.Insert(&systemPort)
-			if err != nil {
+			if (err != nil) && (err != orm.ErrLastInsertIdUnavailable) {
 				return err
 			}
 		} else {
@@ -52,7 +52,7 @@ func AddOpenSystemPort(system *System, port *Port) (err error) {
 			// If it exists, update it
 			systemPort.Id = systemPorts[0].Id
 			_, err = o.Update(&systemPort)
-			if err != nil {
+			if (err != nil) && (err != orm.ErrLastInsertIdUnavailable) {
 				return err
 			}
 		}

@@ -4,3 +4,4 @@ go.mod
 go.sum
 data.db
 /uploads/*
+dev.db

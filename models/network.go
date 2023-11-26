@@ -152,13 +152,13 @@ func AddNetwork(teamId int, networkCidr string) (err error) {
 	if exists.NetworkCidr == "" {
 		// If doesn't exist, insert a new record
 		_, err = o.Insert(&network)
-		if err != nil {
+		if (err != nil) && (err != orm.ErrLastInsertIdUnavailable) {
 			return err
 		}
 	} else {
 		// If it does, update
 		_, err = o.Update(&network)
-		if err != nil {
+		if (err != nil) && (err != orm.ErrLastInsertIdUnavailable) {
 			return err
 		}
 	}

@@ -24,7 +24,7 @@ func AddPort(port Port) (err error) {
 	if readErr == orm.ErrNoRows {
 
 		_, err = o.Insert(&port)
-		if err != nil {
+		if (err != nil) && (err != orm.ErrLastInsertIdUnavailable) {
 			return err
 		}
 	}
