@@ -143,3 +143,23 @@ func SetSystemOs(systemIp string, osFamily string, osVersion string) (err error)
 
 	return nil
 }
+
+func GetSystemsTeam(systemIp string) (team *Team, err error) {
+
+	// Get the system
+	system, err := GetSystem(systemIp)
+	if err != nil {
+		return nil, err
+	}
+
+	// Get the system network
+	networkCidr := system.Network.NetworkCidr
+	network, err := GetNetwork(networkCidr)
+	if err != nil {
+		return nil, err
+	}
+
+	team = network.Team
+
+	return team, nil
+}

@@ -16,6 +16,8 @@ type LootController struct {
 
 func (c *LootController) Get() {
 
+	teamLootedSystems := make(map[int][]string)
+
 	// Get all teams
 	teams, err := models.GetAllTeams()
 	if err != nil {
@@ -30,11 +32,25 @@ func (c *LootController) Get() {
 		return
 	}
 
+	// Get looted systems for each team
+	for _, team := range teams {
+
+		systemIps, err := models.GetLootedTeamSystems(team.Id)
+		if err != nil {
+			c.Ctx.WriteString(err.Error())
+			continue
+		}
+
+		// Save to our map
+		teamLootedSystems[team.Id] = systemIps
+	}
+
 	// Pass to the template
+	c.Data["team_looted_systems"] = teamLootedSystems
 	c.Data["loot_items"] = loot_items
 	c.Data["teams"] = teams
 	c.Layout = "sidebar.tpl"
-	c.TplName = "loot.html"
+	c.TplName = "loot/browser.html"
 	return
 }
 
@@ -113,7 +129,7 @@ func (c *LootController) Add() {
 		return
 	}
 
-	c.Redirect("/uploads", 302) // CHANGE AS NEEDED
+	c.Redirect("/loot", 302) // CHANGE AS NEEDED
 	return
 }
 

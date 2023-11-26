@@ -1,0 +1,88 @@
+<div class="p-0 cs-bg-black m-3 mx-4">
+    <h3 class="col-12 cs-text-white fw-bold mb-4 w-100">Loot</h3>
+    <!-- Top Full-Width Container with similar background style -->
+    <div class="container">
+        <div class="d-flex flex-column cs-text-white p-3 cs-bg-gray">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="col-10 mb-3">
+                        <a href="/uploads">
+                            <button>Upload Loot</button>
+                        </a>
+                        
+                        <!-- Other buttons or content can go here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    
+    
+    <!-- Main Containers for Sidebar and Content -->
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar Section -->
+            <div class="col-md-3">
+                <div class="d-flex flex-column cs-text-white p-3 cs-bg-gray">
+                    <h4 class="mb-3">Team</h4>
+                    {{range .teams}}
+                    <a href="/loot/teams/{{.Id}}" class="mb-2">
+                        {{.Name}}
+                    </a>
+                    <ul>
+                        {{range (index $.team_looted_systems .Id)}}
+                            <li>
+                                <a href="/loot/systems/{{.}}" class="mb-2">
+                                    {{.}}
+                                </a>
+                            </li>
+                        {{end}}
+                    </ul>
+                    {{end}}
+                </div>
+            </div>
+
+            <!-- Main Content Section -->
+            <div class="col-md-8">
+                
+                <div class="container w-100 p-0">
+                    <div class="cs-text-white p-3 cs-bg-gray mb-3">
+                        <table class="table table-responsive table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Loot ID</th>
+                                    <th>File Name</th>
+                                    <th>Tag</th>
+                                    <th>System</th>
+                                    <th>Uploader</th>
+                                    <th>Timestamp</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{range .loot_items}}
+                                <tr>
+                                    <td>{{.Id}}</td>
+                                    <td>
+                                        <a href="/loot/{{.Id}}">
+                                            {{.Name}}
+
+                                            <a href="/loot/delete?loot_id={{.Id}}">
+                                                X
+                                            </a>
+                                        </a>
+                                    </td>
+                                    <td>{{.Tag}}</td>
+                                    <td>{{.System.Ip}}</td>
+                                    <td>{{.Uploader}}</td>
+                                    <td>{{.UploadedAt | formatTime}}</td>
+                                </tr>
+                                {{end}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

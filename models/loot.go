@@ -115,3 +115,52 @@ func GetLootName(lootId int) (lootName string, err error) {
 
 	return lootName, nil
 }
+
+func GetLootedSystems() (systemIps []string, err error) {
+
+	// First get all the loot records
+	lootItems, err := GetAllLoot()
+	if err != nil {
+		return nil, err
+	}
+
+	// Temporary map to store unique IPs
+	uniqueIPs := make(map[string]bool)
+
+	// Then loop over the loot array
+	for _, loot := range lootItems {
+		ip := loot.System.Ip
+		if _, exists := uniqueIPs[ip]; !exists {
+			uniqueIPs[ip] = true
+			systemIps = append(systemIps, ip)
+		}
+	}
+
+	return systemIps, nil
+}
+
+func GetLootedTeamSystems(teamId int) (systemIps []string, err error) {
+	// First get all looted systems
+	allLootedSystems, err := GetLootedSystems()
+	if err != nil {
+		return nil, err
+	}
+
+	// Loop over all looted systems
+	for _, systemIp := range allLootedSystems {
+
+		// Get the team of the system
+		team, err := GetSystemsTeam(systemIp)
+		if err != nil {
+			return nil, err
+		}
+
+		// Check if the system belongs to the specified team
+		if team.Id == teamId {
+			// Add the IP to the array
+			systemIps = append(systemIps, systemIp)
+		}
+	}
+
+	return systemIps, nil
+}

@@ -49,6 +49,8 @@ func init() {
 	beego.Router("/loot/:id", &controllers.LootController{}, "get:Download")
 	beego.Router("/loot/add", &controllers.LootController{}, "post:Add")
 	beego.Router("/loot/delete", &controllers.LootController{}, "get:Delete") // TODO: convert to POST
+	//beego.Router("/loot/systems/:ip", &controllers.LootController{}, "get:SystemLoot")
+	//beego.Router("/loot/teams/:id", &controllers.LootController{}, "get:TeamLoot")
 
 	// External API functionality
 	beego.Router("/api/nmap", &controllers.ApiController{}, "post:Nmap")
