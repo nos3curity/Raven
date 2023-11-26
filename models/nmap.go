@@ -5,6 +5,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/beego/beego/v2/client/orm"
 	"github.com/lair-framework/go-nmap"
 )
 
@@ -38,7 +39,8 @@ func ParseNmapScan(scanPath string) (err error) {
 
 		// Check if we have system already
 		existingSystem, err := GetSystem(system.Ip)
-		if err != nil {
+		if (err != nil) && (err != orm.ErrNoRows) {
+			fmt.Println(err)
 			continue
 		}
 
