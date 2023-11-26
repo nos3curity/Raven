@@ -3,6 +3,7 @@ package models
 import (
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/lair-framework/go-nmap"
 )
@@ -30,6 +31,22 @@ func ParseNmapScan(scanPath string) (err error) {
 		if err != nil {
 			continue
 
+		}
+
+		// Add the scan timestamp to the system
+		system.LatestScan = (*time.Time)(&scan.RunStats.Finished.Time)
+
+		// Check if we have system already
+		existingSystem, err := GetSystem(system.Ip)
+		if err != nil {
+			continue
+		}
+
+		// Check if we have the latest scan and skip the host if we do
+		if system.LatestScan != nil && existingSystem.LatestScan != nil {
+			if system.LatestScan.Before(*existingSystem.LatestScan) || system.LatestScan.Equal(*existingSystem.LatestScan) {
+				continue
+			}
 		}
 
 		// Add the system to the database

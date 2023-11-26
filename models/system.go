@@ -1,6 +1,8 @@
 package models
 
 import (
+	"time"
+
 	"github.com/beego/beego/v2/client/orm"
 )
 
@@ -11,6 +13,7 @@ type System struct {
 	Os          string        `json:"os"`
 	Network     *Network      `orm:"rel(fk);column(network);on_delete(cascade)"`
 	SystemPorts []*SystemPort `orm:"reverse(many);on_delete(cascade)"`
+	LatestScan  *time.Time    `orm:"null" json:"latest_scan"`
 	Pwned       bool          `json:"pwned"`
 }
 

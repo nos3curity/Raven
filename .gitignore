@@ -3,3 +3,4 @@ raven.exe~
 go.mod
 go.sum
 data.db
+/uploads/*
