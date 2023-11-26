@@ -17,6 +17,7 @@ func (c *UploadsController) Get() {
 		c.Ctx.WriteString(err.Error())
 	}
 
+	c.Data["loot_tags"] = models.LootTags
 	c.Data["teams"] = teams
 	c.Layout = "sidebar.tpl"
 	c.TplName = "upload.html"

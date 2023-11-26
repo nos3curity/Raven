@@ -37,14 +37,21 @@ func init() {
 	beego.Router("/systems/hostname", &controllers.SystemsController{}, "post:SetHostname")
 	beego.Router("/systems/delete", &controllers.SystemsController{}, "post:Delete")
 
-	// Uploads functionality
-	beego.Router("/uploads", &controllers.UploadsController{}, "get:Get")
-
 	// Comment functionality
 	beego.Router("/comments/add", &controllers.CommentsController{}, "post:Add")
 	beego.Router("/comments/delete", &controllers.CommentsController{}, "get:Delete") // TODO: convert to POST
 
+	// Uploads functionality
+	beego.Router("/uploads", &controllers.UploadsController{}, "get:Get")
+
+	// Loot Functionality
+	beego.Router("/loot", &controllers.LootController{}, "get:Get")
+	beego.Router("/loot/:id", &controllers.LootController{}, "get:Download")
+	beego.Router("/loot/add", &controllers.LootController{}, "post:Add")
+	beego.Router("/loot/delete", &controllers.LootController{}, "get:Delete") // TODO: convert to POST
+
 	// External API functionality
 	beego.Router("/api/nmap", &controllers.ApiController{}, "post:Nmap")
 	beego.Router("/api/pwned", &controllers.ApiController{}, "post:Pwned")
+
 }

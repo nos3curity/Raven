@@ -3,5 +3,6 @@ raven.exe~
 go.mod
 go.sum
 data.db
-/uploads/*
+/uploads/loot/*
 dev.db
+test.xml

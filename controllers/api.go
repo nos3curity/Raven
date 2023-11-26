@@ -26,6 +26,7 @@ func (c *ApiController) Pwned() {
 	}
 
 	c.Ctx.WriteString("System updated successfully")
+	return
 }
 
 func (c *ApiController) Nmap() {
@@ -65,4 +66,5 @@ func (c *ApiController) Nmap() {
 	}
 
 	c.Redirect("/uploads", 302) // CHANGE AS NEEDED
+	return
 }

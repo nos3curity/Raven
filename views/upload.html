@@ -13,6 +13,30 @@
                     </div>
                 </div>
             </div>
+            <br>
+            <div class="flex-row container w-100 p-0">
+                <div class="col-sm-9">
+                    <div class="col-12 cs-text-white p-3 cs-bg-gray">
+                        <h4>Loot Item</h4>
+                        <form action="/loot/add" method="post" enctype="multipart/form-data">
+                            <p>System IP:</p>
+                            <input type="text" name="system_ip">
+                            <br><br>
+                            <p>Loot tag:</p>
+                            <select name="loot_tag">
+                                {{range .loot_tags}}
+                                <option value="{{.}}">{{.}}</option>
+                                {{end}}
+                            </select>
+                            <br><br>
+                            <p>File upload:</p>
+                            <input type="file" name="file">
+                            <input type="submit" value="Upload">
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+</div>
 <!-- </div> -->
