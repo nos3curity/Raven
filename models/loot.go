@@ -209,6 +209,11 @@ func GetLootedTeamSystems(teamId int) (systemIps []string, err error) {
 
 func FilterLootByTag(lootItems []Loot, tag string) (filteredLoot []Loot, err error) {
 
+	// Make sure the loot tag is valid
+	if !LootTagValid(tag) {
+		return nil, nil
+	}
+
 	// Loop over the loop items
 	for _, loot := range lootItems {
 
