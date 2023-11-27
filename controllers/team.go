@@ -12,6 +12,11 @@ type TeamsController struct {
 	beego.Controller
 }
 
+func (c *TeamsController) Prepare() {
+	sidebar := &SiderbarController{Controller: c.Controller}
+	sidebar.GetTeams()
+}
+
 func (c *TeamsController) Setup() {
 
 	teamNetworks := make(map[int][]models.Network)
@@ -35,9 +40,7 @@ func (c *TeamsController) Setup() {
 	}
 
 	c.Data["team_networks"] = teamNetworks
-	c.Data["teams"] = teams
-
-	c.Layout = "sidebar.tpl"
+	c.Layout = "layout/sidebar.tpl"
 	c.TplName = "team/setup.html"
 }
 
@@ -53,13 +56,6 @@ func (c *TeamsController) Get() {
 	networkSystems := make(map[string][]models.System)
 	systemPorts := make(map[string][]models.SystemPort)
 	systemComments := make(map[string][]models.Comment)
-
-	// Get teams for the sidebar
-	teams, err := models.GetAllTeams()
-	if err != nil {
-		c.Ctx.WriteString(err.Error())
-		return
-	}
 
 	// First, fetch the team information
 	team, err := models.GetTeam(teamId)
@@ -103,14 +99,13 @@ func (c *TeamsController) Get() {
 	}
 
 	// Populate the context for the template
-	c.Data["teams"] = teams
 	c.Data["team"] = team
 	c.Data["networks"] = networks
 	c.Data["network_systems"] = networkSystems
 	c.Data["system_ports"] = systemPorts
 	c.Data["system_comments"] = systemComments
 
-	c.Layout = "sidebar.tpl"
+	c.Layout = "layout/sidebar.tpl"
 	c.TplName = "team/systems.html"
 	return
 }

@@ -116,6 +116,18 @@ func GetLootName(lootId int) (lootName string, err error) {
 	return lootName, nil
 }
 
+func GetSystemLoot(systemIp string) (systemLoot []Loot, err error) {
+
+	o := orm.NewOrm()
+
+	_, err = o.QueryTable("loot").Filter("System__Ip", systemIp).RelatedSel().All(&systemLoot)
+	if err != nil {
+		return nil, err
+	}
+
+	return systemLoot, nil
+}
+
 func GetLootedSystems() (systemIps []string, err error) {
 
 	// First get all the loot records

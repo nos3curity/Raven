@@ -14,19 +14,16 @@ type LootController struct {
 	beego.Controller
 }
 
-func (c *LootController) Get() {
+func (c *LootController) Prepare() {
+
+	// Fetch the sidebar data
+	sidebar := &SiderbarController{Controller: c.Controller}
+	sidebar.GetTeams()
 
 	teamLootedSystems := make(map[int][]string)
 
 	// Get all teams
 	teams, err := models.GetAllTeams()
-	if err != nil {
-		c.Ctx.WriteString(err.Error())
-		return
-	}
-
-	// Get all loot items
-	loot_items, err := models.GetAllLoot()
 	if err != nil {
 		c.Ctx.WriteString(err.Error())
 		return
@@ -45,11 +42,80 @@ func (c *LootController) Get() {
 		teamLootedSystems[team.Id] = systemIps
 	}
 
-	// Pass to the template
 	c.Data["team_looted_systems"] = teamLootedSystems
+}
+
+func (c *LootController) All() {
+
+	// Get all loot items
+	loot_items, err := models.GetAllLoot()
+	if err != nil {
+		c.Ctx.WriteString(err.Error())
+		return
+	}
+
+	// Pass to the template
 	c.Data["loot_items"] = loot_items
-	c.Data["teams"] = teams
-	c.Layout = "sidebar.tpl"
+	c.Layout = "layout/sidebar.tpl"
+	c.TplName = "loot/browser.html"
+	return
+}
+
+func (c *LootController) SystemLoot() {
+
+	// Get the system ip
+	systemIp := c.Ctx.Input.Param(":ip")
+	if systemIp == "" {
+		c.Ctx.WriteString("Provide a system IP")
+		return
+	}
+
+	// Get the loot for the system
+	systemloot, err := models.GetSystemLoot(systemIp)
+	if err != nil {
+		c.Ctx.WriteString(err.Error())
+		return
+	}
+
+	// Pass to the template
+	c.Data["loot_items"] = systemloot
+	c.Layout = "layout/sidebar.tpl"
+	c.TplName = "loot/browser.html"
+	return
+}
+
+func (c *LootController) TeamLoot() {
+	var flattenedLoot []models.Loot
+
+	// Parse the team ID integer
+	teamId, err := strconv.Atoi(c.Ctx.Input.Param(":id"))
+	if err != nil {
+		c.Ctx.WriteString(err.Error())
+		return
+	}
+
+	// Get the IPs of systems looted by the team
+	lootedSystems, err := models.GetLootedTeamSystems(teamId)
+	if err != nil {
+		c.Ctx.WriteString(err.Error())
+		return
+	}
+
+	// Loop over the looted system IPs and accumulate their loot directly into flattenedLoot
+	for _, system := range lootedSystems {
+		loot, err := models.GetSystemLoot(system)
+		if err != nil {
+			c.Ctx.WriteString(err.Error())
+			return
+		}
+
+		// Append each Loot object to the flattenedLoot slice
+		flattenedLoot = append(flattenedLoot, loot...)
+	}
+
+	// Pass the flattened loot to the template
+	c.Data["loot_items"] = flattenedLoot
+	c.Layout = "layout/sidebar.tpl"
 	c.TplName = "loot/browser.html"
 	return
 }

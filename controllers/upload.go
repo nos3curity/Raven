@@ -10,16 +10,15 @@ type UploadsController struct {
 	beego.Controller
 }
 
+func (c *UploadsController) Prepare() {
+	sidebar := &SiderbarController{Controller: c.Controller}
+	sidebar.GetTeams()
+}
+
 func (c *UploadsController) Get() {
-	// Get teams for the sidebar
-	teams, err := models.GetAllTeams()
-	if err != nil {
-		c.Ctx.WriteString(err.Error())
-	}
 
 	c.Data["loot_tags"] = models.LootTags
-	c.Data["teams"] = teams
-	c.Layout = "sidebar.tpl"
+	c.Layout = "layout/sidebar.tpl"
 	c.TplName = "upload.html"
 	return
 }

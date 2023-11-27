@@ -12,6 +12,11 @@ type LoginController struct {
 	beego.Controller
 }
 
+func (c *LoginController) Prepare() {
+	sidebar := &SiderbarController{Controller: c.Controller}
+	sidebar.GetTeams()
+}
+
 func ValidateJwtFilter(c *context.Context) {
 	var token string
 	var err error
@@ -53,12 +58,6 @@ func (c *LoginController) Get() {
 
 func (c *LoginController) Profile() {
 
-	// Get all teams
-	teams, err := models.GetAllTeams()
-	if err != nil {
-		c.Ctx.WriteString(err.Error())
-	}
-
 	// Get the JWT cookie
 	jwt, err := c.Ctx.Request.Cookie("session")
 	if err != nil {
@@ -75,8 +74,7 @@ func (c *LoginController) Profile() {
 
 	c.Data["authorization"] = jwt.Value
 	c.Data["username"] = username
-	c.Data["teams"] = teams
-	c.Layout = "sidebar.tpl"
+	c.Layout = "layout/sidebar.tpl"
 	c.TplName = "user/profile.html"
 	return
 }

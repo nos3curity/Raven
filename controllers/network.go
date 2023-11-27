@@ -11,6 +11,11 @@ type NetworksController struct {
 	beego.Controller
 }
 
+func (c *NetworksController) Prepare() {
+	sidebar := &SiderbarController{Controller: c.Controller}
+	sidebar.GetTeams()
+}
+
 func (c *NetworksController) Add() {
 
 	// Parse the team id
