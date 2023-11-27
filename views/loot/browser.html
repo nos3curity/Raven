@@ -67,7 +67,6 @@
                         <table class="table table-responsive table-striped">
                             <thead>
                                 <tr>
-                                    <th onclick="handleSortClick('id')">ID</th>
                                     <th onclick="handleSortClick('name')">File Name</th>
                                     <th onclick="handleSortClick('tag')">Tag</th>
                                     <th onclick="handleSortClick('system_id')">System</th>
@@ -78,7 +77,6 @@
                             <tbody>
                                 {{range .loot_items}}
                                 <tr>
-                                    <td>{{.Id}}</td>
                                     <td>
                                         <a href="/loot/{{.Id}}">
                                             {{.Name}}
