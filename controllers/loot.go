@@ -21,9 +21,10 @@ func (c *LootController) Prepare() {
 	sidebar.GetTeams()
 
 	teamLootedSystems := make(map[int][]string)
+	var lootedTeams []models.Team
 
-	// Get all teams
-	teams, err := models.GetAllTeams()
+	// Get all teams with loot
+	teams, err := models.GetLootedTeams()
 	if err != nil {
 		c.Ctx.WriteString(err.Error())
 		return
@@ -32,30 +33,54 @@ func (c *LootController) Prepare() {
 	// Get looted systems for each team
 	for _, team := range teams {
 
-		systemIps, err := models.GetLootedTeamSystems(team.Id)
+		// Get the team's looted systems
+		systemIps, err := models.GetLootedTeamSystems(team)
 		if err != nil {
 			c.Ctx.WriteString(err.Error())
 			continue
 		}
 
+		// Retrieve the team object for the sidebar
+		lootedTeam, err := models.GetTeam(team)
+		if err != nil {
+			c.Ctx.WriteString(err.Error())
+			continue
+		}
+
+		lootedTeams = append(lootedTeams, lootedTeam)
+
 		// Save to our map
-		teamLootedSystems[team.Id] = systemIps
+		teamLootedSystems[team] = systemIps
 	}
 
+	c.Data["loot_tags"] = models.LootTags
+	c.Data["looted_teams"] = lootedTeams
 	c.Data["team_looted_systems"] = teamLootedSystems
 }
 
 func (c *LootController) All() {
 
 	// Get all loot items
-	loot_items, err := models.GetAllLoot()
+	lootItems, err := models.GetAllLoot()
 	if err != nil {
 		c.Ctx.WriteString(err.Error())
 		return
 	}
 
+	// Filter by the loot tag if present
+	lootTag := c.GetString("loot_tag")
+	if lootTag != "" {
+		lootItems, err = models.FilterLootByTag(lootItems, lootTag)
+		if err != nil {
+			c.Ctx.WriteString(err.Error())
+			return
+		}
+
+		c.Data["selected_tag"] = lootTag
+	}
+
 	// Pass to the template
-	c.Data["loot_items"] = loot_items
+	c.Data["loot_items"] = lootItems
 	c.Layout = "layout/sidebar.tpl"
 	c.TplName = "loot/browser.html"
 	return
@@ -75,6 +100,18 @@ func (c *LootController) SystemLoot() {
 	if err != nil {
 		c.Ctx.WriteString(err.Error())
 		return
+	}
+
+	// Filter by the loot tag if present
+	lootTag := c.GetString("loot_tag")
+	if lootTag != "" {
+		systemloot, err = models.FilterLootByTag(systemloot, lootTag)
+		if err != nil {
+			c.Ctx.WriteString(err.Error())
+			return
+		}
+
+		c.Data["selected_tag"] = lootTag
 	}
 
 	// Pass to the template
@@ -111,6 +148,18 @@ func (c *LootController) TeamLoot() {
 
 		// Append each Loot object to the flattenedLoot slice
 		flattenedLoot = append(flattenedLoot, loot...)
+	}
+
+	// Filter by the loot tag if present
+	lootTag := c.GetString("loot_tag")
+	if lootTag != "" {
+		flattenedLoot, err = models.FilterLootByTag(flattenedLoot, lootTag)
+		if err != nil {
+			c.Ctx.WriteString(err.Error())
+			return
+		}
+
+		c.Data["selected_tag"] = lootTag
 	}
 
 	// Pass the flattened loot to the template

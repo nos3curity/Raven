@@ -4,11 +4,23 @@
     <div class="container">
         <div class="d-flex flex-column cs-text-white p-3 cs-bg-gray">
             <div class="row">
-                <div class="col-md-3">
-                    <div class="col-10 mb-3">
+                <div class="col-md-10">
+                    <div class="mb-10">
                         <a href="/uploads">
-                            <button>Upload Loot</button>
+                            <button class="btn btn-primary mb-3 me-3">Upload Loot</button> <!-- Added mb-3 for bottom margin -->
                         </a>
+                        <div class="d-inline-block me-3">Tags:</div>
+                        <div class="d-inline-block">
+                            {{range .loot_tags}}
+                                {{if and $.selected_tag (eq $.selected_tag .)}}
+                                    <!-- If the current tag is the selected tag -->
+                                    <span class="badge bg-primary me-3 mb-3 clickable-badge" onclick="handleTagClick('{{.}}')">{{.}}</span>
+                                {{else}}
+                                    <!-- Regular styling for non-selected tags -->
+                                    <span class="badge bg-secondary me-3 mb-3 clickable-badge" onclick="handleTagClick('{{.}}')">{{.}}</span>
+                                {{end}}
+                            {{end}}
+                        </div>
                         
                         <!-- Other buttons or content can go here -->
                     </div>
@@ -16,6 +28,8 @@
             </div>
         </div>
     </div>
+    
+    
     <br>
     
     
@@ -25,8 +39,10 @@
             <!-- Sidebar Section -->
             <div class="col-md-3">
                 <div class="d-flex flex-column cs-text-white p-3 cs-bg-gray">
-                    <h4 class="mb-3">Teams</h4>
-                    {{range .teams}}
+                    <a href="/loot/" class="mb-2">
+                        All Teams
+                    </a>
+                    {{range .looted_teams}}
                     <a href="/loot/teams/{{.Id}}" class="mb-2">
                         {{.Name}}
                     </a>
@@ -44,14 +60,14 @@
             </div>
 
             <!-- Main Content Section -->
-            <div class="col-md-8">
+            <div class="col-md-9">
                 
                 <div class="container w-100 p-0">
                     <div class="cs-text-white p-3 cs-bg-gray mb-3">
                         <table class="table table-responsive table-striped">
                             <thead>
                                 <tr>
-                                    <th>Loot ID</th>
+                                    <th>ID</th>
                                     <th>File Name</th>
                                     <th>Tag</th>
                                     <th>System</th>
@@ -86,3 +102,27 @@
         </div>
     </div>
 </div>
+
+<script>
+    function handleTagClick(selectedTag) {
+        var currentUrl = new URL(window.location.href);
+        var searchParams = currentUrl.searchParams;
+
+        // Check if 'loot_tag' is already in the URL
+        if (searchParams.has('loot_tag')) {
+            if (searchParams.get('loot_tag') === selectedTag) {
+                // If the clicked tag is the same as in the URL, remove the parameter
+                searchParams.delete('loot_tag');
+            } else {
+                // If different, replace its value
+                searchParams.set('loot_tag', selectedTag);
+            }
+        } else {
+            // If 'loot_tag' is not in the URL, add it
+            searchParams.set('loot_tag', selectedTag);
+        }
+
+        // Update the URL
+        window.location.href = currentUrl.toString();
+    }
+</script>

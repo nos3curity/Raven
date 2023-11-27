@@ -151,6 +151,36 @@ func GetLootedSystems() (systemIps []string, err error) {
 	return systemIps, nil
 }
 
+func GetLootedTeams() (teamIds []int, err error) {
+
+	// First get all looted systems
+	allLootedSystems, err := GetLootedSystems()
+	if err != nil {
+		return nil, err
+	}
+
+	// Use a map to track unique team IDs
+	uniqueTeamIDs := make(map[int]struct{})
+
+	// Loop over all looted systems
+	for _, systemIp := range allLootedSystems {
+		// Get the team of the system
+		team, err := GetSystemsTeam(systemIp)
+		if err != nil {
+			return nil, err
+		}
+
+		// Check if the team ID is already in the map
+		if _, exists := uniqueTeamIDs[team.Id]; !exists {
+			// If not, add it to the map and the teamIds slice
+			uniqueTeamIDs[team.Id] = struct{}{}
+			teamIds = append(teamIds, team.Id)
+		}
+	}
+
+	return teamIds, nil
+}
+
 func GetLootedTeamSystems(teamId int) (systemIps []string, err error) {
 	// First get all looted systems
 	allLootedSystems, err := GetLootedSystems()
@@ -175,4 +205,18 @@ func GetLootedTeamSystems(teamId int) (systemIps []string, err error) {
 	}
 
 	return systemIps, nil
+}
+
+func FilterLootByTag(lootItems []Loot, tag string) (filteredLoot []Loot, err error) {
+
+	// Loop over the loop items
+	for _, loot := range lootItems {
+
+		// Return only those that have the tag
+		if loot.Tag == tag {
+			filteredLoot = append(filteredLoot, loot)
+		}
+	}
+
+	return filteredLoot, nil
 }
