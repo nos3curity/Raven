@@ -80,11 +80,28 @@ func GetLoot(lootId int) (loot Loot, err error) {
 	return loot, nil
 }
 
-func GetAllLoot() (lootItems []Loot, err error) {
-
+func GetAllLoot(sortBy string, orderBy string) ([]Loot, error) {
+	var lootItems []Loot
 	o := orm.NewOrm()
 
-	_, err = o.QueryTable(new(Loot)).All(&lootItems)
+	query := o.QueryTable(new(Loot))
+
+	// Check if sortBy is provided and valid
+	if sortBy != "" {
+		// Build the order string
+		orderString := ""
+		if orderBy == "desc" {
+			orderString = "-" + sortBy // Prefix with "-" for descending order
+		} else {
+			orderString = sortBy // Ascending order is default
+		}
+
+		// Apply ordering to the query
+		query = query.OrderBy(orderString)
+	}
+
+	// Execute the query
+	_, err := query.All(&lootItems)
 	if err != nil {
 		return nil, err
 	}
@@ -116,11 +133,28 @@ func GetLootName(lootId int) (lootName string, err error) {
 	return lootName, nil
 }
 
-func GetSystemLoot(systemIp string) (systemLoot []Loot, err error) {
+func GetSystemLoot(systemIp string, sortBy string, orderBy string) (systemLoot []Loot, err error) {
 
 	o := orm.NewOrm()
 
-	_, err = o.QueryTable("loot").Filter("System__Ip", systemIp).RelatedSel().All(&systemLoot)
+	query := o.QueryTable("loot").Filter("System__Ip", systemIp).RelatedSel()
+
+	// Check if sortBy is provided and valid
+	if sortBy != "" {
+		// Build the order string
+		orderString := ""
+		if orderBy == "desc" {
+			orderString = "-" + sortBy // Prefix with "-" for descending order
+		} else {
+			orderString = sortBy // Ascending order is default
+		}
+
+		// Apply ordering to the query
+		query = query.OrderBy(orderString)
+	}
+
+	// Execute the query
+	_, err = query.All(&systemLoot)
 	if err != nil {
 		return nil, err
 	}
@@ -131,7 +165,7 @@ func GetSystemLoot(systemIp string) (systemLoot []Loot, err error) {
 func GetLootedSystems() (systemIps []string, err error) {
 
 	// First get all the loot records
-	lootItems, err := GetAllLoot()
+	lootItems, err := GetAllLoot("system_id", "asc")
 	if err != nil {
 		return nil, err
 	}
@@ -224,4 +258,10 @@ func FilterLootByTag(lootItems []Loot, tag string) (filteredLoot []Loot, err err
 	}
 
 	return filteredLoot, nil
+}
+
+func SortLoot(lootItems []Loot, sortBy string, order string) (sortedLoot []Loot, err error) {
+
+	//
+	return sortedLoot, nil
 }

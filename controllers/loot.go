@@ -60,8 +60,12 @@ func (c *LootController) Prepare() {
 
 func (c *LootController) All() {
 
+	// Check for sort and order:
+	sortBy := c.GetString("sort_by", "uploaded_at")
+	orderBy := c.GetString("order_by", "desc")
+
 	// Get all loot items
-	lootItems, err := models.GetAllLoot()
+	lootItems, err := models.GetAllLoot(sortBy, orderBy)
 	if err != nil {
 		c.Ctx.WriteString(err.Error())
 		return
@@ -88,6 +92,10 @@ func (c *LootController) All() {
 
 func (c *LootController) SystemLoot() {
 
+	// Check for sort and order:
+	sortBy := c.GetString("sort_by", "uploaded_at")
+	orderBy := c.GetString("order_by", "desc")
+
 	// Get the system ip
 	systemIp := c.Ctx.Input.Param(":ip")
 	if systemIp == "" {
@@ -96,7 +104,7 @@ func (c *LootController) SystemLoot() {
 	}
 
 	// Get the loot for the system
-	systemloot, err := models.GetSystemLoot(systemIp)
+	systemloot, err := models.GetSystemLoot(systemIp, sortBy, orderBy)
 	if err != nil {
 		c.Ctx.WriteString(err.Error())
 		return
@@ -122,7 +130,12 @@ func (c *LootController) SystemLoot() {
 }
 
 func (c *LootController) TeamLoot() {
+
 	var flattenedLoot []models.Loot
+
+	// Check for sort and order:
+	sortBy := c.GetString("sort_by", "uploaded_at")
+	orderBy := c.GetString("order_by", "desc")
 
 	// Parse the team ID integer
 	teamId, err := strconv.Atoi(c.Ctx.Input.Param(":id"))
@@ -140,7 +153,7 @@ func (c *LootController) TeamLoot() {
 
 	// Loop over the looted system IPs and accumulate their loot directly into flattenedLoot
 	for _, system := range lootedSystems {
-		loot, err := models.GetSystemLoot(system)
+		loot, err := models.GetSystemLoot(system, sortBy, orderBy)
 		if err != nil {
 			c.Ctx.WriteString(err.Error())
 			return

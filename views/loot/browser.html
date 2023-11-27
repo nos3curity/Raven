@@ -67,12 +67,12 @@
                         <table class="table table-responsive table-striped">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>File Name</th>
-                                    <th>Tag</th>
-                                    <th>System</th>
-                                    <th>Uploader</th>
-                                    <th>Timestamp</th>
+                                    <th onclick="handleSortClick('id')">ID</th>
+                                    <th onclick="handleSortClick('name')">File Name</th>
+                                    <th onclick="handleSortClick('tag')">Tag</th>
+                                    <th onclick="handleSortClick('system_id')">System</th>
+                                    <th onclick="handleSortClick('uploader')">Uploader</th>
+                                    <th onclick="handleSortClick('uploaded_at')">Timestamp</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -120,6 +120,33 @@
         } else {
             // If 'loot_tag' is not in the URL, add it
             searchParams.set('loot_tag', selectedTag);
+        }
+
+        // Update the URL
+        window.location.href = currentUrl.toString();
+    }
+
+    function handleSortClick(sortField) {
+        var currentUrl = new URL(window.location.href);
+        var searchParams = currentUrl.searchParams;
+
+        // Check the current state of sorting
+        var currentSortField = searchParams.get('sort_by');
+        var currentOrder = searchParams.get('order_by') || 'asc';
+
+        if (currentSortField === sortField) {
+            // If already sorted by this field, toggle the order or clear the sorting
+            if (currentOrder === 'asc') {
+                searchParams.set('order_by', 'desc');
+            } else {
+                // Remove sorting parameters if the order is already 'desc'
+                searchParams.delete('sort_by');
+                searchParams.delete('order_by');
+            }
+        } else {
+            // Set new sorting field and default order
+            searchParams.set('sort_by', sortField);
+            searchParams.set('order_by', 'asc');
         }
 
         // Update the URL
