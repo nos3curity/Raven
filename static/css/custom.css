@@ -1,40 +1,77 @@
 html, body
-    {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-    }
+{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
     
-    .cs-bg-white {
-        background-color: #faf4dd !important;
-    }
-    .cs-bg-black {
-        background-color: #1d1d1d !important;
-    }
-    .cs-text-black {
-        color: #1d1d1d !important;
-    }
-    .cs-bg-gray {
-        background-color: #929190 !important;
-    }
-    .cs-bg-brown {
-        background-color: #403c3c !important;
-    }
-    .cs-text-white {
-        color: #faf4dd !important;
-    }
-    .cs-text-gray {
-        color: #929190 !important;
-    }
-    .cs-button-red {
-        background-color: #f26270 !important;
-    }
-    .cs-button-active {
-        background-color: #403c3c !important;
-        color: #faf4dd !important;
-    }
-    
+.cs-bg-white {
+    background-color: #faf4dd !important;
+}
+.cs-bg-black {
+    background-color: #1d1d1d !important;
+}
+.cs-text-black {
+    color: #1d1d1d !important;
+}
+.cs-text-light-black {
+    color: #3b3939 !important;
+}
+.cs-text-dark-white {
+    color: #e0ddce !important;
+}
+.cs-bg-red {
+    background-color: #f26270 !important; 
+}
+.cs-bg-gray {
+    background-color: #929190 !important;
+}
+.cs-bg-dark-gray {
+    background-color: #757575 !important;
+}
+.cs-bg-brown {
+    background-color: #403c3c !important;
+}
+.cs-text-white {
+    color: #faf4dd !important;
+}
+.cs-text-gray {
+    color: #929190 !important;
+}
+.cs-text-dark-gray {
+    color: #757575 !important;
+}
+.cs-text-light-gray {
+    color: #cfcecc !important;
+}
+.cs-button-red {
+    background-color: #f26270 !important;
+}
+.cs-button-active {
+    background-color: #403c3c !important;
+    color: #faf4dd !important;
+}
+.cs-comment-del:after {
+    /* content: '\d7' !important; */
+}
+
+.vertical-center {
+    margin-top: auto !important;
+    margin-bottom: auto !important;
+  }
+
+.grid-container {
+    display: grid !important;
+    grid-template-columns: repeat(6, 1fr) !important; /* Six equal columns in each row */
+    gap: 20px !important; /* Adjust the gap between grid items as needed */
+    grid-auto-rows: 1fr !important;
+}
+
+.grid-item {
+    flex: 1 !important;
+}
+
 
     /* Bootstrap override */
 .accordion {
