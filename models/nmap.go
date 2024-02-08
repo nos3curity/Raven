@@ -145,6 +145,25 @@ func ParseNmapPort(port nmap.Port) (openPort Port, err error) {
 
 	var portNumber int
 	var protocol string
+	var serviceName string
+	var serviceVersion string
+	var serviceProduct string
+
+	// Assign defaults
+	serviceProduct = "N/A"
+	serviceName = "N/A"
+	serviceVersion = "N/A"
+
+	// Only assign values if not empty
+	if port.Service.Name != "" {
+		serviceName = port.Service.Name
+	}
+	if port.Service.Version != "" {
+		serviceVersion = port.Service.Version
+	}
+	if port.Service.Product != "" {
+		serviceProduct = port.Service.Product
+	}
 
 	// Assign values to variables
 	portNumber = port.PortId
@@ -152,8 +171,11 @@ func ParseNmapPort(port nmap.Port) (openPort Port, err error) {
 
 	// Assign the variables to the model
 	openPort = Port{
-		PortNumber: portNumber,
-		Protocol:   protocol,
+		PortNumber:         portNumber,
+		Protocol:           protocol,
+		PortServiceName:    serviceName,
+		PortServiceVersion: serviceVersion,
+		PortServiceProduct: serviceProduct,
 	}
 
 	return openPort, nil

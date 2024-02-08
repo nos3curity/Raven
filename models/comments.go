@@ -19,9 +19,10 @@ func init() {
 }
 
 func FormatTime(t time.Time) string {
+    // Format the time according to the desired format
+    formattedTime := t.Format("Jan. _2, 2006 03:04PM")
 
-	localTime := t.Local()
-	return localTime.Format("2006-01-02 15:04:05")
+    return formattedTime
 }
 
 func AddComment(systemIp string, username string, commentText string) (err error) {
@@ -71,6 +72,11 @@ func GetSystemComments(systemIp string) ([]Comment, error) {
 	_, err := o.QueryTable("comment").Filter("System__Ip", systemIp).RelatedSel().All(&comments)
 	if err != nil {
 		return nil, err
+	}
+
+	// Reverse the order of comments
+	for i, j := 0, len(comments)-1; i < j; i, j = i+1, j-1 {
+		comments[i], comments[j] = comments[j], comments[i]
 	}
 
 	return comments, nil

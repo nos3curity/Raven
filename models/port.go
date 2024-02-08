@@ -3,9 +3,12 @@ package models
 import "github.com/beego/beego/v2/client/orm"
 
 type Port struct {
-	PortNumber  int           `json:"portnumber" orm:"pk"`
-	Protocol    string        `json:"protocol"`
-	SystemPorts []*SystemPort `orm:"reverse(many)"`
+	PortNumber         int           `json:"portnumber" orm:"pk"`
+	Protocol           string        `json:"protocol"`
+	SystemPorts        []*SystemPort `orm:"reverse(many)"`
+	PortServiceName    string        `json:"productname"`
+	PortServiceVersion string        `json:"productversion"`
+	PortServiceProduct string        `json:"productservice"`
 }
 
 func init() {

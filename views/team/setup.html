@@ -1,3 +1,134 @@
+<div class="p-0 cs-bg-black m-3 mx-4">
+    <div class="container">
+        <h3 class="col-12 cs-text-white fw-bold mb-4 w-100">Team Setup</h3> 
+        <div class="flex-row container w-100 rounded-0 cs-text-white p-0">
+            <div class="container p-0">
+                <div class="container mt-4">
+                    <div class="row">
+                      <!-- Large screens: 4 buttons in a row -->
+                      <div class="col-lg-2 col-md-6 p-0 pe-2 pb-4">
+                        <button type="button" class="btn w-100 rounded-0 cs-bg-brown cs-text-white py-3" onclick="toggleForm('addTeamForm')">Add New Team</button>
+                      </div>
+                      <div class="col-lg-3 col-md-6 p-0 px-2 pb-4">
+                        <button type="button" class="btn w-100 rounded-0 cs-bg-brown cs-text-white py-3" onclick="toggleForm('addMultipleTeamsForm')">Add Multiple New Teams</button>
+                      </div>
+                      <div class="col-lg-3 col-md-6 p-0 px-2 pb-4">
+                        <button type="button" class="btn w-100 rounded-0 cs-bg-brown cs-text-white py-3" onclick="toggleForm('addNetworkToNetworkForm')">Add Network to Team</button>
+                      </div>
+                      <div class="col-lg-4 col-md-6 p-0 ps-2 pb-4">
+                        <button type="button" class="btn w-100 rounded-0 cs-bg-brown cs-text-white py-3" onclick="toggleForm('addNetworkToMultipleTeamsForm')">Add Network to Multiple Teams</button>
+                      </div>
+                    </div>
+                  </div>
+
+                <div id="addTeamForm" class="col-12 cs-text-white p-3 cs-bg-gray team-setup-form" style="display:block;">
+                    <h4>Add Team</h4>
+                    <p>Add a single team by specifying its name and hardcoded network addresses.</p>
+                    <form action="/teams/add" method="post">
+                        <p>Name:</p>
+                        <input type="text" placeholder="Team 1" required name="team_name">
+                        <br><br>
+                        <p>Networks:</p>
+                        <div id="singleTeamNetworks">
+                            <input type="text" placeholder="10.0.1.0/24" required name="network_cidr[]">
+                            <br><br>
+                        </div>
+                        <button type="button" onclick="addSingleTeamNetwork()">Add Network</button>
+                        <br><br>
+                        <input type="submit" value="Add Team">
+                    </form>
+                </div>
+
+                <div id="addMultipleTeamsForm" class="col-12 cs-text-white p-3 cs-bg-gray team-setup-form" style="display:none">
+                    <h4>Add Multiple Teams</h4>
+                    <p>Add multiple teams by incrementing the first team's IP ranges in the specified octet.</p>
+                    <form action="/teams/add-multiple" method="post">
+                        <p>Number of Teams:</p>
+                        <input type="text" placeholder="10" required name="teams_number">
+                        <br><br>
+                        <table id="multipleTeamNetworks">
+                            <thead>
+                                <tr>
+                                    <th>Network CIDR</th>
+                                    <th>Team Octet</th>
+                                    <th>Team Increment</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="networkRow">
+                                    <td><input type="text" placeholder="10.0.1.0/24" required name="network_cidr[]"></td>
+                                    <td>
+                                        <select name="team_octet[]" required>
+                                            <option value="2">2nd Octet</option>
+                                            <option value="3" selected>3rd Octet</option>
+                                            <option value="4">4th Octet</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="text" placeholder="1" required name="team_increment[]"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br>
+                        <button type="button" onclick="addMultipleTeamNetwork()">Add Network</button>
+                        <br><br>
+                        <input type="submit" value="Add Teams">
+                    </form>
+                </div>
+
+                <div id="addNetworkToNetworkForm" class="col-12 cs-text-white p-3 cs-bg-gray team-setup-form" style="display:none">
+                    <h4>Add Network to Team</h4>
+                    <p>Add a single network to the specified team using a hardcoded network address.</p>
+                    <form action="/networks/add" method="post">
+                        <p>Team:</p>
+                        <select id="team_id" name="team_id">
+                            {{range .teams}}
+                            <option value="{{.Id}}">{{.Name}}</option>
+                            {{end}}
+                        </select>
+                        <br><br>
+                        <p>Network Cidr:</p>
+                        <input type="text" placeholder="10.0.1.0/24" required name="network_cidr">
+                        <br><br>
+                        <input type="submit" value="Add">
+                    </form>
+                </div>
+
+                <div id="addNetworkToMultipleTeamsForm" class="col-12 cs-text-white p-3 cs-bg-gray team-setup-form" style="display:none">
+                    <h4>Add Network To Multiple Teams</h4>
+                    <p>Add a single network to all teams by incrementing the first team's IP range in the specified octet.</p>
+                    <form action="/networks/add-multiple" method="post">
+                        <table id="multipleTeamNetworks">
+                            <thead>
+                                <tr>
+                                    <th>Network CIDR</th>
+                                    <th>Team Octet</th>
+                                    <th>Team Increment</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="networkRow">
+                                    <td><input type="text" placeholder="10.0.1.0/24" required name="network_cidr[]"></td>
+                                    <td>
+                                        <select name="team_octet[]" required>
+                                            <option value="2">2nd Octet</option>
+                                            <option value="3" selected>3rd Octet</option>
+                                            <option value="4">4th Octet</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="text" placeholder="1" required name="team_increment[]"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br>
+                        <input type="submit" value="Add Networks">
+                    </form>
+                </div>
+            </div> 
+            <br>
+        </div>
+    </div>
+</div>
+
 <script>
     function addSingleTeamNetwork() {
         var networksContainer = document.getElementById("singleTeamNetworks");
@@ -79,176 +210,16 @@
         // Append the new row to the table
         networksTable.appendChild(newRow);
     }
+
+    function toggleForm(formId) {
+    var forms = document.querySelectorAll('.team-setup-form');
+    for (var i = 0; i < forms.length; i++) {
+      if (forms[i].id === formId) {
+        forms[i].style.display = 'block';
+      } else {
+        forms[i].style.display = 'none';
+      }
+    }
+  }
+
 </script>
-
-<div class="col-12 col-sm-6 col-md-8 col-lg-9 col-xl-9 p-0 cs-bg-black">
-<div class="p-0 cs-bg-black m-3 mx-4">
-    <div class="container">
-        <h3 class="col-12 cs-text-white fw-bold mb-4 w-100">Team Setup</h3> 
-        <div class="flex-row container w-100 p-0">
-            <div class="container p-0">
-                <div class="col-12 cs-text-white p-3 cs-bg-gray">
-                    <h4>Add Team</h4>
-                    <p>Add a single team by specifying its name and hardcoded network addresses.</p>
-                    <form action="/teams/add" method="post">
-                        <p>Name:</p>
-                        <input type="text" placeholder="Team 1" required name="team_name">
-                        <br><br>
-                        <p>Networks:</p>
-                        <div id="singleTeamNetworks">
-                            <input type="text" placeholder="10.0.1.0/24" required name="network_cidr[]">
-                            <br><br>
-                        </div>
-                        <button type="button" onclick="addSingleTeamNetwork()">Add Network</button>
-                        <br><br>
-                        <input type="submit" value="Add Team">
-                    </form>
-                </div>
-            </div> 
-            <br>
-            <div class="container p-0">
-                <div class="col-12 cs-text-white p-3 cs-bg-gray">
-                    <h4>Add Multiple Teams</h4>
-                    <p>Add multiple teams by incrementing the first team's IP ranges in the specified octet.</p>
-                    <form action="/teams/add-multiple" method="post">
-                        <p>Number of Teams:</p>
-                        <input type="text" placeholder="10" required name="teams_number">
-                        <br><br>
-                        <table id="multipleTeamNetworks">
-                            <thead>
-                                <tr>
-                                    <th>Network CIDR</th>
-                                    <th>Team Octet</th>
-                                    <th>Team Increment</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="networkRow">
-                                    <td><input type="text" placeholder="10.0.1.0/24" required name="network_cidr[]"></td>
-                                    <td>
-                                        <select name="team_octet[]" required>
-                                            <option value="2">2nd Octet</option>
-                                            <option value="3" selected>3rd Octet</option>
-                                            <option value="4">4th Octet</option>
-                                        </select>
-                                    </td>
-                                    <td><input type="text" placeholder="1" required name="team_increment[]"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <br>
-                        <button type="button" onclick="addMultipleTeamNetwork()">Add Network</button>
-                        <br><br>
-                        <input type="submit" value="Add Teams">
-                    </form>
-                </div>
-            </div> 
-            <br>
-            <div class="container p-0">
-                <div class="col-12 cs-text-white p-3 cs-bg-gray">
-                    <h4>Add Network to Team</h4>
-                    <p>Add a single network to the specified team using a hardcoded network address.</p>
-                    <form action="/networks/add" method="post">
-                        <p>Team:</p>
-                        <select id="team_id" name="team_id">
-                            {{range .teams}}
-                            <option value="{{.Id}}">{{.Name}}</option>
-                            {{end}}
-                        </select>
-                        <br><br>
-                        <p>Network Cidr:</p>
-                        <input type="text" placeholder="10.0.1.0/24" required name="network_cidr">
-                        <br><br>
-                        <input type="submit" value="Add">
-                    </form>
-                </div>
-            </div>
-            <br>
-            <div class="container p-0">
-                <div class="col-12 cs-text-white p-3 cs-bg-gray">
-                    <h4>Add Network To Multiple Teams</h4>
-                    <p>Add a single network to all teams by incrementing the first team's IP range in the specified octet.</p>
-                    <form action="/networks/add-multiple" method="post">
-                        <table id="multipleTeamNetworks">
-                            <thead>
-                                <tr>
-                                    <th>Network CIDR</th>
-                                    <th>Team Octet</th>
-                                    <th>Team Increment</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="networkRow">
-                                    <td><input type="text" placeholder="10.0.1.0/24" required name="network_cidr[]"></td>
-                                    <td>
-                                        <select name="team_octet[]" required>
-                                            <option value="2">2nd Octet</option>
-                                            <option value="3" selected>3rd Octet</option>
-                                            <option value="4">4th Octet</option>
-                                        </select>
-                                    </td>
-                                    <td><input type="text" placeholder="1" required name="team_increment[]"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <br>
-                        <input type="submit" value="Add Networks">
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-<!-- </div> -->
-
-
-
-
-
-
-
-
-<!-- 
-<div class="col-sm-9">
-    <div class="well">
-        <h4>Add Team</h4>
-        <form action="/teams/add" method="get">
-            <p>Name:</p>
-            <input type="text" name="team_name">
-            <br><br>
-            <input type="submit" value="Add">
-        </form>
-    </div>
-</div>
-
-<div class="col-sm-9">
-    <div class="well">
-        <h4>Add Network</h4>
-        <form action="/networks/add" method="get">
-            <p>Team:</p>
-            <select id="team_id" name="team_id">
-                {{range .teams}}
-                <option value="{{.Id}}">{{.Name}}</option>
-                {{end}}
-            </select>
-            <br><br>
-            <p>Network Cidr:</p>
-            <input type="text" name="network_cidr">
-            <br><br>
-            <input type="submit" value="Add">
-        </form>
-    </div>
-</div>
-
-{{range .teams}}
-<div class="col-sm-9">
-    <div class="well">
-        <h4>Team {{.Name}} <a href="/teams/delete?team_id={{.Id}}">Delete</a></h4>
-        <p>Networks:</p>
-        <ul>
-            {{range (index $.team_networks .Id)}}
-            <li>{{.NetworkCidr}} <a href="/networks/delete?network_cidr={{.NetworkCidr}}">Delete</a></li>
-            {{end}}
-        </ul>
-    </div>
-</div>
-{{end}} -->
