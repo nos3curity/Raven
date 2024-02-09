@@ -32,9 +32,9 @@
                                 <a href="/profile" onclick="setActiveButton('profileBtn')">
                                     <button id="profileBtn" type="button" class="btn w-100 text-start rounded-0 cs-text-black mb-2">Profile</button>
                                 </a>
-                                <!-- <a href="/loot" onclick="setActiveButton('lootBtn')">
+                                <a href="/loot" onclick="setActiveButton('lootBtn')">
                                     <button id="lootBtn" type="button" class="btn w-100 text-start rounded-0 cs-text-black mb-2">Loot</button>
-                                </a> -->
+                                </a>
                             </div>
                             <br>
                             <br>
