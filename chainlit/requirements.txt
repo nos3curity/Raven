@@ -1,0 +1,9 @@
+langchain
+chainlit
+langchain_community
+asyncio
+uuid
+typing
+pydantic
+langchain_openai
+langchainhub

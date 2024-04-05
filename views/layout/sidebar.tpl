@@ -9,6 +9,18 @@
     <link rel="stylesheet" href="/static/css/custom.css">
 </head>
 <body>
+<script src="http://localhost:8000/copilot/index.js"></script>
+<script>
+    window.mountChainlitWidget({
+    chainlitServer: "http://localhost:8000",
+    button: {
+        style: {
+          bgcolor: "#929190", // Set the background color of the button
+          bgcolorHover: "#bdbdbc"
+        }
+      }
+    });
+</script>
 <div class="fluid-container">
     <div class="row g-0">
         <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 p-0 cs-bg-gray">

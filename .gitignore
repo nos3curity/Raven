@@ -6,3 +6,6 @@ data.db
 /uploads/loot/*
 dev.db
 test.xml
+chainlit/__pycache__
+chainlit/.files
+chainlit/.env
