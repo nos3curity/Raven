@@ -1,6 +1,7 @@
 package models
 
 import (
+	"bytes"
 	"fmt"
 	"net"
 	"sort"
@@ -207,13 +208,21 @@ func DeleteNetwork(networkCidr string) (err error) {
 }
 
 func GetNetworkSystems(networkCidr string) (systems []System, err error) {
-
 	o := orm.NewOrm()
-
-	_, err = o.QueryTable(new(System)).RelatedSel().Filter("Network__NetworkCidr", networkCidr).All(&systems)
+	_, err = o.QueryTable(new(System)).
+		RelatedSel().
+		Filter("Network__NetworkCidr", networkCidr).
+		All(&systems)
 	if err != nil {
 		return nil, err
 	}
+
+	// Sort the systems array by IP address
+	sort.Slice(systems, func(i, j int) bool {
+		ip1 := net.ParseIP(systems[i].Ip).To4()
+		ip2 := net.ParseIP(systems[j].Ip).To4()
+		return bytes.Compare(ip1, ip2) < 0
+	})
 
 	return systems, nil
 }
