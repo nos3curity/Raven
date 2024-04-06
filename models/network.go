@@ -3,8 +3,10 @@ package models
 import (
 	"fmt"
 	"net"
+	"sort"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/beego/beego/v2/client/orm"
 	"github.com/praserx/ipconv"
@@ -256,4 +258,36 @@ func IncrementNetwork(networkCidr string, octet int, increment int) (newNetworkC
 	// Construct new CIDR
 	newNetworkCidr = fmt.Sprintf("%s/%d", newIP, ConvertNetmaskToCidr(ipnet.Mask))
 	return newNetworkCidr, nil
+}
+
+func GetNetworkNmapTimestamp(networkCidr string) (*time.Time, error) {
+	systems, err := GetNetworkSystems(networkCidr)
+	if err != nil {
+		return nil, err
+	}
+
+	if len(systems) == 0 {
+		return nil, fmt.Errorf("no systems found for the network")
+	}
+
+	// Sort systems by LatestScan in descending order to find the latest scan
+	sort.Slice(systems, func(i, j int) bool {
+		if systems[i].LatestScan == nil {
+			return false
+		}
+		if systems[j].LatestScan == nil {
+			return true
+		}
+		return systems[i].LatestScan.After(*systems[j].LatestScan)
+	})
+
+	// The first system should now have the latest LastScanned value
+	for _, system := range systems {
+		if system.LatestScan != nil {
+			return system.LatestScan, nil
+		}
+	}
+
+	// If all systems have a nil LatestScan, return an error
+	return nil, fmt.Errorf("no latest scan timestamp found")
 }

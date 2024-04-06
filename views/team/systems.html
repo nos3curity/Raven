@@ -9,7 +9,7 @@
                
                     <h2 class="accordion-header border border-0 rounded m-0 cs-bg-gray pb-3" id="heading"> 
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion{{.NetworkID}}" aria-expanded="true" aria-controls="accordion{{.NetworkID}}">
-                            Network: {{ .NetworkCidr }}
+                            Network: {{ .NetworkCidr }}&nbsp;&nbsp;&nbsp;&nbsp;<span class="cs-text-white fst-italic opacity-60">{{if index $.network_last_scan .NetworkCidr}}Last Scan: {{index $.network_last_scan .NetworkCidr | formatTime}}{{else}}Not Scanned{{end}}</span>
                         </button>
                     </h2>
                     <div id="accordion{{.NetworkID}}" class="accordion-collapse collapse show" aria-labelledby="accordion{{.NetworkID}}">
@@ -52,7 +52,8 @@
                                                         <h5 class="modal-title cs-text-black fw-bold" id="exampleModalLabel">{{.Ip}} ({{.Hostname }})</h5>
                                                     {{else}}
                                                         <h5 class="modal-title cs-text-black fw-bold" id="exampleModalLabel">{{.Ip}}</h5>
-                                                    {{end}}
+                                                    {{end}}x
+                                                    <p class="cs-text-white mb-0">Last Scan: {{.LatestScan | formatTime}}</p>
                                                 </div>
                                                 <div class="modal-body cs-bg-gray">
                                                     <div class="fluid-container p-0 pb-5 border-0">

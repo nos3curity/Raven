@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"raven/models"
 	"strconv"
+	"time"
 
 	beego "github.com/beego/beego/v2/server/web"
 )
@@ -56,6 +57,7 @@ func (c *TeamsController) Get() {
 	networkSystems := make(map[string][]models.System)
 	systemPorts := make(map[string][]models.SystemPort)
 	systemComments := make(map[string][]models.Comment)
+	networkLastScan := make(map[string]*time.Time)
 
 	// First, fetch the team information
 	team, err := models.GetTeam(teamId)
@@ -79,6 +81,12 @@ func (c *TeamsController) Get() {
 		}
 
 		networkSystems[network.NetworkCidr] = systems
+
+		// Get the latest system scan timestamp
+		latestScan, err := models.GetNetworkNmapTimestamp(network.NetworkCidr)
+		if err == nil {
+			networkLastScan[network.NetworkCidr] = latestScan
+		}
 
 		// Grab open ports for each system
 		for _, system := range systems {
@@ -104,6 +112,7 @@ func (c *TeamsController) Get() {
 	c.Data["network_systems"] = networkSystems
 	c.Data["system_ports"] = systemPorts
 	c.Data["system_comments"] = systemComments
+	c.Data["network_last_scan"] = networkLastScan
 
 	c.Layout = "layout/sidebar.tpl"
 	c.TplName = "team/systems.html"
