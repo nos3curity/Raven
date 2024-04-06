@@ -44,6 +44,8 @@
                                             <img width="100" height="100" src="/static/linux.png" alt="Linux Image">
                                             {{else if eq .OsFamily "Windows"}}
                                             <img width="100" height="100" src="/static/windows.png" alt="Windows Image">
+                                            {{else}}
+                                            <img width="100" height="100" src="/static/unknown.png" class="align-self-center" style="transform: scale(0.80);" alt="Unknown OS Image">
                                             {{end}}
                                         </div>
                                         </div>
