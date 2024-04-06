@@ -1,6 +1,7 @@
 package models
 
 import (
+	"sort"
 	"time"
 
 	"github.com/beego/beego/v2/client/orm"
@@ -76,13 +77,19 @@ func GetSystem(systemIp string) (system System, err error) {
 }
 
 func GetSystemPorts(systemIp string) (systemPorts []SystemPort, err error) {
-
 	o := orm.NewOrm()
-
-	_, err = o.QueryTable(new(SystemPort)).RelatedSel().Filter("System__Ip", systemIp).All(&systemPorts)
+	_, err = o.QueryTable(new(SystemPort)).
+		RelatedSel().
+		Filter("System__Ip", systemIp).
+		All(&systemPorts)
 	if err != nil {
 		return nil, err
 	}
+
+	// Sort the systemPorts array by port number
+	sort.Slice(systemPorts, func(i, j int) bool {
+		return systemPorts[i].Port.PortNumber < systemPorts[j].Port.PortNumber
+	})
 
 	return systemPorts, nil
 }
