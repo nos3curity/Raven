@@ -6,12 +6,12 @@
             {{range .networks}}
             <div class="pb-3">
             <div class="accordion border-0 accordion-borderless">
-                <div class="accordion-item border-0 pt-2 cs-bg-gray cs-text-gray">
-                    <h2 class="accordion-header border border-0 rounded m-0 cs-bg-gray pb-2" id="heading"> 
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion{{.NetworkID}}" aria-expanded="true" aria-controls="accordion{{.NetworkID}}">
+                <div id="accordion-item-{{.NetworkID}}" class="accordion-item border-0 pt-2 cs-bg-gray cs-text-gray">
+                    <h2 class="accordion-header d-flex border border-0 rounded m-0 cs-bg-gray pb-2" id="accordion-heading-{{.NetworkID}}"> 
+                        <button id="accordion-button-{{.NetworkID}}" class="cs-bg-gray cs-bg-light-gray-on-hover HEADER collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion{{.NetworkID}}" aria-expanded="true" aria-controls="accordion{{.NetworkID}}" style="padding: 1rem; border: none; width: 96%; text-align: left;">
                             <div class="d-flex w-100">
                                 <div class="d-block w-100">
-                                    <span class="d-block">
+                                    <span class="d-block cs-text-black" style="font-size: 1rem;">
                                         Network: {{ .NetworkCidr }}
                                     </span>
                                     <span class="cs-text-black d-block opacity-50 w-100" style="font-size: 14px; padding-top: 2px;">
@@ -24,6 +24,9 @@
                                 </div>
                             </div>
                         </button>                                             
+                        <div id="copy-icon-{{.NetworkID}}" class="d-flex" style="cursor: pointer; text-align: right; align-items: center; padding-right: 1rem;">
+                            <img type="button" class="cs-bg-light-gray-on-hover" src="/static/copyIcon.png" style="width: 35px; height: 35px;" data-bs-toggle="tooltip" data-bs-trigger="manual" data-bs-delay='{"show":200,"hide":150}' data-bs-placement="left" title="All IPs copied!" onclick="copyIpsString(this)">
+                        </div>
                     </h2>                    
                     <div id="accordion{{.NetworkID}}" class="accordion-collapse collapse show" aria-labelledby="accordion{{.NetworkID}}">
                         <div class="accordion-body p-0 cs-bg-dark-gray py-2">
@@ -31,7 +34,7 @@
                                 <div class="grid-container">
                                     {{range $index, $element := (index $.network_systems .NetworkCidr)}}
                                     <div type="button" class="grid-item btn p-0 m-0" data-bs-toggle="modal" data-bs-target="#modal{{$index}}">
-                                        <div class="cs-bg-gray d-flex flex-column justify-content-between pt-2 pb-2 h-100">
+                                        <div class="cs-bg-light-gray-on-hover cs-bg-gray d-flex flex-column justify-content-between pt-2 pb-2 h-100">
                                         <div class="container d-flex align-items-center justify-content-center">
                                             <div class="text-center">
                                                 {{if .Hostname}}
@@ -66,10 +69,10 @@
                                                 <div class="modal-header border-0 cs-bg-dark-gray">
                                                     {{if .Hostname}}
                                                     <div class="block">
-                                                        <button type="button" class="btn cs-bg-transparent border-0 p-0" onclick="copyToClipboard(this, '{{.Ip}}')" data-bs-toggle="tooltip" data-bs-trigger="manual" data-bs-delay='{"show":200,"hide":150}' data-bs-placement="right" title="Copied!"><h5 class="m-0 me-1 fw-bold">{{.Ip}}</h5></button>
+                                                        <button type="button" class="btn cs-bg-transparent border-0 p-0 cs-text-white" onclick="copyToClipboard(this, '{{.Ip}}')" data-bs-toggle="tooltip" data-bs-trigger="manual" data-bs-delay='{"show":200,"hide":150}' data-bs-placement="right" title="Copied!"><h5 class="m-0 me-1 fw-bold cs-text-white-on-hover">{{.Ip}}</h5></button>
                                                     </div>
                                                     <div class="block">
-                                                        <button type="button" class="btn cs-bg-transparent border-0 p-0" onclick="copyToClipboard(this, '{{.Hostname}}')" data-bs-toggle="tooltip" data-bs-trigger="manual" data-bs-delay='{"show":200,"hide":150}' data-bs-placement="right" title="Copied!"><h6 class="m-0 me-1">{{.Hostname}}</h6></button>
+                                                        <button type="button" class="btn cs-bg-transparent border-0 p-0 cs-text-white" onclick="copyToClipboard(this, '{{.Hostname}}')" data-bs-toggle="tooltip" data-bs-trigger="manual" data-bs-delay='{"show":200,"hide":150}' data-bs-placement="right" title="Copied!"><h6 class="m-0 me-1 cs-text-white-on-hover">{{.Hostname}}</h6></button>
                                                     </div>
 
                                                     <!-- <h5 class="modal-title cs-system-title fw-bold" onclick="copyToClipboard('{{.Hostname}}')">
@@ -77,7 +80,7 @@
                                                     </h5> -->
                                                     {{else}}
                                                     <div>
-                                                        <button type="button" class="btn cs-bg-transparent border-0 p-0" onclick="copyToClipboard(this, '{{.Ip}}')" data-bs-toggle="tooltip" data-bs-trigger="manual" data-bs-delay='{"show":200,"hide":150}' data-bs-placement="right" title="Copied!"><h5 class="m-0 me-1">{{.Ip}}</h5></button>
+                                                        <button type="button" class="btn cs-bg-transparent border-0 p-0 cs-text-white" onclick="copyToClipboard(this, '{{.Ip}}')" data-bs-toggle="tooltip" data-bs-trigger="manual" data-bs-delay='{"show":200,"hide":150}' data-bs-placement="right" title="Copied!"><h5 class="m-0 me-1 cs-text-white-on-hover">{{.Ip}}</h5></button>
                                                     </div>
                                                     {{end}}
                                                     <!-- <p class="cs-text-white mb-0">Last Scan: {{.LatestScan | formatTime}}</p> -->
@@ -164,12 +167,98 @@
 </div>
 
 <script>
-    // Initialize Bootstrap tooltips
+    // Initializing Bootstrap's tooltips
+    // Used for "Copied!" pop-up
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
       return new bootstrap.Tooltip(tooltipTriggerEl)
     })
 </script>
+
+<script> 
+function copyIpsString(button)
+{
+    var ipsString = "";
+
+    {{range .networks }}
+        {{range $index, $element := (index $.network_systems .NetworkCidr)}}
+            ipsString += "{{ .Ip }}\n";
+        {{ end }}
+    {{ end }}
+
+    // Now 'ipsString' contains all the IP addresses separated by newline characters
+    console.log(ipsString);
+    copyToClipboard(button, ipsString);
+}
+</script>
+
+<script>
+    // Get all elements whose IDs start with "accordion-button-"
+    const buttons = document.querySelectorAll('[id^="accordion-button-"]');
+
+    // Loop through each button
+    buttons.forEach(function(button) {
+        // Extract the index from the button ID
+        const index = button.id.split('-').pop();
+        console.log(index);
+
+        // Construct the IDs of the corresponding heading and accordion item elements
+        const headingId = 'accordion-heading-' + index;
+        console.log(headingId);
+        const accordionItemId = 'accordion-item-' + index;
+        console.log(accordionItemId);
+
+        // Get the corresponding heading and accordion item elements
+        const heading = document.getElementById(headingId);
+        const accordionItem = document.getElementById(accordionItemId);
+
+        // Add mouseover event listener to the button
+        button.addEventListener('mouseover', function() {
+            if (heading && accordionItem) {
+                heading.classList.remove('cs-bg-gray'); // Remove cs-bg-gray class
+                heading.style.backgroundColor = '#adadad';
+
+                accordionItem.classList.remove('cs-bg-gray');
+                accordionItem.style.backgroundColor = '#adadad';
+            }
+        });
+
+        // Add mouseout event listener to the button
+        button.addEventListener('mouseout', function() {
+            if (heading && accordionItem) {
+                heading.classList.add('cs-bg-gray'); // Add cs-bg-gray class back
+                heading.style.backgroundColor = ''; // Reset to default background color
+
+                accordionItem.classList.add('cs-bg-gray');
+                accordionItem.style.backgroundColor = '';
+            }
+        });
+    });
+</script>
+
+<!-- <script>
+    const button = document.getElementById('accordion-button-1');
+    const heading = document.getElementById('accordion-heading-1');
+
+    const accordionItem = document.getElementById('accordion-item-1');
+    button.addEventListener('mouseover', function() {
+        var button = document.getElement
+        heading.classList.remove('cs-bg-gray'); // Remove cs-bg-gray class
+        heading.style.backgroundColor = '#adadad';
+
+        accordionItem.classList.remove('cs-bg-gray');
+        accordionItem.style.backgroundColor = '#adadad';
+    });
+
+    button.addEventListener('mouseout', function() {
+        heading.classList.add('cs-bg-gray'); // Add cs-bg-gray class back
+        heading.style.backgroundColor = ''; // Reset to default background color
+
+        accordionItem.classList.add('cs-bg-gray');
+        accordionItem.style.backgroundColor = '';
+    });
+</script> -->
+
 
 <script>
 document.getElementById('commentForm').addEventListener('submit', function(event) {

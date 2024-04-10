@@ -43,16 +43,16 @@
                                     <button id="homeBtn" type="button" class="cs-button btn w-100 text-start rounded-0 mb-2">Home</button>
                                 </a> -->
                                 <a href="/teams" onclick="setActiveButton('teamsBtn')">
-                                    <button id="teamsBtn" type="button" class="cs-button btn w-100 text-start rounded-0 mb-2 py-2">Team Setup</button>
+                                    <button id="teamsBtn" type="button" class="cs-button btn w-100 text-start rounded-0 mb-2 py-2 cs-bg-brown-on-hover">Team Setup</button>
                                 </a>
                                 <a href="/uploads" onclick="setActiveButton('uploadsBtn')">
-                                    <button id="uploadsBtn" type="button" class="cs-button btn w-100 text-start rounded-0 mb-2 py-2">Uploads</button>
+                                    <button id="uploadsBtn" type="button" class="cs-button btn w-100 text-start rounded-0 mb-2 py-2 cs-bg-brown-on-hover">Uploads</button>
                                 </a>
                                 <a href="/profile" onclick="setActiveButton('profileBtn')">
-                                    <button id="profileBtn" type="button" class="btn w-100 text-start rounded-0 cs-text-black mb-2 py-2">Profile</button>
+                                    <button id="profileBtn" type="button" class="btn w-100 text-start rounded-0 mb-2 py-2 cs-bg-brown-on-hover">Profile</button>
                                 </a>
                                 <a href="/loot" onclick="setActiveButton('lootBtn')">
-                                    <button id="lootBtn" type="button" class="btn w-100 text-start rounded-0 cs-text-black mb-2 py-2">Loot</button>
+                                    <button id="lootBtn" type="button" class="btn w-100 text-start rounded-0 mb-2 py-2 cs-bg-brown-on-hover">Loot</button>
                                 </a>
                             </div>
                             <br>
@@ -63,7 +63,7 @@
                             <div>
                                 {{ range .teams }}
                                 <a href="/teams/{{ .Id }}" onclick="setActiveButton('team{{ .Id }}Btn')">
-                                    <button id="team{{ .Id }}Btn" type="button" class="btn w-100 text-start rounded-0 cs-text-black mb-2 py-2">{{ .Name }}</button>
+                                    <button id="team{{ .Id }}Btn" type="button" class="btn w-100 text-start rounded-0 cs-text-black mb-2 py-2 cs-bg-brown-on-hover cs-text-white-on-hover">{{ .Name }}</button>
                                 </a>
                                 {{ end }}
                             </div>
