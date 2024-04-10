@@ -11,13 +11,13 @@
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion{{.NetworkID}}" aria-expanded="true" aria-controls="accordion{{.NetworkID}}">
                             Network: {{ .NetworkCidr }}
                             &nbsp;&nbsp;&nbsp;&nbsp;
-                            <span class="cs-text-white fst-italic opacity-60">
+                            <!-- <span class="cs-text-white fst-italic opacity-60">
                                 {{if index $.network_last_scan .NetworkCidr}}
                                     Last Scan: {{index $.network_last_scan .NetworkCidr | formatTime}}
                                 {{else}}
                                     Not Scanned
                                 {{end}}
-                            </span>
+                            </span> -->
                         </button>                                             
                     </h2>                    
                     <div id="accordion{{.NetworkID}}" class="accordion-collapse collapse show" aria-labelledby="accordion{{.NetworkID}}">
@@ -56,84 +56,91 @@
                                     {{range $index, $element := (index $.network_systems .NetworkCidr)}}
                                     <div class="modal" id="modal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-lg p-0" role="document">
-                                            <div class="modal-content py-3 px-4 cs-bg-gray">
-                                                <div class="modal-header border-0">
+                                            <!-- py-3 px-4 -->
+                                            <div class="modal-content cs-bg-gray">
+                                                <div class="modal-header border-0 cs-bg-dark-gray">
                                                     {{if .Hostname}}
-                                                        <h5 class="modal-title cs-text-black fw-bold" id="exampleModalLabel">
-                                                            {{.Ip}} <i class="fa fa-copy ms-2 fs-6" onclick="copyToClipboard('{{.Ip}}')"></i>
-                                                            ({{.Hostname }} <i class="fa fa-copy ms-2 fs-6" onclick="copyToClipboard('{{.Hostname}}')"></i>)
-                                                        </h5>
+                                                    <div class="block">
+                                                        <button type="button" class="btn cs-bg-transparent border-0 p-0" onclick="copyToClipboard(this, '{{.Ip}}')" data-bs-toggle="tooltip" data-bs-trigger="manual" data-bs-delay='{"show":200,"hide":150}' data-bs-placement="right" title="Copied!"><h5 class="m-0 me-1 fw-bold">{{.Ip}}</h5></button>
+                                                    </div>
+                                                    <div class="block">
+                                                        <button type="button" class="btn cs-bg-transparent border-0 p-0" onclick="copyToClipboard(this, '{{.Hostname}}')" data-bs-toggle="tooltip" data-bs-trigger="manual" data-bs-delay='{"show":200,"hide":150}' data-bs-placement="right" title="Copied!"><h6 class="m-0 me-1">{{.Hostname}}</h6></button>
+                                                    </div>
+
+                                                    <!-- <h5 class="modal-title cs-system-title fw-bold" onclick="copyToClipboard('{{.Hostname}}')">
+                                                        {{.Hostname }} 
+                                                    </h5> -->
                                                     {{else}}
-                                                        <h5 class="modal-title cs-text-black fw-bold" id="exampleModalLabel">
-                                                            {{.Ip}} <i class="fa fa-copy ms-2 fs-6" onclick="copyToClipboard('{{.Ip}}')"></i>
-                                                        </h5>
+                                                    <div>
+                                                        <button type="button" class="btn cs-bg-transparent border-0 p-0" onclick="copyToClipboard(this, '{{.Ip}}')" data-bs-toggle="tooltip" data-bs-trigger="manual" data-bs-delay='{"show":200,"hide":150}' data-bs-placement="right" title="Copied!"><h5 class="m-0 me-1">{{.Ip}}</h5></button>
+                                                    </div>
                                                     {{end}}
-                                                    <p class="cs-text-white mb-0">Last Scan: {{.LatestScan | formatTime}}</p>
+                                                    <!-- <p class="cs-text-white mb-0">Last Scan: {{.LatestScan | formatTime}}</p> -->
                                                 </div>
-                                                <div class="modal-body cs-bg-gray">
-                                                    <div class="fluid-container p-0 pb-5 border-0">
-                                                        <div class="row">
-                                                            <div class="col-7">
-                                                                <table class="table border border-bottom-0 m-0">
-                                                                    <tbody class="">
-                                                                        <tr class="">
-                                                                            <td class="border-0 p-0">
-                                                                                <table class="table m-0 border-0">
-                                                                                    <tbody class="border-0">
-                                                                                        <tr class="border-0">
-                                                                                            <th class="cs-text-white cs-bg-gray">Port</th>
-                                                                                            <th class="cs-text-white cs-bg-gray">Name</th>
-                                                                                            <th class="cs-text-white cs-bg-gray">Version</th>
-                                                                                            <th class="cs-text-white cs-bg-gray">Product</th>
-                                                                                        </tr>
-                                                                                        {{range (index $.system_ports .Ip)}}
-                                                                                        <tr class="border-0">
-                                                                                            <td class="cs-text-white cs-bg-gray">{{.Port.PortNumber}}/{{.Port.Protocol}}</td>
-                                                                                            <td class="cs-text-white cs-bg-gray">{{.Port.PortServiceName}}</td>
-                                                                                            <td class="cs-text-white cs-bg-gray">{{.Port.PortServiceVersion}}</td>
-                                                                                            <td class="cs-text-white cs-bg-gray">{{.Port.PortServiceProduct}}</td>
-                                                                                        </tr> 
-                                                                                        {{end}}
-                                                                                    </tbody>
-                                                                                </table>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                        </div>
+                                                <div class="modal-body cs-bg-gray rounded-3 py-0 pb-3">
+                                                    <div class="py-3 border-0">
+                                                        <table class="table w-100 table-striped">
+                                                            <thead class="cs-text-gray">
+                                                              <tr>
+                                                                <th scope="col" class="cs-text-white cs-bg-gray border-0">Port</th>
+                                                                <th scope="col" class="cs-text-white cs-bg-gray border-0">Name</th>
+                                                                <th scope="col" class="cs-text-white cs-bg-gray border-0">Version</th>
+                                                                <th scope="col" class="cs-text-white cs-bg-gray border-0">Product</th>
+                                                                <!-- <th scope="col" class="cs-text-white cs-bg-gray border-0">Misc.</th> -->
+                                                              </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                              {{range (index $.system_ports .Ip)}}
+                                                                <tr class="border-0">
+                                                                    <th scope="row" class="cs-text-white cs-bg-gray border-0">
+                                                                        <p class="fw-normal mb-1 cs-text-white">{{.Port.PortNumber}}/{{.Port.Protocol}}</p>
+                                                                    </th>
+                                                                    <th class="cs-text-white cs-bg-gray border-0">
+                                                                        <p class="fw-normal mb-1 cs-text-white">{{.Port.PortServiceName}}</p>
+                                                                    </th>
+                                                                    <th class="cs-text-white cs-bg-gray border-0">
+                                                                        <p class="fw-normal mb-1 cs-text-white">{{.Port.PortServiceVersion}}</p>
+                                                                    </th>
+                                                                    <th class="cs-text-white cs-bg-gray border-0">
+                                                                        <p class="fw-normal mb-1 cs-text-white">{{.Port.PortServiceProduct}}</p>
+                                                                    </th>
+                                                                    <!-- <th class="cs-text-white cs-bg-gray border-0">
+                                                                        <p class="fw-normal mb-1 cs-text-white">something?</p>
+                                                                    </th> -->
+                                                                </th>
+                                                                </tr> 
+                                                            {{end}} 
+                                                            </tbody>
+                                                          </table>
+                                            </div>
+                                            <h5 class="cs-text-black">Activity</h5>
+                                            <form method="POST" action="/comments/add">
+                                                <div class="pb-2">
+                                                    <input type="hidden" name="system_ip" value="{{.Ip}}">
+                                                    <textarea class="w-100 cs-text-white p-2 rounded-2 cs-bg-brown border-0" name="comment" rows="1" placeholder="Write a comment..."></textarea>
+                                                </div>
+                                                <input type="submit" value="Save" class="btn rounded-1 cs-bg-red cs-text-white py-1" style="width: 60px; height: 35px;">
+                                            </form>
+                                            {{range (index $.system_comments .Ip)}}
+                                            <div class="container-fluid p-0 mb-3 pt-3">
+                                                <div class="row m-0 align-middle">
+                                                    <p class="col-auto m-0 ps-0 pe-2 cs-text-white fw-bold pe-2">{{.Username}}</p>
+                                                    <p class="col-4 m-0 ps-0 cs-text-dark-white d-flex flex-column justify-content-center" style="font-size: 12px;">{{.CreatedAt | formatTime}}</p>
+                                                </div>
+                                                <div class="row m-0">
+                                                    <div class="cs-text-white p-2 ps-0 rounded-2 cs-bg-brown text-wrap" style="word-wrap: break-word; width: 100%;">
+                                                        <p class="px-2 m-0 text-wrap">{{.Text}}</p>
                                                     </div>
-                                                    <h5 class="cs-text-black">Activity</h5>
-                                                    <form method="POST" action="/comments/add">
-                                                        <div class="pb-2">
-                                                            <input type="hidden" name="system_ip" value="{{.Ip}}">
-                                                            <textarea class="w-100 cs-text-white p-2 rounded-2 cs-bg-brown border-0" name="comment" rows="1" placeholder="Write a comment..."></textarea>
-                                                        </div>
-                                                        <input type="submit" value="Save" class="btn rounded-1 cs-bg-red cs-text-white py-1" style="width: 60px; height: 35px;">
-                                                    </form>
-                                                    {{range (index $.system_comments .Ip)}}
-                                                    <div class="container-fluid p-0 mb-3 pt-3">
-                                                        <div class="row m-0 align-middle">
-                                                            <p class="col-auto m-0 ps-0 pe-2 cs-text-white fw-bold pe-2">{{.Username}}</p>
-                                                            <p class="col-4 m-0 ps-0 cs-text-dark-white d-flex flex-column justify-content-center" style="font-size: 12px;">{{.CreatedAt | formatTime}}</p>
-                                                        </div>
-                                                        <div class="row m-0">
-                                                            <div class="cs-text-white p-2 ps-0 rounded-2 cs-bg-brown text-wrap" style="word-wrap: break-word; width: 100%;">
-                                                                <p class="px-2 m-0 text-wrap">{{.Text}}</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row m-0">
-                                                            <div class="p-0 d-inline-block" style="width: 10%;">
-                                                                <a class="cs-comment-del cs-text-light-black" style="font-size: 12px;" href="/comments/delete?comment_id={{.Id}}">Delete</a>
-                                                            </div>
-                                                        </div>
+                                                </div>
+                                                <div class="row m-0">
+                                                    <div class="p-0 d-inline-block" style="width: 10%;">
+                                                        <a class="cs-comment-del cs-text-light-black" style="font-size: 12px;" href="/comments/delete?comment_id={{.Id}}">Delete</a>
                                                     </div>
+                                                </div>
+                                            </div>
                                                     {{end}}
                                                     <!-- <h6 class="cs-text-black m-0 vertical-center"></h6> -->
                                                 </div>
-                                                <div class="modal-footer border-0">
-                                                </div>
-                                            
                                             </div>
                                         </div>
                                     </div>
@@ -150,6 +157,14 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Initialize Bootstrap tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+</script>
 
 <script>
 document.getElementById('commentForm').addEventListener('submit', function(event) {
