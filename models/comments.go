@@ -20,7 +20,6 @@ func init() {
 }
 
 func normalizeTime(t time.Time) time.Time {
-
 	timezone, _ := beego.AppConfig.String("timezone")
 	loc, _ := time.LoadLocation(timezone)
 	normalizedTime := t.In(loc)
