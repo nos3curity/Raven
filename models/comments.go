@@ -20,9 +20,11 @@ func init() {
 }
 
 func normalizeTime(t time.Time) time.Time {
+	// Adjust time to defined timezone in conf
 	timezone, _ := beego.AppConfig.String("timezone")
 	loc, _ := time.LoadLocation(timezone)
 	normalizedTime := t.In(loc)
+
 	return normalizedTime
 }
 
@@ -30,6 +32,7 @@ func FormatTime(t time.Time) string {
 	// Format the time according to the desired format
 	normalizedTime := normalizeTime(t)
 	formattedTime := normalizedTime.Format("Jan. _2, 2006 03:04PM")
+
 	return formattedTime
 }
 
