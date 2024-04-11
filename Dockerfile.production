@@ -1,0 +1,24 @@
+FROM golang:1.21-bullseye as builder
+
+ENV APP_HOME /go/src/raven
+
+WORKDIR "$APP_HOME"
+COPY . .
+
+RUN go mod init raven
+RUN go mod tidy
+RUN go mod verify
+RUN go build -o raven
+
+FROM golang:1.21-bullseye
+
+ENV APP_HOME /go/src/raven
+RUN mkdir -p "$APP_HOME"
+WORKDIR "$APP_HOME"
+
+COPY conf/ conf/
+COPY views/ views/
+COPY --from=builder "$APP_HOME"/raven $APP_HOME
+
+EXPOSE 8080
+CMD ["./raven"]

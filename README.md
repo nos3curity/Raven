@@ -43,6 +43,45 @@ run the app:
 bee run
 ```
 
+## Docker
+
+### Development Environment
+
+1. Clone
+
+2. Build Docker Image
+
+```
+docker build -t raven-dev .
+```
+
+3. Init the modules and download libraries
+```
+go mod init raven
+go mod tidy
+go mod vendor
+```
+
+5. Run
+
+```
+docker run -it --rm -p 8080:8080 -v $PWD/src:/go/src/raven raven-dev
+```
+
+### Production Environment
+
+1. Clone
+
+2. Build Production Docker Image
+```
+docker build -t raven-prod -f Dockerfile.production
+```
+
+3. Run
+```
+docker run -it -p 8080:8080 raven-prod
+```
+
 ## documentation
 
 ### primary functions
