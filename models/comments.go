@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/beego/beego/v2/client/orm"
+	beego "github.com/beego/beego/v2/server/web"
 )
 
 type Comment struct {
@@ -18,11 +19,21 @@ func init() {
 	orm.RegisterModel(new(Comment))
 }
 
-func FormatTime(t time.Time) string {
-    // Format the time according to the desired format
-    formattedTime := t.Format("Jan. _2, 2006 03:04PM")
+func normalizeTime(t time.Time) time.Time {
+	// Adjust time to defined timezone in conf
+	timezone, _ := beego.AppConfig.String("timezone")
+	loc, _ := time.LoadLocation(timezone)
+	normalizedTime := t.In(loc)
 
-    return formattedTime
+	return normalizedTime
+}
+
+func FormatTime(t time.Time) string {
+	// Format the time according to the desired format
+	normalizedTime := normalizeTime(t)
+	formattedTime := normalizedTime.Format("Jan. _2, 2006 03:04PM")
+
+	return formattedTime
 }
 
 func AddComment(systemIp string, username string, commentText string) (err error) {

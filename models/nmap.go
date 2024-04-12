@@ -35,7 +35,9 @@ func ParseNmapScan(scanPath string) (err error) {
 		}
 
 		// Add the scan timestamp to the system
-		system.LatestScan = (*time.Time)(&scan.RunStats.Finished.Time)
+		t := (*time.Time)(&scan.RunStats.Finished.Time)
+		normalizedTime := normalizeTime(*t)
+		system.LatestScan = (&normalizedTime)
 
 		// Check if we have system already
 		existingSystem, err := GetSystem(system.Ip)
