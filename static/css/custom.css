@@ -41,7 +41,7 @@ html, body
     background-color: #403c3c !important;
 }
 .cs-bg-light-gray-on-hover:hover {
-    background-color: #adadad !important
+    background-color: #adadad !important;
 }
 .cs-text-white-on-hover:hover {
     color: #faf4dd !important;
@@ -61,6 +61,9 @@ html, body
 .cs-text-light-gray {
     color: #cfcecc !important;
 }
+.cs-text-white-active:active {
+    color: #faf4dd !important;
+}
 .cs-button-red {
     background-color: #f26270 !important;
 }
@@ -75,33 +78,17 @@ html, body
 #accordion-button:hover ~ #accordion-item {
     background-color: #adadad !important;
 }
-/* [id^="accordion-button-"]:hover ~ [id^="accordion-item-"] {
-    background-color: #adadad !important;
-}
 
-[id^="accordion-button-"]:hover + [id^="copy-icon-"] {
-    background-color: #adadad !important;
-} */
-
-/* [id^="accordion-button-"]:hover > [id^="copy-icon-"]{
-    background-color: yellow !important;
-} */
-.cs-something {
-    translate: calc()
+.btn .dropdown-toggle img {
+    object-fit: contain !important;
 }
 
 .modal-header {
     display: block !important;
-    /* position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    margin: 0 !important;
-    z-index: 1000 !important; */
 }
-.accordion-header .d-flex img.btn {
+/* .accordion-header .d-flex img.btn {
     visibility: visible !important;
-}
+} */
 .accordion-button:hover {
     z-index: 0 !important;
 }
@@ -130,8 +117,33 @@ html, body
     flex: 1 !important;
 }
 
+.cs-copy-ips-string {
+    --bs-tooltip-padding-x: 50px !important;
+}
 
-/* Bootstrap override */
+
+/* BOOTSTRAP OVERRIDE */
+:root {
+.tooltip {
+    --bs-tooltip-color: #faf4dd !important;
+    --bs-tooltip-bg: #aeadad !important;
+    --bs-tooltip-padding-x: 10px !important;
+    --bs-tooltip-padding-y: 2px !important;
+    --bs-tooltip-opacity: 0.9 !important;
+}
+
+.btn {
+    --bs-btn-hover-bg: transparent !important; 
+    --bs-btn-hover-color: #faf4dd !important;
+    --bs-btn-active-color: #faf4dd !important;
+    --bs-btn-active-border-color: transparent !important;
+}
+
+.link {
+    --bs-link-hover-color: #1d1d1d;
+    --bs-link-hover-rgb: (29,29,29);
+}
+
 .accordion {
     --bs-accordion-btn-bg: #929190;
     --bs-accordion-active-bg: #929190;
@@ -141,24 +153,4 @@ html, body
     --bs-accordion-border-width: 0;
 }
 
-
-.link {
-    --bs-link-hover-color: #1d1d1d;
-    --bs-link-hover-rgb: (29,29,29);
-}
-:root {
-.tooltip {
-    --bs-tooltip-color: #faf4dd !important;
-    --bs-tooltip-bg: #aeadad !important;
-    --bs-tooltip-padding-x: 10px !important;
-    --bs-tooltip-padding-y: 2px !important;
-    --bs-tooltip-opacity: 0.9 !important;
-    /* --bs-tooltip-zindex: 0 !important; */
-}
-
-.btn {
-    /* --bs-btn-hover-color: #757575 !important; */
-    --bs-btn-hover-bg:transparent !important; 
-    --bs-btn-hover-color: #faf4dd !important;
-}
 }

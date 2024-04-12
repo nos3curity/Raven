@@ -7,7 +7,7 @@
             <div class="pb-3">
             <div class="accordion border-0 accordion-borderless">
                 <div id="accordion-item-{{.NetworkID}}" class="accordion-item border-0 pt-2 cs-bg-gray cs-text-gray">
-                    <h2 class="accordion-header d-flex border border-0 rounded m-0 cs-bg-gray pb-2" id="accordion-heading-{{.NetworkID}}"> 
+                    <h2 class="accordion-header d-flex border border-0 rounded m-0 cs-bg-gray pb-2" id="accordion-heading-{{.NetworkID}}" style="align-items: center;"> 
                         <button id="accordion-button-{{.NetworkID}}" class="cs-bg-gray cs-bg-light-gray-on-hover HEADER collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion{{.NetworkID}}" aria-expanded="true" aria-controls="accordion{{.NetworkID}}" style="padding: 1rem; border: none; width: 96%; text-align: left;">
                             <div class="d-flex w-100">
                                 <div class="d-block w-100">
@@ -24,8 +24,33 @@
                                 </div>
                             </div>
                         </button>                                             
-                        <div id="copy-icon-{{.NetworkID}}" class="d-flex" style="cursor: pointer; text-align: right; align-items: center; padding-right: 1rem;">
-                            <img type="button" class="cs-bg-light-gray-on-hover" src="/static/copyIcon.png" style="width: 35px; height: 35px;" data-bs-toggle="tooltip" data-bs-trigger="manual" data-bs-delay='{"show":200,"hide":150}' data-bs-placement="left" title="All IPs copied!" onclick="copyIpsString(this)">
+                        <div class="d-flex" style="height: 35px;">
+                            <div class="d-flex" id="copy-icon-{{.NetworkID}}" style="cursor: pointer; text-align: right; align-items: center; padding-right: 0rem; padding: 0.5rem;">
+                                <div class="d-flex" style="align-items: center;">
+                                    <button type="button" data-bs-toggle="tooltip" data-bs-trigger="manual" data-bs-placement="left" title="All IPs Copied!" class="cs-text-white cs-bg-light-gray-on-hover cs-text-white-on-hover btn" style="align-items: center; padding: 0.5rem;" data-bs-custom-class="cs-copy-ips-string" data-bs-delay='{"show":200,"hide":150}' onclick="copyIpsString(this)">
+                                        <img type="button" class="cs-bg-light-gray-on-hover" src="/static/copyIcon.png" style="width: 25px; height: 25px;">
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="d-flex" style="cursor: pointer; text-align: right; align-items: center; padding-right: 1rem;">
+                                <div class="dropdown d-flex" style="align-items: center;">
+                                    <button class="cs-text-white cs-bg-light-gray-on-hover cs-text-white-on-hover cs-bg-light-gray-target btn dropdown-toggle" style="align-items: center; padding: 0.5rem; border-width: 0px;" type="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <span id="dropdown-title">
+                                            <img src="/static/four-square-icon.png" style="width: 25px;">
+                                        </span>
+                                    </button>
+                                    <ul class="dropdown-menu" style="background-color: #9d9d9d; border-color: #faf4dd; border-width: 0px; box-shadow: 1px 10px 10px #666">
+                                        <li>
+                                            <a class="dropdown-item cs-text-black cs-bg-light-gray-on-hover"><img src="/static/four-square-icon.png" style="width: 25px; margin-right: 0.5rem;">Hosts View
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item cs-text-black cs-bg-light-gray-on-hover"><img src="/static/magnifying-glass.png" style="width: 25px; margin-right: 0.5rem;">Gowitness View
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </h2>                    
                     <div id="accordion{{.NetworkID}}" class="accordion-collapse collapse show" aria-labelledby="accordion{{.NetworkID}}">
@@ -74,16 +99,11 @@
                                                     <div class="block">
                                                         <button type="button" class="btn cs-bg-transparent border-0 p-0 cs-text-white" onclick="copyToClipboard(this, '{{.Hostname}}')" data-bs-toggle="tooltip" data-bs-trigger="manual" data-bs-delay='{"show":200,"hide":150}' data-bs-placement="right" title="Copied!"><h6 class="m-0 me-1 cs-text-white-on-hover">{{.Hostname}}</h6></button>
                                                     </div>
-
-                                                    <!-- <h5 class="modal-title cs-system-title fw-bold" onclick="copyToClipboard('{{.Hostname}}')">
-                                                        {{.Hostname }} 
-                                                    </h5> -->
                                                     {{else}}
                                                     <div>
                                                         <button type="button" class="btn cs-bg-transparent border-0 p-0 cs-text-white" onclick="copyToClipboard(this, '{{.Ip}}')" data-bs-toggle="tooltip" data-bs-trigger="manual" data-bs-delay='{"show":200,"hide":150}' data-bs-placement="right" title="Copied!"><h5 class="m-0 me-1 cs-text-white-on-hover">{{.Ip}}</h5></button>
                                                     </div>
                                                     {{end}}
-                                                    <!-- <p class="cs-text-white mb-0">Last Scan: {{.LatestScan | formatTime}}</p> -->
                                                 </div>
                                                 <div class="modal-body cs-bg-gray rounded-3 py-0 pb-3">
                                                     <div class="py-3 border-0">
@@ -119,44 +139,42 @@
                                                                 </tr> 
                                                             {{end}} 
                                                             </tbody>
-                                                          </table>
-                                            </div>
-                                            <h5 class="cs-text-black">Activity</h5>
-                                            <form method="POST" action="/comments/add">
-                                                <div class="pb-2">
-                                                    <input type="hidden" name="system_ip" value="{{.Ip}}">
-                                                    <textarea class="w-100 cs-text-white p-2 rounded-2 cs-bg-brown border-0" name="comment" rows="1" placeholder="Write a comment..."></textarea>
-                                                </div>
-                                                <input type="submit" value="Save" class="btn rounded-1 cs-bg-red cs-text-white py-1" style="width: 60px; height: 35px;">
-                                            </form>
-                                            {{range (index $.system_comments .Ip)}}
-                                            <div class="container-fluid p-0 mb-3 pt-3">
-                                                <div class="row m-0 align-middle">
-                                                    <p class="col-auto m-0 ps-0 pe-2 cs-text-white fw-bold pe-2">{{.Username}}</p>
-                                                    <p class="col-4 m-0 ps-0 cs-text-dark-white d-flex flex-column justify-content-center" style="font-size: 12px;">{{.CreatedAt | formatTime}}</p>
-                                                </div>
-                                                <div class="row m-0">
-                                                    <div class="cs-text-white p-2 ps-0 rounded-2 cs-bg-brown text-wrap" style="word-wrap: break-word; width: 100%;">
-                                                        <p class="px-2 m-0 text-wrap">{{.Text}}</p>
+                                                        </table>
                                                     </div>
-                                                </div>
-                                                <div class="row m-0">
-                                                    <div class="p-0 d-inline-block" style="width: 10%;">
-                                                        <a class="cs-comment-del cs-text-light-black" style="font-size: 12px;" href="/comments/delete?comment_id={{.Id}}">Delete</a>
+                                                    <h5 class="cs-text-black">Activity</h5>
+                                                    <form method="POST" action="/comments/add">
+                                                        <div class="pb-2">
+                                                            <input type="hidden" name="system_ip" value="{{.Ip}}">
+                                                            <textarea class="w-100 cs-text-white p-2 rounded-2 cs-bg-brown border-0" name="comment" rows="1" placeholder="Write a comment..."></textarea>
+                                                        </div>
+                                                        <input type="submit" value="Save" class="btn rounded-1 cs-bg-red cs-text-white py-1" style="width: 60px; height: 35px;">
+                                                    </form>
+                                                    {{range (index $.system_comments .Ip)}}
+                                                    <div class="container-fluid p-0 mb-3 pt-3">
+                                                        <div class="row m-0 align-middle">
+                                                            <p class="col-auto m-0 ps-0 pe-2 cs-text-white fw-bold pe-2">{{.Username}}</p>
+                                                            <p class="col-4 m-0 ps-0 cs-text-dark-white d-flex flex-column justify-content-center" style="font-size: 12px;">{{.CreatedAt | formatTime}}</p>
+                                                        </div>
+                                                        <div class="row m-0">
+                                                            <div class="cs-text-white p-2 ps-0 rounded-2 cs-bg-brown text-wrap" style="word-wrap: break-word; width: 100%;">
+                                                                <p class="px-2 m-0 text-wrap">{{.Text}}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row m-0">
+                                                            <div class="p-0 d-inline-block" style="width: 10%;">
+                                                                <a class="cs-comment-del cs-text-light-black" style="font-size: 12px;" href="/comments/delete?comment_id={{.Id}}">Delete</a>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>
                                                     {{end}}
-                                                    <!-- <h6 class="cs-text-black m-0 vertical-center"></h6> -->
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     {{end}}
                                 </div>
-                                </div>
+                            </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -166,17 +184,18 @@
     </div>
 </div>
 
-<script>
-    // Initializing Bootstrap's tooltips
-    // Used for "Copied!" pop-up
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-      return new bootstrap.Tooltip(tooltipTriggerEl)
-    })
-</script>
-
 <script> 
-function copyIpsString(button)
+// ==== copyIpsString ========================================================
+//
+// This function copies a newline delimited string of all the IPs in the
+// relevant network to the user's clipboard.
+//
+// Input:
+//      copyButton   -- a reference to the calling button object
+//      text [IN]    -- a string value to be copied
+//
+// ============================================================================
+function copyIpsString(copyButton)
 {
     var ipsString = "";
 
@@ -188,101 +207,6 @@ function copyIpsString(button)
 
     // Now 'ipsString' contains all the IP addresses separated by newline characters
     console.log(ipsString);
-    copyToClipboard(button, ipsString);
+    copyToClipboard(copyButton, ipsString);
 }
 </script>
-
-<script>
-    // Get all elements whose IDs start with "accordion-button-"
-    const buttons = document.querySelectorAll('[id^="accordion-button-"]');
-
-    // Loop through each button
-    buttons.forEach(function(button) {
-        // Extract the index from the button ID
-        const index = button.id.split('-').pop();
-        console.log(index);
-
-        // Construct the IDs of the corresponding heading and accordion item elements
-        const headingId = 'accordion-heading-' + index;
-        console.log(headingId);
-        const accordionItemId = 'accordion-item-' + index;
-        console.log(accordionItemId);
-
-        // Get the corresponding heading and accordion item elements
-        const heading = document.getElementById(headingId);
-        const accordionItem = document.getElementById(accordionItemId);
-
-        // Add mouseover event listener to the button
-        button.addEventListener('mouseover', function() {
-            if (heading && accordionItem) {
-                heading.classList.remove('cs-bg-gray'); // Remove cs-bg-gray class
-                heading.style.backgroundColor = '#adadad';
-
-                accordionItem.classList.remove('cs-bg-gray');
-                accordionItem.style.backgroundColor = '#adadad';
-            }
-        });
-
-        // Add mouseout event listener to the button
-        button.addEventListener('mouseout', function() {
-            if (heading && accordionItem) {
-                heading.classList.add('cs-bg-gray'); // Add cs-bg-gray class back
-                heading.style.backgroundColor = ''; // Reset to default background color
-
-                accordionItem.classList.add('cs-bg-gray');
-                accordionItem.style.backgroundColor = '';
-            }
-        });
-    });
-</script>
-
-<!-- <script>
-    const button = document.getElementById('accordion-button-1');
-    const heading = document.getElementById('accordion-heading-1');
-
-    const accordionItem = document.getElementById('accordion-item-1');
-    button.addEventListener('mouseover', function() {
-        var button = document.getElement
-        heading.classList.remove('cs-bg-gray'); // Remove cs-bg-gray class
-        heading.style.backgroundColor = '#adadad';
-
-        accordionItem.classList.remove('cs-bg-gray');
-        accordionItem.style.backgroundColor = '#adadad';
-    });
-
-    button.addEventListener('mouseout', function() {
-        heading.classList.add('cs-bg-gray'); // Add cs-bg-gray class back
-        heading.style.backgroundColor = ''; // Reset to default background color
-
-        accordionItem.classList.add('cs-bg-gray');
-        accordionItem.style.backgroundColor = '';
-    });
-</script> -->
-
-
-<script>
-document.getElementById('commentForm').addEventListener('submit', function(event) {
-    var formData = new FormData(this);
-
-    fetch('/comments/add', {
-        method: 'POST',
-        body: formData,
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Update the comments list with the new comment
-        var commentsList = document.getElementById('commentsList');
-        var newCommentElement = document.createElement('li');
-        newCommentElement.textContent = data.createdAt + '/' + data.username + '/' + data.text;
-        commentsList.appendChild(newCommentElement);
-
-        // Clear the textarea
-        document.querySelector('textarea[name="comment"]').value = '';
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-});
-
-</script>
-

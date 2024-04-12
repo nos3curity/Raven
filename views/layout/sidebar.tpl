@@ -13,7 +13,8 @@
     <!-- END: FOR TOOLTIPS -->
 
     <script src="/static/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/static/js/qol.js"></script>
+    <script src="/static/js/qol.js" defer></script>
+    <script src="/static/js/comments.js"></script>
     <link rel="stylesheet" href="/static/css/custom.css">
 </head>
 <body>
