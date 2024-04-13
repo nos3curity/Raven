@@ -55,5 +55,11 @@ func init() {
 	// External API functionality
 	beego.Router("/api/nmap", &controllers.ApiController{}, "post:Nmap")
 	beego.Router("/api/pwned", &controllers.ApiController{}, "post:Pwned")
+	beego.Router("/api/gowitness", &controllers.ApiController{}, "post:Gowitness")
 
+	// Gowitness Functionality
+	beego.Router("/gowitness/process", &controllers.GowitnessController{}, "get:ProcessScreenshots")
+
+	// Debugger
+	beego.Router("debug/log-screenshots", &controllers.GowitnessController{}, "get:LogScreenshotDetails")
 }

@@ -7,6 +7,7 @@ type SystemPort struct {
 	System *System `orm:"rel(fk);column(system_ip);on_delete(cascade)"`
 	Port   *Port   `orm:"rel(fk);column(port_number);on_delete(cascade)"`
 	Open   bool    `json:"open"`
+	Screenshots []*Screenshot `orm:"reverse(many)"`
 }
 
 func init() {
@@ -88,3 +89,14 @@ func SetAllSystemPortsClosedByIp(systemIp string) (err error) {
 
 	return nil
 }
+
+func FindSystemPortByIPAndPort(ip string, port int) (*SystemPort, error) {
+    o := orm.NewOrm()
+    var systemPort SystemPort  // Rename the variable to avoid conflict with the 'port' parameter
+    err := o.QueryTable(new(SystemPort)).RelatedSel().Filter("System__Ip", ip).Filter("Port__PortNumber", port).One(&systemPort)
+    if err != nil {
+        return nil, err
+    }
+    return &systemPort, nil
+}
+

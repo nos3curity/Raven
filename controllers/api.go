@@ -68,3 +68,28 @@ func (c *ApiController) Nmap() {
 	c.Redirect("/uploads", 302) // CHANGE AS NEEDED
 	return
 }
+
+func (c *ApiController) Gowitness() {
+
+	file, header, err := c.GetFile("gowitness")
+	if err != nil {
+		c.Ctx.WriteString("Error in file upload: " + err.Error())
+		return
+	}
+	defer file.Close()
+
+	originalFileName := header.Filename
+
+	// Define the full path
+	tempFilePath := "gowitness/screenshots/" + originalFileName
+
+	// Save the file
+	err = c.SaveToFile("gowitness", tempFilePath)
+	if err != nil {
+		c.Ctx.WriteString("Error saving file: " + err.Error())
+		return
+	}
+
+	c.Redirect("/uploads", 302) // CHANGE AS NEEDED
+	return
+}
